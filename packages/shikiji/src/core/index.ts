@@ -160,7 +160,7 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
         theme,
         includeExplanation,
       }),
-      getTheme(theme)._theme,
+      getTheme(theme),
     ] as [string, ThemedToken[][], ThemeRegisteration])
 
     return renderToThemedTokensDualThemes(
