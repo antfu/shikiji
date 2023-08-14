@@ -206,6 +206,7 @@ Currently supports:
 - `codeToThemedTokens`
 - `codeToHtml`
 - `codeToHtmlDualThemes`
+- `codeToThemedTokensDualThemes`
 
 Internally they maintain a singleton highlighter instance and load the theme/language on demand. Different from `shiki.codeToHtml`, the `codeToHtml` shorthand function returns a Promise and `lang` and `theme` options are required.
 
