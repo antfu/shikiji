@@ -102,6 +102,66 @@ export interface CodeToHtmlDualThemesOptions<Languages = string, Themes = string
   lineOptions?: LineOption[]
 }
 
+export interface CodeToThemedTokensDualThemesOptions<Languages = string, Themes = string> {
+  lang?: Languages | PlainTextLanguage
+
+  /**
+   * A map of color names to themes.
+   *
+   * `light` and `dark` are required, and arbitrary color names can be added.
+   *
+   * @example
+   * ```ts
+   * themes: {
+   *   light: 'vitesse-light',
+   *   dark: 'vitesse-dark',
+   *   soft: 'nord',
+   *   // custom colors
+   * }
+   * ```
+   */
+  themes: {
+    light: Themes
+    dark: Themes
+  } & Partial<Record<string, Themes>>
+
+  /**
+   * The default theme applied to the code (via inline `color` style).
+   * The rest of the themes are applied via CSS variables, and toggled by CSS overrides.
+   *
+   * For example, if `defaultColor` is `light`, then `light` theme is applied to the code,
+   * and the `dark` theme and other custom themes are applied via CSS variables:
+   *
+   * ```html
+   * <span style="color:#{light};--shiki-dark:#{dark};--shiki-custom:#{custom};">code</span>
+   * ```
+   *
+   * When set to `false`, no default styles will be applied, and totally up to users to apply the styles:
+   *
+   * ```html
+   * <span style="--shiki-light:#{light};--shiki-dark:#{dark};--shiki-custom:#{custom};">code</span>
+   * ```
+   *
+   *
+   * @default 'light'
+   */
+  defaultColor?: StringLiteralUnion<'light' | 'dark'> | false
+
+  /**
+   * Prefix of CSS variables used to store the color of the other theme.
+   *
+   * @default '--shiki-'
+   */
+  cssVariablePrefix?: string
+
+  /**
+   * Include explanation of why a token is given a color.
+   *
+   * @default true
+   */
+  includeExplanation?: boolean
+}
+
 export interface CodeToThemedTokensOptions<Languages = string, Themes = string> {
   lang?: Languages | PlainTextLanguage
   theme?: Themes

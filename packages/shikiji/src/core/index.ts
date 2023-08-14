@@ -1,4 +1,4 @@
-import type { CodeToHtmlDualThemesOptions, CodeToHtmlOptions, CodeToThemedTokensOptions, LanguageInput, MaybeGetter, ThemeInput, ThemeRegisteration, ThemedToken } from '../types'
+import type { CodeToHtmlDualThemesOptions, CodeToHtmlOptions, CodeToThemedTokensDualThemesOptions, CodeToThemedTokensOptions, LanguageInput, MaybeGetter, ThemeInput, ThemeRegisteration, ThemedToken } from '../types'
 import type { OnigurumaLoadOptions } from '../oniguruma'
 import { createOnigScanner, createOnigString, loadWasm } from '../oniguruma'
 import { Registry } from './registry'
@@ -7,6 +7,7 @@ import { tokenizeWithTheme } from './themedTokenizer'
 import { renderToHtml } from './renderer-html'
 import { isPlaintext } from './utils'
 import { renderToHtmlDualThemes } from './renderer-html-dual-themes'
+import { renderToThemedTokensDualThemes } from './renderer-themed-tokens-dual-themes'
 
 export interface HighlighterCoreOptions {
   themes: ThemeInput[]
@@ -136,6 +137,34 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
     )
   }
 
+  function codeToThemedTokensDualThemes(code: string, options: CodeToThemedTokensDualThemesOptions) {
+    const {
+      defaultColor = 'light',
+      cssVariablePrefix = '--shiki-',
+      includeExplanation = true,
+    } = options
+
+    const themes = Object.entries(options.themes)
+      .filter(i => i[1])
+      .sort(a => a[0] === defaultColor ? -1 : 1)
+
+    const tokens = themes.map(([color, theme]) => [
+      color,
+      codeToThemedTokens(code, {
+        ...options,
+        theme,
+        includeExplanation,
+      }),
+      getTheme(theme)._theme,
+    ] as [string, ThemedToken[][], ThemeRegisteration])
+
+    return renderToThemedTokensDualThemes(
+      tokens,
+      cssVariablePrefix,
+      defaultColor !== false,
+    )
+  }
+
   async function loadLanguage(...langs: LanguageInput[]) {
     await _registry.loadLanguages(await resolveLangs(langs))
   }
@@ -152,6 +181,7 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
     codeToThemedTokens,
     codeToHtml,
     codeToHtmlDualThemes,
+    codeToThemedTokensDualThemes,
     loadLanguage,
     loadTheme,
     getLoadedThemes: () => _registry.getLoadedThemes(),

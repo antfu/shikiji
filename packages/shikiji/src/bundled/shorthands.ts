@@ -1,4 +1,4 @@
-import type { BuiltinLanguages, BuiltinThemes, CodeToHtmlDualThemesOptions, CodeToHtmlOptions, CodeToThemedTokensOptions, MaybeArray, PlainTextLanguage, RequireKeys } from '../types'
+import type { BuiltinLanguages, BuiltinThemes, CodeToHtmlDualThemesOptions, CodeToHtmlOptions, CodeToThemedTokensDualThemesOptions, CodeToThemedTokensOptions, MaybeArray, PlainTextLanguage, RequireKeys } from '../types'
 import { toArray } from '../core/utils'
 import { getHighlighter } from './highlighter'
 import type { Highlighter } from './highlighter'
@@ -57,4 +57,18 @@ export async function codeToHtmlDualThemes(code: string, options: RequireKeys<Co
     theme: Object.values(options.themes).filter(Boolean) as BuiltinThemes[],
   })
   return shiki.codeToHtmlDualThemes(code, options)
+}
+
+/**
+ * Shorthand for `codeToHtmlDualThemes` with auto-loaded theme and language.
+ * A singleton highlighter it maintained internally.
+ *
+ * Differences from `shiki.codeToHtmlDualThemes()`, this function is async.
+ */
+export async function codeToThemedTokensDualThemes(code: string, options: RequireKeys<CodeToThemedTokensDualThemesOptions<BuiltinLanguages, BuiltinThemes>, 'themes' | 'lang'>) {
+  const shiki = await getShikiWithThemeLang({
+    lang: options.lang,
+    theme: Object.values(options.themes).filter(Boolean) as BuiltinThemes[],
+  })
+  return shiki.codeToThemedTokensDualThemes(code, options)
 }
