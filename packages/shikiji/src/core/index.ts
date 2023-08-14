@@ -70,7 +70,7 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
       return [...lines.map(line => [{ content: line }])]
     }
     const _grammar = getLang(lang)
-    const { _theme, _colorMap } = getTheme(theme)
+    const { _theme, _colorMap } = setTheme(theme)
     return tokenizeWithTheme(code, _grammar, _theme, _colorMap, {
       includeExplanation,
     })
@@ -87,6 +87,11 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
     const _theme = _registry.getTheme(name!)
     if (!_theme)
       throw new Error(`[shikiji] Theme \`${name}\` not found, you may need to load it first`)
+    return _theme
+  }
+
+  function setTheme(name = defaultTheme) {
+    const _theme = getTheme(name)
     _registry.setTheme(_theme)
     const _colorMap = _registry.getColorMap()
     return {
@@ -100,7 +105,7 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
       ...options,
       includeExplanation: false,
     })
-    const { _theme } = getTheme(options.theme)
+    const _theme = getTheme(options.theme)
     return renderToHtml(tokens, {
       fg: _theme.fg,
       bg: _theme.bg,
@@ -126,7 +131,7 @@ export async function getHighlighterCore(options: HighlighterCoreOptions) {
         theme,
         includeExplanation: false,
       }),
-      getTheme(theme)._theme,
+      getTheme(theme),
     ] as [string, ThemedToken[][], ThemeRegisteration])
 
     return renderToHtmlDualThemes(
