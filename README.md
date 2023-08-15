@@ -144,7 +144,7 @@ async function main() {
 
 ### CDN Usage
 
-To use `shikiji` in the browser via CDN, you can use [esm.run](https://esm.run) from [jsDelivr](https://www.jsdelivr.com/).
+To use `shikiji` in the browser via CDN, you can use [esm.run](https://esm.run) from [jsDelivr](https://www.jsdelivr.com/). Or import `shikiji` from [esm.sh](https://esm.sh/).
 
 ```html
 <body>
