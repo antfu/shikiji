@@ -101,6 +101,20 @@ export function createSingletonShorthands<L extends string, T extends string >(g
   }
 
   /**
+   * Shorthand for `codeToHtml` with auto-loaded theme and language.
+   * A singleton highlighter it maintained internally.
+   *
+   * Differences from `shiki.codeToHtml()`, this function is async.
+   */
+  async function codeToHast(code: string, options: CodeToHastOptions<L, T>) {
+    const shiki = await _getHighlighter({
+      lang: options.lang,
+      theme: 'theme' in options ? [options.theme] : Object.values(options.themes) as T[],
+    })
+    return shiki.codeToHast(code, options)
+  }
+
+  /**
    * Shorthand for `codeToThemedTokens` with auto-loaded theme and language.
    * A singleton highlighter it maintained internally.
    *
@@ -127,6 +141,7 @@ export function createSingletonShorthands<L extends string, T extends string >(g
 
   return {
     codeToHtml,
+    codeToHast,
     codeToThemedTokens,
     codeToTokensWithThemes,
   }

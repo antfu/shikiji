@@ -22,6 +22,7 @@ export const getHighlighter = /* @__PURE__ */ createdBundledHighlighter<
 
 export const {
   codeToHtml,
+  codeToHast,
   codeToThemedTokens,
   codeToTokensWithThemes,
 } = /* @__PURE__ */ createSingletonShorthands<
