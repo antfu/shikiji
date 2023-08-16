@@ -1,15 +1,15 @@
-import type { CodeToHtmlOptions, CodeToHtmlThemesOptions, CodeToThemedTokensOptions, CodeToTokensWithThemesOptions, HighlighterCoreOptions, HighlighterGeneric, LanguageInput, MaybeGetter, ThemeInput, ThemedToken } from '../types'
+import type { HighlighterContext, HighlighterCoreOptions, HighlighterGeneric, LanguageInput, MaybeGetter, ThemeInput } from '../types'
 import { createOnigScanner, createOnigString, loadWasm } from '../oniguruma'
 import { Registry } from './registry'
 import { Resolver } from './resolver'
-import { tokenizeWithTheme } from './themedTokenizer'
-import { renderToHtml } from './renderer-html'
-import { isPlaintext } from './utils'
-import { renderToHtmlThemes, syncThemesTokenization } from './renderer-html-themes'
+import { codeToHtml, codeToHtmlThemes, codeToThemedTokens, codeToTokensWithThemes } from './renderers'
 
 export type HighlighterCore = HighlighterGeneric<never, never>
 
-export async function getHighlighterCore(options: HighlighterCoreOptions = {}): Promise<HighlighterCore> {
+/**
+ * Get the minimal shiki context for rendering.
+ */
+export async function getHighlighterContext(options: HighlighterCoreOptions = {}): Promise<HighlighterContext> {
   async function resolveLangs(langs: LanguageInput[]) {
     return Array.from(new Set((await Promise.all(
       langs.map(async lang => await normalizeGetter(lang).then(r => Array.isArray(r) ? r : [r])),
@@ -40,104 +40,36 @@ export async function getHighlighterCore(options: HighlighterCoreOptions = {}): 
   const _registry = new Registry(resolver, themes, langs)
   await _registry.init()
 
-  const defaultTheme = themes[0]?.name
-
-  function codeToThemedTokens(
-    code: string,
-    options: CodeToThemedTokensOptions = {},
-  ): ThemedToken[][] {
-    const {
-      lang = 'text', theme = defaultTheme, includeExplanation = true,
-    } = options
-
-    if (isPlaintext(lang)) {
-      const lines = code.split(/\r\n|\r|\n/)
-      return [...lines.map(line => [{ content: line }])]
-    }
-    const _grammar = getLang(lang)
-    const { _theme, _colorMap } = setTheme(theme)
-    return tokenizeWithTheme(code, _grammar, _theme, _colorMap, {
-      includeExplanation,
-    })
-  }
-
-  function getLang(name: string) {
+  function getLangGrammar(name: string) {
     const _lang = _registry.getGrammar(name)
     if (!_lang)
       throw new Error(`[shikiji] Language \`${name}\` not found, you may need to load it first`)
     return _lang
   }
 
-  function getTheme(name = defaultTheme) {
+  function getTheme(name: string) {
     const _theme = _registry.getTheme(name!)
     if (!_theme)
       throw new Error(`[shikiji] Theme \`${name}\` not found, you may need to load it first`)
     return _theme
   }
 
-  function setTheme(name = defaultTheme) {
-    const _theme = getTheme(name)
-    _registry.setTheme(_theme)
-    const _colorMap = _registry.getColorMap()
+  function setTheme(name: string) {
+    const theme = getTheme(name)
+    _registry.setTheme(theme)
+    const colorMap = _registry.getColorMap()
     return {
-      _theme,
-      _colorMap,
+      theme,
+      colorMap,
     }
   }
 
-  /**
-   * Get highlighted code in HTML.
-   */
-  function codeToHtml(code: string, options: CodeToHtmlOptions = {}): string {
-    const tokens = codeToThemedTokens(code, {
-      ...options,
-      includeExplanation: false,
-    })
-    const _theme = getTheme(options.theme)
-    return renderToHtml(tokens, {
-      fg: _theme.fg,
-      bg: _theme.bg,
-      lineOptions: options?.lineOptions,
-      themeName: _theme.name,
-    })
+  function getLoadedThemes() {
+    return _registry.getLoadedThemes()
   }
 
-  /**
-   * Get tokens with multiple themes, with synced
-   */
-  function codeToTokensWithThemes(code: string, options: CodeToTokensWithThemesOptions) {
-    const themes = Object.entries(options.themes)
-      .filter(i => i[1]) as [string, string][]
-
-    const tokens = syncThemesTokenization(...themes.map(t => codeToThemedTokens(code, {
-      ...options,
-      theme: t[1],
-      includeExplanation: false,
-    })))
-
-    return themes.map(([color, theme], idx) => [
-      color,
-      theme,
-      tokens[idx],
-    ] as [string, string, ThemedToken[][]])
-  }
-
-  function codeToHtmlThemes(code: string, options: CodeToHtmlThemesOptions): string {
-    const {
-      defaultColor = 'light',
-      cssVariablePrefix = '--shiki-',
-    } = options
-
-    const tokens = codeToTokensWithThemes(code, options)
-      .sort(a => a[0] === defaultColor ? -1 : 1)
-
-    return renderToHtmlThemes(
-      tokens,
-      tokens.map(i => getTheme(i[1])),
-      cssVariablePrefix,
-      defaultColor !== false,
-      options,
-    )
+  function getLoadedLanguages() {
+    return _registry.getLoadedLanguages()
   }
 
   async function loadLanguage(...langs: LanguageInput[]) {
@@ -151,14 +83,29 @@ export async function getHighlighterCore(options: HighlighterCoreOptions = {}): 
   }
 
   return {
-    codeToHtml,
-    codeToHtmlThemes,
-    codeToThemedTokens,
-    codeToTokensWithThemes,
+    setTheme,
+    getTheme,
+    getLangGrammar,
+    getLoadedThemes,
+    getLoadedLanguages,
     loadLanguage,
     loadTheme,
-    getLoadedThemes: () => _registry.getLoadedThemes(),
-    getLoadedLanguages: () => _registry.getLoadedLanguages(),
+  }
+}
+
+export async function getHighlighterCore(options: HighlighterCoreOptions = {}): Promise<HighlighterCore> {
+  const context = await getHighlighterContext(options)
+
+  return {
+    codeToHtml: (code, options) => codeToHtml(context, code, options),
+    codeToHtmlThemes: (code, options) => codeToHtmlThemes(context, code, options),
+    codeToThemedTokens: (code, options) => codeToThemedTokens(context, code, options),
+    codeToTokensWithThemes: (code, options) => codeToTokensWithThemes(context, code, options),
+
+    loadLanguage: context.loadLanguage,
+    loadTheme: context.loadTheme,
+    getLoadedThemes: context.getLoadedThemes,
+    getLoadedLanguages: context.getLoadedLanguages,
   }
 }
 

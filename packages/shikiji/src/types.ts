@@ -1,4 +1,4 @@
-import type { IRawGrammar, IRawTheme } from 'vscode-textmate'
+import type { IGrammar, IRawGrammar, IRawTheme } from 'vscode-textmate'
 import type { bundledThemes } from './themes'
 import type { bundledLanguages } from './assets/langs'
 import type { FontStyle } from './core/stackElementMetadata'
@@ -28,6 +28,21 @@ interface Nothing {}
 export type StringLiteralUnion<T extends U, U = string> = T | (U & Nothing)
 
 export type ResolveBundleKey<T extends string> = never extends T ? string : T
+
+export interface HighlighterContext {
+  setTheme(name: string): {
+    theme: ThemeRegisteration
+    colorMap: string[]
+  }
+
+  getTheme(name: string): ThemeRegisteration
+  getLangGrammar(name: string): IGrammar
+
+  getLoadedThemes(): string[]
+  getLoadedLanguages(): string[]
+  loadLanguage(...langs: LanguageInput[]): Promise<void>
+  loadTheme(...themes: ThemeInput[]): Promise<void>
+}
 
 export interface HighlighterGeneric<BundledLangKeys extends string, BundledThemeKeys extends string> {
   codeToHtml(
