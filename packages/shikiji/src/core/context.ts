@@ -1,15 +1,16 @@
-import type { HighlighterContext, HighlighterCoreOptions, HighlighterGeneric, LanguageInput, MaybeGetter, ThemeInput } from '../types'
+import type { HighlighterCoreOptions, LanguageInput, MaybeGetter, ShikiContext, ThemeInput } from '../types'
 import { createOnigScanner, createOnigString, loadWasm } from '../oniguruma'
 import { Registry } from './registry'
 import { Resolver } from './resolver'
-import { codeToHtml, codeToHtmlThemes, codeToThemedTokens, codeToTokensWithThemes } from './renderers'
-
-export type HighlighterCore = HighlighterGeneric<never, never>
 
 /**
- * Get the minimal shiki context for rendering.
- */
-export async function getHighlighterContext(options: HighlighterCoreOptions = {}): Promise<HighlighterContext> {
+* Get the minimal shiki context for rendering.
+*/
+export async function getShikiContext(options: HighlighterCoreOptions = {}): Promise<ShikiContext> {
+  async function normalizeGetter<T>(p: MaybeGetter<T>): Promise<T> {
+    return Promise.resolve(typeof p === 'function' ? (p as any)() : p).then(r => r.default || r)
+  }
+
   async function resolveLangs(langs: LanguageInput[]) {
     return Array.from(new Set((await Promise.all(
       langs.map(async lang => await normalizeGetter(lang).then(r => Array.isArray(r) ? r : [r])),
@@ -91,24 +92,4 @@ export async function getHighlighterContext(options: HighlighterCoreOptions = {}
     loadLanguage,
     loadTheme,
   }
-}
-
-export async function getHighlighterCore(options: HighlighterCoreOptions = {}): Promise<HighlighterCore> {
-  const context = await getHighlighterContext(options)
-
-  return {
-    codeToHtml: (code, options) => codeToHtml(context, code, options),
-    codeToHtmlThemes: (code, options) => codeToHtmlThemes(context, code, options),
-    codeToThemedTokens: (code, options) => codeToThemedTokens(context, code, options),
-    codeToTokensWithThemes: (code, options) => codeToTokensWithThemes(context, code, options),
-
-    loadLanguage: context.loadLanguage,
-    loadTheme: context.loadTheme,
-    getLoadedThemes: context.getLoadedThemes,
-    getLoadedLanguages: context.getLoadedLanguages,
-  }
-}
-
-async function normalizeGetter<T>(p: MaybeGetter<T>): Promise<T> {
-  return Promise.resolve(typeof p === 'function' ? (p as any)() : p).then(r => r.default || r)
 }

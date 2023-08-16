@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { ThemedToken } from '../src'
-import { codeToHtmlThemes, codeToThemedTokens, codeToTokensWithThemes } from '../src'
+import { codeToHtml, codeToThemedTokens, codeToTokensWithThemes } from '../src'
 import { syncThemesTokenization } from '../src/core/renderer-html-themes'
 
 describe('syncThemesTokenization', () => {
@@ -50,7 +50,7 @@ describe('syncThemesTokenization', () => {
 
 describe('codeToHtmlThemes', () => {
   it('dual themes', async () => {
-    const code = await codeToHtmlThemes('console.log("hello")', {
+    const code = await codeToHtml('console.log("hello")', {
       lang: 'js',
       themes: {
         dark: 'nord',
@@ -82,7 +82,7 @@ describe('codeToHtmlThemes', () => {
       'min-light': 'min-light',
     } as const
 
-    const code = await codeToHtmlThemes('console.log("hello")', {
+    const code = await codeToHtml('console.log("hello")', {
       lang: 'js',
       themes,
       cssVariablePrefix: '--s-',
@@ -126,7 +126,7 @@ function toggleTheme() {
       'min-light': 'min-light',
     } as const
 
-    const code = await codeToHtmlThemes('console.log("hello")', {
+    const code = await codeToHtml('console.log("hello")', {
       lang: 'js',
       themes,
       defaultColor: false,
