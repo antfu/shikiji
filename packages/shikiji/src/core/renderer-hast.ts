@@ -32,10 +32,19 @@ export function codeToHast(
       cssVariablePrefix = '--shiki-',
     } = options
 
+    const themes = Object.entries(options.themes)
+      .filter(i => i[1]) as [string, string][]
+
+    if (themes.length === 0)
+      throw new Error('[shikiji] `themes` option must not be empty')
+
     const themeTokens = codeToTokensWithThemes(context, code, options)
       .sort(a => a[0] === defaultColor ? -1 : 1)
-    const themeRegs = themeTokens.map(t => context.getTheme(t[1]))
 
+    if (defaultColor && !themeTokens.find(t => t[0] === defaultColor))
+      throw new Error(`[shikiji] \`themes\` option must contain the defaultColor key \`${defaultColor}\``)
+
+    const themeRegs = themeTokens.map(t => context.getTheme(t[1]))
     const themeMap = themeTokens.map(t => t[2])
     tokens = []
 
