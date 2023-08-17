@@ -118,7 +118,9 @@ export interface CodeToThemedTokensOptions<Languages = string, Themes = string> 
 
 export interface CodeToHastOptionsCommon<Languages = string> {
   lang: Languages | PlainTextLanguage
-
+  /**
+   * TODO
+   */
   hastTransform?: (hast: Root) => Root
 }
 
@@ -146,6 +148,28 @@ export interface CodeToTokensWithThemesOptions<Languages = string, Themes = stri
 export type CodeToHastOptions<Languages = string, Themes = string> = CodeToHastOptionsCommon<Languages> & ({
   theme: Themes
 } | {
+  /**
+   * A map of color names to themes.
+   * This allows you to specify multiple themes for the generated code.
+   *
+   * ```ts
+   * shiki.codeToHtml(code, {
+   *  lang: 'js',
+   *  themes: {
+   *    light: 'vitesse-light',
+   *    dark: 'vitesse-dark',
+   *  }
+   * })
+   * ```
+   *
+   * Will generate:
+   *
+   * ```html
+   * <span style="color:#111;--shiki-dark:#fff;">code</span>
+   * ```
+   *
+   * @see https://github.com/antfu/shikiji#lightdark-dual-themes
+   */
   themes: CodeToTokensWithThemesOptions<Languages, Themes>['themes']
 
   /**

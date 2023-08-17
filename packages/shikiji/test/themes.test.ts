@@ -48,7 +48,7 @@ describe('syncThemesTokenization', () => {
   })
 })
 
-describe('codeToHtmlThemes', () => {
+describe('codeToHtml', () => {
   it('dual themes', async () => {
     const code = await codeToHtml('console.log("hello")', {
       lang: 'js',
