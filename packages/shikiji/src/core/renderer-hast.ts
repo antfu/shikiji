@@ -15,18 +15,7 @@ export function codeToHast(
   let themeName: string
   let rootStyle: string | undefined
 
-  if ('theme' in options) {
-    tokens = codeToThemedTokens(context, code, {
-      ...options,
-      includeExplanation: false,
-    })
-
-    const _theme = context.getTheme(options.theme)
-    bg = _theme.bg
-    fg = _theme.fg
-    themeName = _theme.name
-  }
-  else if ('themes' in options) {
+  if ('themes' in options) {
     const {
       defaultColor = 'light',
       cssVariablePrefix = '--shiki-',
@@ -68,11 +57,23 @@ export function codeToHast(
     themeName = `shiki-themes ${themeRegs.map(t => t.name).join(' ')}`
     rootStyle = defaultColor ? undefined : [fg, bg].join(';')
   }
+  else if ('theme' in options) {
+    tokens = codeToThemedTokens(context, code, {
+      ...options,
+      includeExplanation: false,
+    })
+
+    const _theme = context.getTheme(options.theme)
+    bg = _theme.bg
+    fg = _theme.fg
+    themeName = _theme.name
+  }
   else {
     throw new Error('[shikiji] Invalid options, either `theme` or `themes` must be provided')
   }
 
   return tokensToHast(tokens, {
+    ...options,
     fg,
     bg,
     themeName,

@@ -121,7 +121,7 @@ export interface CodeToHastOptionsCommon<Languages = string> {
   /**
    * TODO
    */
-  hastTransform?: (hast: Root) => Root
+  hastTransform?: (hast: Root) => Root | void
 }
 
 export interface CodeToTokensWithThemesOptions<Languages = string, Themes = string> {
@@ -257,7 +257,7 @@ export interface HtmlRendererOptions {
   fg?: string
   bg?: string
 
-  hastTransform?: (hast: Root) => Root
+  hastTransform?: (hast: Root) => Root | void
 
   elements?: ElementsOptions
 
