@@ -4,6 +4,8 @@ import { toString } from 'hast-util-to-string'
 import { visit } from 'unist-util-visit'
 import type { Plugin } from 'unified'
 import type { Root } from 'hast'
+import type { CodeToHastOptions } from '../../shikiji/dist/core.mjs'
+import { parseHighlightLines } from '../../shared/line-highlight'
 
 export type RehypeShikijiOptions = CodeOptionsThemes<BuiltinTheme> & {
   /**
@@ -12,9 +14,20 @@ export type RehypeShikijiOptions = CodeOptionsThemes<BuiltinTheme> & {
    * @default Object.keys(bundledLanguages)
    */
   langs?: Array<LanguageInput | BuiltinLanguage>
+
+  /**
+   * Add `highlighted` class to lines defined in after codeblock
+   *
+   * @default true
+   */
+  highlightLines?: boolean | string
 }
 
 const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (options = {} as any) {
+  const {
+    highlightLines = true,
+  } = options
+
   const prefix = 'language-'
   const themeNames = ('themes' in options ? Object.values(options.themes) : [options.theme]).filter(Boolean) as BuiltinTheme[]
   const promise = getHighlighter({
@@ -51,21 +64,32 @@ const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (options = 
       if (typeof language !== 'string')
         return
 
-      const fragment = highlighter.codeToHast(toString(head as any), {
+      const code = toString(head as any)
+      const codeOptions: CodeToHastOptions = {
         ...options,
         lang: language.slice(prefix.length),
-      })
+      }
 
-      parent.children.splice(index, 1, {
-        type: 'element',
-        tagName: 'div',
-        properties: {
-          className: [
-            'highlight',
-          ],
-        },
-        children: fragment.children as any,
-      })
+      const attrs = (head.data as any)?.meta
+      if (highlightLines && typeof attrs === 'string') {
+        const lines = parseHighlightLines(attrs)
+        if (lines) {
+          const className = highlightLines === true
+            ? 'highlighted'
+            : highlightLines
+
+          codeOptions.transforms ||= {}
+          codeOptions.transforms.line = (node, line) => {
+            if (lines.includes(line))
+              node.properties.class += ` ${className}`
+            return node
+          }
+        }
+      }
+
+      const fragment = highlighter.codeToHast(code, codeOptions)
+
+      parent.children.splice(index, 1, ...fragment.children)
     })
   }
 }

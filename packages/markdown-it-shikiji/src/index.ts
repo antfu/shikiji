@@ -1,6 +1,7 @@
 import type MarkdownIt from 'markdown-it'
 import { bundledLanguages, getHighlighter } from 'shikiji'
-import type { BuiltinLanguage, BuiltinTheme, CodeOptionsThemes, Highlighter, LanguageInput } from 'shikiji'
+import type { BuiltinLanguage, BuiltinTheme, CodeOptionsThemes, CodeToHastOptions, Highlighter, LanguageInput } from 'shikiji'
+import { parseHighlightLines } from '../../shared/line-highlight'
 
 export type MarkdownItShikijiOptions = MarkdownItShikijiSetupOptions & {
   /**
@@ -11,17 +12,51 @@ export type MarkdownItShikijiOptions = MarkdownItShikijiSetupOptions & {
   langs?: Array<LanguageInput | BuiltinLanguage>
 }
 
-export type MarkdownItShikijiSetupOptions = CodeOptionsThemes<BuiltinTheme>
+export type MarkdownItShikijiSetupOptions = CodeOptionsThemes<BuiltinTheme> & {
+  /**
+   * Add `highlighted` class to lines defined in after codeblock
+   *
+   * @default true
+   */
+  highlightLines?: boolean | string
+}
 
 function setup(markdownit: MarkdownIt, highlighter: Highlighter, options: MarkdownItShikijiSetupOptions) {
+  const {
+    highlightLines = true,
+  } = options
+
   markdownit.options.highlight = (code, lang = 'text', attrs) => {
+    const codeOptions: CodeToHastOptions = {
+      ...options,
+      lang,
+    }
+
+    codeOptions.transforms ||= {}
+
+    if (highlightLines) {
+      const lines = parseHighlightLines(attrs)
+      if (lines) {
+        const className = highlightLines === true
+          ? 'highlighted'
+          : highlightLines
+
+        codeOptions.transforms.line = (node, line) => {
+          if (lines.includes(line))
+            node.properties.class += ` ${className}`
+          return node
+        }
+      }
+    }
+
+    codeOptions.transforms.code = (node) => {
+      node.properties.class = `language-${lang}`
+    }
+
     return highlighter.codeToHtml(
       code,
-      {
-        ...options,
-        lang: lang as any,
-      },
-    ).replace('<code>', `<code class="language-${lang}">`)
+      codeOptions,
+    )
   }
 }
 
