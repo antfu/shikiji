@@ -132,6 +132,8 @@ export function tokensToHast(
       class: `shiki ${options.themeName || ''}`,
       style: options.rootStyle || `background-color:${options.bg};color:${options.fg}`,
       tabindex: '0',
+      lang: options.lang,
+      ...options.meta,
     },
     children: [],
   }

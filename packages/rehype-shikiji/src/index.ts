@@ -70,6 +70,18 @@ const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (options = 
       }
 
       const attrs = (head.data as any)?.meta
+
+      if (attrs) {
+        const meta = Object.fromEntries(attrs.split(' ').reduce((prev: [string, boolean | string][], curr: string) => {
+          const [key, value] = curr.split('=')
+          const isNormalKey = /^[A-Za-z0-9]+$/.test(key)
+          if (isNormalKey)
+            prev = [...prev, [key, value || true]]
+          return prev
+        }, []))
+        codeOptions.meta = meta
+      }
+
       if (highlightLines && typeof attrs === 'string') {
         const lines = parseHighlightLines(attrs)
         if (lines) {
