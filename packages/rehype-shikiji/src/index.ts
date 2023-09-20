@@ -20,11 +20,15 @@ export type RehypeShikijiOptions = CodeOptionsThemes<BuiltinTheme> & {
    * @default true
    */
   highlightLines?: boolean | string
+
+  onMeta?: (attrs: string, codeOptions: CodeToHastOptions) => void
 }
 
 const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (options = {} as any) {
   const {
     highlightLines = true,
+    onMeta,
+    ...rest
   } = options
 
   const prefix = 'language-'
@@ -65,22 +69,12 @@ const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (options = 
 
       const code = toString(head as any)
       const codeOptions: CodeToHastOptions = {
-        ...options,
+        ...rest,
         lang: language.slice(prefix.length),
       }
 
       const attrs = (head.data as any)?.meta
-
-      if (attrs) {
-        const meta = Object.fromEntries(attrs.split(' ').reduce((prev: [string, boolean | string][], curr: string) => {
-          const [key, value] = curr.split('=')
-          const isNormalKey = /^[A-Za-z0-9]+$/.test(key)
-          if (isNormalKey)
-            prev = [...prev, [key, value || true]]
-          return prev
-        }, []))
-        codeOptions.meta = meta
-      }
+      onMeta && onMeta(attrs, codeOptions)
 
       if (highlightLines && typeof attrs === 'string') {
         const lines = parseHighlightLines(attrs)
