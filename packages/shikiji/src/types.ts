@@ -216,8 +216,9 @@ export type CodeOptionsThemes<Themes extends string = string> =
   | CodeOptionsMultipleThemes<Themes>
 
 export interface CodeOptionsMeta {
-  meta?: Record<string, string | boolean>
+  meta?: Record<string, any>
 }
+
 export type CodeToHastOptions<Languages extends string = string, Themes extends string = string> =
   & CodeToHastOptionsCommon<Languages>
   & CodeOptionsThemes<Themes>

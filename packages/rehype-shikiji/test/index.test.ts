@@ -12,15 +12,14 @@ it('run', async () => {
     .use(remarkRehype)
     .use(rehypeShikiji, {
       theme: 'vitesse-light',
-      onMeta: (attrs, codeOptions) => {
-        const meta = Object.fromEntries(attrs.split(' ').reduce((prev: [string, boolean | string][], curr: string) => {
+      parseMetaString: (str) => {
+        return Object.fromEntries(str.split(' ').reduce((prev: [string, boolean | string][], curr: string) => {
           const [key, value] = curr.split('=')
           const isNormalKey = /^[A-Za-z0-9]+$/.test(key)
           if (isNormalKey)
             prev = [...prev, [key, value || true]]
           return prev
         }, []))
-        codeOptions.meta = meta
       },
     })
     .use(rehypeStringify)
