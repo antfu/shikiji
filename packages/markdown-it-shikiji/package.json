@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-shikiji",
   "type": "module",
-  "version": "0.6.8",
+  "version": "0.6.10",
   "description": "markdown-it integration for shikiji",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -35,10 +35,10 @@
     "prepublishOnly": "nr build"
   },
   "dependencies": {
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^13.0.2",
     "shikiji": "workspace:*"
   },
   "devDependencies": {
-    "@types/markdown-it": "^13.0.1"
+    "@types/markdown-it": "^13.0.5"
   }
 }

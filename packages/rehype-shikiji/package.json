@@ -1,7 +1,7 @@
 {
   "name": "rehype-shikiji",
   "type": "module",
-  "version": "0.6.8",
+  "version": "0.6.10",
   "description": "rehype integration for shikiji",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -35,15 +35,15 @@
     "prepublishOnly": "nr build"
   },
   "dependencies": {
-    "@types/hast": "^3.0.0",
+    "@types/hast": "^3.0.2",
     "hast-util-to-string": "^3.0.0",
     "shikiji": "workspace:*",
-    "unified": "^11.0.3",
+    "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "rehype-stringify": "^10.0.0",
-    "remark-parse": "^10.0.2",
-    "remark-rehype": "^10.1.0"
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.0.0"
   }
 }
