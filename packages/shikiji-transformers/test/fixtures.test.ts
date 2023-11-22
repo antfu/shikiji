@@ -50,7 +50,7 @@ suite(
 <style>
 body { margin: 0; }
 .shiki { padding: 1em; }
-code, .line { display: block; width: 100%; }
+.line { display: block; width: 100%; height: 1.2em; }
 .has-diff .diff.added { background-color: #0505; }
 .has-diff .diff.removed { background-color: #8005; }
 </style>`,
@@ -64,7 +64,7 @@ suite(
 <style>
 body { margin: 0; }
 .shiki { padding: 1em; }
-code, .line { display: block; width: 100%; }
+.line { display: block; width: 100%; height: 1.2em; }
 .has-focused .focused { background-color: #8805; }
 </style>`,
 )
@@ -77,7 +77,7 @@ suite(
 <style>
 body { margin: 0; }
 .shiki { padding: 1em; }
-code, .line { display: block; width: 100%; }
+.line { display: block; width: 100%; height: 1.2em; }
 .highlighted { background-color: #888; }
 </style>`,
 )
@@ -90,7 +90,7 @@ suite(
 <style>
 body { margin: 0; }
 .shiki { padding: 1em; }
-code, .line { display: block; width: 100%; }
+.line { display: block; width: 100%; height: 1.2em; }
 .highlighted.warning { background-color: #9905; }
 .highlighted.error { background-color: #8005; }
 </style>`,
