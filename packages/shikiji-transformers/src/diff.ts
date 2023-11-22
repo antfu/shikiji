@@ -1,6 +1,7 @@
 import type { ShikijiTransformer } from 'shikiji'
 import type { Element } from 'hast'
 import { addClassToHast } from 'shikiji'
+import { isCommentLike } from './utils'
 
 const regexMatch = /\[!code (\-\-|\+\+)\]/
 
@@ -42,6 +43,8 @@ export function transformerDiffNotation(
         let nodeToRemove: Element | undefined
         for (const child of line.children) {
           if (child.type !== 'element')
+            continue
+          if (!isCommentLike(child, line))
             continue
           const text = child.children[0]
           if (text.type !== 'text')
