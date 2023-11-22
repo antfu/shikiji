@@ -1,4 +1,5 @@
 import type { ShikijiTransformer } from 'shikiji'
+import { addClassToHast } from 'shikiji'
 
 export interface TransformerRenderWhitespaceOptions {
   /**
@@ -67,7 +68,7 @@ export function transformerRenderWhitespace(
           }
           clone.children = [{ type: 'text', value: part }]
           if (part in classMap) {
-            clone.properties.class = [clone.properties.class, classMap[part]].filter(Boolean).join(' ')
+            addClassToHast(clone, classMap[part])
             delete clone.properties.style
           }
           return clone

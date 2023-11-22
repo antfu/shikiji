@@ -1,5 +1,6 @@
 import type { ShikijiTransformer } from 'shikiji'
 import type { Element } from 'hast'
+import { addClassToHast } from 'shikiji'
 
 const regexMatch = /\[!code (\-\-|\+\+)\]/
 
@@ -52,15 +53,16 @@ export function transformerDiffNotation(
             ? classRemoved
             : classAdded
           nodeToRemove = child
-          line.properties.class = `${line.properties.class || ''} ${className}`.trim()
+          addClassToHast(line, className)
           hasDiff = true
           break
         }
         if (nodeToRemove)
           line.children.splice(line.children.indexOf(nodeToRemove), 1)
       }
+
       if (hasDiff && classHasDiff)
-        code.properties.class = `${code.properties.class || ''} ${classHasDiff}`.trim()
+        addClassToHast(code, classHasDiff)
     },
   }
 }
