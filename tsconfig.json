@@ -6,7 +6,9 @@
     "module": "esnext",
     "moduleResolution": "Bundler",
     "paths": {
-      "shikiji": ["./packages/shikiji/src/index.ts"]
+      "shikiji": ["./packages/shikiji/src/index.ts"],
+      "shikiji/core": ["./packages/shikiji/src/core/index.ts"],
+      "shikiji-transformers": ["./packages/shikiji-transformers/src/index.ts"]
     },
     "resolveJsonModule": true,
     "strict": true,

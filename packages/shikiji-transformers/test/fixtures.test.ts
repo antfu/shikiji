@@ -3,8 +3,14 @@
 import { describe, expect, it } from 'vitest'
 import type { ShikijiTransformer } from 'shikiji'
 import { codeToHtml } from 'shikiji'
-import { transformerDiffNotation, transformerRemoveLineBreak, transformerRenderWhitespace } from '../src'
-import { transformerFocusNotation } from '../src/focus'
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerRemoveLineBreak,
+  transformerRenderWhitespace,
+} from '../src'
 
 function suite(
   name: string,
@@ -39,7 +45,7 @@ function suite(
 suite(
   'diff',
   import.meta.glob('./fixtures/diff/*.*', { as: 'raw', eager: true }),
-  [transformerDiffNotation(), transformerRemoveLineBreak()],
+  [transformerNotationDiff(), transformerRemoveLineBreak()],
   code => `${code}
 <style>
 body { margin: 0; }
@@ -53,13 +59,40 @@ code, .line { display: block; width: 100%; }
 suite(
   'focus',
   import.meta.glob('./fixtures/focus/*.*', { as: 'raw', eager: true }),
-  [transformerFocusNotation(), transformerRemoveLineBreak()],
+  [transformerNotationFocus(), transformerRemoveLineBreak()],
   code => `${code}
 <style>
 body { margin: 0; }
 .shiki { padding: 1em; }
 code, .line { display: block; width: 100%; }
 .has-focused .focused { background-color: #8805; }
+</style>`,
+)
+
+suite(
+  'highlight',
+  import.meta.glob('./fixtures/highlight/*.*', { as: 'raw', eager: true }),
+  [transformerNotationHighlight(), transformerRemoveLineBreak()],
+  code => `${code}
+<style>
+body { margin: 0; }
+.shiki { padding: 1em; }
+code, .line { display: block; width: 100%; }
+.highlighted { background-color: #888; }
+</style>`,
+)
+
+suite(
+  'error-level',
+  import.meta.glob('./fixtures/error-level/*.*', { as: 'raw', eager: true }),
+  [transformerNotationErrorLevel(), transformerRemoveLineBreak()],
+  code => `${code}
+<style>
+body { margin: 0; }
+.shiki { padding: 1em; }
+code, .line { display: block; width: 100%; }
+.highlighted.warning { background-color: #9905; }
+.highlighted.error { background-color: #8005; }
 </style>`,
 )
 

@@ -10,6 +10,7 @@ export default antfu(
   {
     rules: {
       'no-restricted-syntax': 'off',
+      'ts/no-invalid-this': 'off',
     },
   },
 )

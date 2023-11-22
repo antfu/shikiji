@@ -21,9 +21,9 @@ export function addClassToHast(node: Element, className: string | string[]) {
   if (!Array.isArray(node.properties.class))
     node.properties.class = []
 
-  const targets = Array.isArray(className) ? className : [className]
+  const targets = Array.isArray(className) ? className : className.split(/\s+/g)
   for (const c of targets) {
-    if (!node.properties.class.includes(c))
+    if (c && !node.properties.class.includes(c))
       node.properties.class.push(c)
   }
 }

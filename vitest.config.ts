@@ -10,7 +10,9 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      shikiji: fileURLToPath(new URL('./packages/shikiji/src/index.ts', import.meta.url)),
+      'shikiji': fileURLToPath(new URL('./packages/shikiji/src/index.ts', import.meta.url)),
+      'shikiji/core': fileURLToPath(new URL('./packages/shikiji/src/core/index.ts', import.meta.url)),
+      'shikiji-transformers': fileURLToPath(new URL('./packages/shikiji-transformers/src/index.ts', import.meta.url)),
     },
   },
   test: {

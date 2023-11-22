@@ -37,6 +37,7 @@
     "prepublishOnly": "nr build"
   },
   "dependencies": {
-    "shikiji": "workspace:*"
+    "shikiji": "workspace:*",
+    "shikiji-transformers": "workspace:*"
   }
 }

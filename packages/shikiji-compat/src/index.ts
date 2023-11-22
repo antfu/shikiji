@@ -1,7 +1,8 @@
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import type { BuiltinLanguage, BuiltinTheme, CodeToThemedTokensOptions, MaybeGetter, StringLiteralUnion, ThemeInput, ThemeRegistration, ThemedToken } from 'shikiji'
-import { addClassToHast, bundledLanguages, bundledThemes, getHighlighter as getShikiji, toShikiTheme } from 'shikiji'
+import { bundledLanguages, bundledThemes, getHighlighter as getShikiji, toShikiTheme } from 'shikiji'
+import { transformerCompactLineOptions } from 'shikiji-transformers'
 import type { AnsiToHtmlOptions, CodeToHtmlOptions, CodeToHtmlOptionsExtra, HighlighterOptions } from './types'
 
 export const BUNDLED_LANGUAGES = bundledLanguages
@@ -66,16 +67,7 @@ export async function getHighlighter(options: HighlighterOptions = {}) {
 
     if (options.lineOptions) {
       options.transformers ||= []
-      options.transformers.push({
-        name: 'shikiji-compat:line-class',
-        line(node, line) {
-          const lineOption = options.lineOptions?.find(o => o.line === line)
-          if (lineOption?.classes)
-            addClassToHast(node, lineOption.classes)
-
-          return node
-        },
-      })
+      options.transformers.push(transformerCompactLineOptions(options.lineOptions))
     }
 
     return shikiji.codeToHtml(code, options as any)
