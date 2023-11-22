@@ -4,6 +4,7 @@ export default antfu(
   {
     ignores: [
       'packages/shikiji/src/assets/*.ts',
+      '**/fixtures/**',
     ],
   },
   {

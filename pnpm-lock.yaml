@@ -189,6 +189,12 @@ importers:
         specifier: workspace:*
         version: link:../shikiji
 
+  packages/shikiji-transformers:
+    dependencies:
+      shikiji:
+        specifier: workspace:*
+        version: link:../shikiji
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
