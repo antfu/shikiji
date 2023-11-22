@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest'
 import type { ShikijiTransformer } from 'shikiji'
 import { codeToHtml } from 'shikiji'
-import { transformerDiffNotation, transformerRenderWhitespace } from '../src'
+import { transformerDiffNotation, transformerRemoveLineBreak, transformerRenderWhitespace } from '../src'
 
 function suite(
   name: string,
@@ -38,15 +38,14 @@ function suite(
 suite(
   'diff',
   import.meta.glob('./fixtures/diff/*.*', { as: 'raw', eager: true }),
-  [transformerDiffNotation()],
+  [transformerDiffNotation(), transformerRemoveLineBreak()],
   code => `${code}
 <style>
-.has-diff .diff.added {
-  background-color: #0505;
-}
-.has-diff .diff.removed {
-  background-color: #8005;
-}
+body { margin: 0; }
+.shiki { padding: 1em; }
+code, .line { display: block; width: 100%; }
+.has-diff .diff.added { background-color: #0505; }
+.has-diff .diff.removed { background-color: #8005; }
 </style>`,
 )
 
@@ -56,9 +55,9 @@ suite(
   [transformerRenderWhitespace()],
   code => `${code}
 <style>
-* {
-  tab-size: 4;
-}
+* { tab-size: 4; }
+body { margin: 0; }
+.shiki { padding: 1em; }
 .tab, .space { position: relative; }
 .tab::before { content: "\\21E5"; position: absolute; opacity: 0.3; }
 .space::before { content: "\\B7"; position: absolute; opacity: 0.3; }
