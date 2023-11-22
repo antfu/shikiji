@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import type { ShikijiTransformer } from 'shikiji'
 import { codeToHtml } from 'shikiji'
 import { transformerDiffNotation, transformerRemoveLineBreak, transformerRenderWhitespace } from '../src'
+import { transformerFocusNotation } from '../src/focus'
 
 function suite(
   name: string,
@@ -46,6 +47,19 @@ body { margin: 0; }
 code, .line { display: block; width: 100%; }
 .has-diff .diff.added { background-color: #0505; }
 .has-diff .diff.removed { background-color: #8005; }
+</style>`,
+)
+
+suite(
+  'focus',
+  import.meta.glob('./fixtures/focus/*.*', { as: 'raw', eager: true }),
+  [transformerFocusNotation(), transformerRemoveLineBreak()],
+  code => `${code}
+<style>
+body { margin: 0; }
+.shiki { padding: 1em; }
+code, .line { display: block; width: 100%; }
+.has-focused .focused { background-color: #8805; }
 </style>`,
 )
 
