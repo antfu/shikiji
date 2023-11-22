@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
-// @ts-expect-error no types
+// @ts-expect-error - no types
 import { wasmPlugin } from './packages/shikiji/rollup.config.mjs'
 
 export default defineConfig({
@@ -22,6 +22,7 @@ export default defineConfig({
       },
     },
     coverage: {
+      provider: 'v8',
       exclude: [
         '**/src/oniguruma/**',
         '**/src/assets/**',
