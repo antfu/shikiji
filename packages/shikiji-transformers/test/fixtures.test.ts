@@ -49,10 +49,14 @@ suite(
   code => `${code}
 <style>
 body { margin: 0; }
-.shiki { padding: 1em; }
+.shiki { padding: 1.5em; }
 .line { display: block; width: 100%; height: 1.2em; }
-.has-diff .diff.added { background-color: #0505; }
-.has-diff .diff.removed { background-color: #8005; }
+.diff { margin: 0 -24px; padding: 0 24px; }
+.diff.add { background-color: #0505; }
+.diff.remove { background-color: #8005; }
+.diff:before { position: absolute; left: 5px; }
+.diff.add:before { content: "+"; color: green;}
+.diff.remove:before { content: "-"; color: red; }
 </style>`,
 )
 

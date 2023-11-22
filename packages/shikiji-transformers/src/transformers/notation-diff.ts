@@ -24,8 +24,8 @@ export function transformerNotationDiff(
   options: TransformerNotationDiffOptions = {},
 ): ShikijiTransformer {
   const {
-    classAdded = 'diff added',
-    classRemoved = 'diff removed',
+    classAdded = 'diff add',
+    classRemoved = 'diff remove',
     classRootActive = 'has-diff',
   } = options
 
