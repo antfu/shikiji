@@ -85,6 +85,23 @@ describe('should', () => {
         ]
       `)
   })
+
+  // https://github.com/antfu/shikiji/issues/35
+  it('dynamic load theme and lang with md', async () => {
+    const shiki = await getHighlighter({})
+
+    await shiki.loadTheme('min-dark')
+    await shiki.loadLanguage('md')
+    await shiki.loadLanguage('js')
+
+    expect(shiki.getLoadedLanguages())
+      .toMatchInlineSnapshot()
+    expect(shiki.getLoadedThemes())
+      .toMatchInlineSnapshot()
+
+    expect(shiki.codeToHtml('console.log(1)', { lang: 'js', theme: 'min-dark' }))
+      .toMatchInlineSnapshot()
+  })
 })
 
 describe('errors', () => {
