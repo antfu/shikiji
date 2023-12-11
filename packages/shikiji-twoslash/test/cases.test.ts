@@ -70,7 +70,7 @@ const a = Number.isNaN(123)
   expect(styleTag + html).toMatchFileSnapshot('./out/completions.html')
 })
 
-it.only('cuts_out_unnecessary_code', async () => {
+it('cuts_out_unnecessary_code', async () => {
   const code = `
 interface IdLabel {
   id: number /* some fields */

@@ -1,34 +1,12 @@
-import type { TwoSlashOptions, TwoSlashReturn } from '@typescript/twoslash'
 import { twoslasher } from '@typescript/twoslash'
-import type { CodeToHastOptions, ShikijiTransformer, ShikijiTransformerContext } from 'shikiji'
+import type { ShikijiTransformer, ShikijiTransformerContext } from 'shikiji'
 import { addClassToHast } from 'shikiji'
 import type { Element, ElementContent, Text } from 'hast'
+import { rendererClassic } from './renderer-classic'
+import type { TransformerTwoSlashOptions } from './types'
 
-declare module 'shikiji' {
-  interface ShikijiTransformerContextMeta {
-    twoslash?: TwoSlashReturn
-  }
-}
-
-export interface TransformerTwoSlashOptions {
-  /**
-   * Languages to apply this transformer to
-   */
-  langs?: string[]
-  /**
-   * Mapping from language alias to language name
-   */
-  langAlias?: Record<string, string>
-  /**
-   * Custom filter function to apply this transformer to
-   * When specified, `langs` will be ignored
-   */
-  filter?: (lang: string, code: string, options: CodeToHastOptions) => boolean
-  /**
-   * Options to pass to twoslash
-   */
-  twoslashOptions?: TwoSlashOptions
-}
+export * from './types'
+export * from './renderer-classic'
 
 export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): ShikijiTransformer {
   const {
@@ -41,6 +19,7 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
       json5: 'json',
       yml: 'yaml',
     },
+    renderer = rendererClassic,
   } = options
   const filter = options.filter || (lang => langs.includes(lang))
   return {
@@ -65,7 +44,7 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
       if (!twoslash)
         return
 
-      const insertAfterLine = (line: number, nodes: Element[]) => {
+      const insertAfterLine = (line: number, nodes: ElementContent[]) => {
         let index: number
         if (line >= this.lines.length) {
           index = codeEl.children.length
@@ -89,16 +68,9 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
         const token = locateTextToken(this, info.line, info.character)
         if (!token || token.type !== 'text')
           continue
-        const text = { ...token }
-        // Wrap the token with a <data-lsp> tag
-        Object.assign(token, {
-          type: 'element',
-          tagName: 'data-lsp',
-          properties: {
-            lsp: info.text,
-          },
-          children: [text],
-        })
+
+        const clone = { ...token }
+        Object.assign(token, renderer.nodeStaticInfo(info, clone))
       }
 
       for (const error of twoslash.errors) {
@@ -108,200 +80,27 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
         if (!token)
           continue
 
-        const text = { ...token }
-        // Wrap the token with a <data-err> tag
-        Object.assign(token, {
-          type: 'element',
-          tagName: 'data-err',
-          children: [text],
-        })
+        const clone = { ...token }
+        Object.assign(token, renderer.nodeError(error, clone))
 
-        insertAfterLine(error.line, createErrorLine(error))
+        insertAfterLine(error.line, renderer.lineError(error))
       }
 
       for (const query of twoslash.queries) {
         insertAfterLine(
           query.line,
           query.kind === 'completions'
-            ? createCompletions(query)
+            ? renderer.lineCompletions(query)
             : query.kind === 'query'
-              ? createPopover(this, query)
+              ? renderer.lineQuery(query, locateTextToken(this, query.line, query.offset))
               : [],
         )
       }
 
       for (const tag of twoslash.tags)
-        insertAfterLine(tag.line, createTagLine(tag))
+        insertAfterLine(tag.line, renderer.lineCustomTag(tag))
     },
   }
-}
-
-function createErrorLine(error: TwoSlashReturn['errors'][0]): Element[] {
-  return [
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: {
-        class: 'error',
-      },
-      children: [
-        {
-          type: 'element',
-          tagName: 'span',
-          properties: {},
-          children: [
-            {
-              type: 'text',
-              value: error.renderedMessage,
-            },
-          ],
-        },
-        {
-          type: 'element',
-          tagName: 'span',
-          properties: {
-            class: 'code',
-          },
-          children: [
-            {
-              type: 'text',
-              value: String(error.code),
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'element',
-      tagName: 'span',
-      properties: {
-        class: 'error-behind',
-      },
-      children: [
-        {
-          type: 'text',
-          value: error.renderedMessage,
-        },
-      ],
-    },
-  ]
-}
-
-function createCompletions(query: TwoSlashReturn['queries'][0]): Element[] {
-  return [
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: { class: 'meta-line' },
-      children: [
-        { type: 'text', value: ' '.repeat(query.offset) },
-        {
-          type: 'element',
-          tagName: 'span',
-          properties: { class: 'inline-completions' },
-          children: [{
-            type: 'element',
-            tagName: 'ul',
-            properties: { class: 'dropdown' },
-            children: query.completions!
-              .filter(i => i.name.startsWith(query.completionsPrefix || '____'))
-              .map(i => ({
-                type: 'element',
-                tagName: 'li',
-                properties: {
-                  class: i.kindModifiers?.split(',').includes('deprecated')
-                    ? 'deprecated'
-                    : undefined,
-                },
-                children: [{
-                  type: 'element',
-                  tagName: 'span',
-                  properties: {},
-                  children: [
-                    {
-                      type: 'element',
-                      tagName: 'span',
-                      properties: { class: 'result-found' },
-                      children: [
-                        {
-                          type: 'text',
-                          value: query.completionsPrefix || '',
-                        },
-                      ],
-                    },
-                    {
-                      type: 'text',
-                      value: i.name.slice(query.completionsPrefix?.length || 0),
-                    },
-                  ],
-                }],
-              })),
-          }],
-        },
-      ],
-    },
-  ]
-}
-
-function createPopover(
-  context: ShikijiTransformerContext,
-  query: TwoSlashReturn['queries'][0],
-): Element[] {
-  const targetNode = locateTextToken(context, query.line, query.offset)
-  const targetText = targetNode?.type === 'text' ? targetNode.value : ''
-  const offset = Math.max(0, (query.offset || 0) - Math.round(targetText.length / 2) - 1)
-  return [
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: { class: 'meta-line' },
-      children: [
-        { type: 'text', value: ' '.repeat(offset) },
-        {
-          type: 'element',
-          tagName: 'span',
-          properties: { class: 'popover' },
-          children: [
-            {
-              type: 'element',
-              tagName: 'div',
-              properties: { class: 'arrow' },
-              children: [],
-            },
-            {
-              type: 'text',
-              value: query.text || '',
-            },
-          ],
-        },
-      ],
-    },
-  ]
-}
-
-function createTagLine(
-  tag: TwoSlashReturn['tags'][0],
-): Element[] {
-  return [
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: { class: `meta-line logger ${tag.name}-log` },
-      children: [
-        {
-          type: 'element',
-          tagName: 'span',
-          properties: { class: 'message' },
-          children: [
-            {
-              type: 'text',
-              value: tag.annotation || '',
-            },
-          ],
-        },
-      ],
-    },
-  ]
 }
 
 function locateTextToken(
