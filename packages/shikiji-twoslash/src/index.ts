@@ -4,6 +4,12 @@ import type { CodeToHastOptions, ShikijiTransformer, ShikijiTransformerContext }
 import { addClassToHast } from 'shikiji'
 import type { Element, ElementContent, Text } from 'hast'
 
+declare module 'shikiji' {
+  interface ShikijiTransformerContextMeta {
+    twoslash?: TwoSlashReturn
+  }
+}
+
 export interface TransformerTwoSlashOptions {
   /**
    * Languages to apply this transformer to

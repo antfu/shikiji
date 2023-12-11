@@ -1,13 +1,6 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shikiji'
-import type { TwoSlashReturn } from '@typescript/twoslash'
 import { transformerTwoSlash } from '../src'
-
-declare module 'shikiji' {
-  interface ShikijiTransformerContextMeta {
-    twoslash?: TwoSlashReturn
-  }
-}
 
 const styleTag = `
 <link rel="stylesheet" href="../../style.css" />
