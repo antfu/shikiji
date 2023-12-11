@@ -1,6 +1,8 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shikiji'
+import { createShikiHighlighter, renderCodeToHTML, runTwoSlash } from 'shiki-twoslash'
 import { transformerTwoSlash } from '../src'
+import type { BuiltinTheme } from '../../shikiji/dist/types.mjs'
 
 const styleTag = `
 <link rel="stylesheet" href="../../style.css" />
@@ -68,7 +70,7 @@ const a = Number.isNaN(123)
   expect(styleTag + html).toMatchFileSnapshot('./out/completions.html')
 })
 
-it('cuts_out_unnecessary_code', async () => {
+it.only('cuts_out_unnecessary_code', async () => {
   const code = `
 interface IdLabel {
   id: number /* some fields */
@@ -104,3 +106,36 @@ let c = createLabel(Math.random() ? "hello" : 42)
 
   expect(styleTag + html).toMatchFileSnapshot('./out/cuts_out_unnecessary_code.html')
 })
+
+it('console_log', async () => {
+  const code = `
+// Hello
+console.error("This is an error")
+// @error: This is an error
+`.trim()
+
+  const html = await codeToHtml(code, {
+    lang: 'ts',
+    theme: 'vitesse-dark',
+    transformers: [
+      transformerTwoSlash(),
+    ],
+  })
+
+  // expect(styleTag + await runShiki(code, 'vitesse-dark')).toMatchFileSnapshot('./out/shiki.html')
+  expect(styleTag + html).toMatchFileSnapshot('./out/console_log.html')
+})
+
+export async function runShiki(code: string, theme: BuiltinTheme) {
+  const highlighter = await createShikiHighlighter({ theme })
+  const twoslash = runTwoSlash(code, 'ts', {})
+  const html = renderCodeToHTML(
+    twoslash.code,
+    'ts',
+    { twoslash: true },
+    {} as any,
+    highlighter,
+    twoslash,
+  )
+  return html
+}
