@@ -29,8 +29,12 @@ const result = Object.fromEntries(
   }),
 )
 
-await fs.writeFile('./src/completion-icons.json', JSON.stringify(result, (r, v) => {
-  if (v?.position)
-    delete v.position
-  return v
-}, 2), 'utf-8')
+await fs.writeFile(
+  './src/completion-icons.json',
+  `${JSON.stringify(result, (r, v) => {
+    if (v?.position)
+      delete v.position
+    return v
+  }, 2)}\n`,
+  'utf-8',
+)
