@@ -50,13 +50,13 @@ interface Todo {
 }
 
 const todo: Readonly<Todo> = {
-  title: "Delete inactive users",
+  title: "Delete inactive users".toUpperCase(),
 //  ^?
 };
 
 todo.title = "Hello";
 
-Number.isNaN(123) 
+Number.parseInt("123", 10);
 //      ^|
 `.trim()
 

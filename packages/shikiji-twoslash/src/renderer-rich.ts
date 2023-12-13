@@ -1,5 +1,11 @@
 import type { Element, ElementContent } from 'hast'
+import type { TwoSlashReturn } from '@typescript/twoslash'
 import type { TwoSlashRenderers } from './types'
+import icons from './completion-icons.json'
+
+type CompletionItem = NonNullable<TwoSlashReturn['queries'][0]['completions']>[0]
+
+export const rendererRichCompletionIcons: Record<CompletionItem['kind'], Element> = icons as any
 
 /**
  * An alternative renderer that providers better prefixed class names,
@@ -123,32 +129,51 @@ export const rendererRich: TwoSlashRenderers = {
                 type: 'element',
                 tagName: 'li',
                 properties: {
-                  class: i.kindModifiers?.split(',').includes('deprecated')
-                    ? 'deprecated'
-                    : undefined,
+
                 },
-                children: [{
-                  type: 'element',
-                  tagName: 'span',
-                  properties: {},
-                  children: [
-                    {
-                      type: 'element',
-                      tagName: 'span',
-                      properties: { class: 'twoslash-completions-matched' },
-                      children: [
-                        {
-                          type: 'text',
-                          value: query.completionsPrefix || '',
-                        },
-                      ],
+                children: [
+                  {
+                    type: 'element',
+                    tagName: 'span',
+                    properties: { class: `twoslash-completions-icon completions-${i.kind.replace(/\s/g, '-')}` },
+                    children: [
+                      rendererRichCompletionIcons[i.kind] || rendererRichCompletionIcons.property,
+                    ],
+                  },
+                  {
+                    type: 'element',
+                    tagName: 'span',
+                    properties: {
+                      class: i.kindModifiers?.split(',').includes('deprecated')
+                        ? 'deprecated'
+                        : undefined,
                     },
-                    {
-                      type: 'text',
-                      value: i.name.slice(query.completionsPrefix?.length || 0),
-                    },
-                  ],
-                }],
+                    children: [
+                      {
+                        type: 'element',
+                        tagName: 'span',
+                        properties: { class: 'twoslash-completions-matched' },
+                        children: [
+                          {
+                            type: 'text',
+                            value: query.completionsPrefix || '',
+                          },
+                        ],
+                      },
+                      {
+                        type: 'element',
+                        tagName: 'span',
+                        properties: { class: 'twoslash-completions-unmatched' },
+                        children: [
+                          {
+                            type: 'text',
+                            value: i.name.slice(query.completionsPrefix?.length || 0),
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
               })),
           }],
         },
