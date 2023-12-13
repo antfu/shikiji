@@ -91,6 +91,75 @@ export const rendererRich: TwoSlashRenderers = {
     }
   },
 
+  nodeCompletions(query, node) {
+    if (node.type !== 'text')
+      throw new Error(`[shikiji-twoslash] nodeCompletions only works on text nodes, got ${node.type}`)
+
+    const leftPart = query.completionsPrefix || ''
+    const rightPart = node.value.slice(leftPart.length || 0)
+
+    return {
+      type: 'element',
+      tagName: 'span',
+      properties: {},
+      children: [
+        {
+          type: 'text',
+          value: leftPart,
+        },
+        {
+          type: 'element',
+          tagName: 'span',
+          properties: {
+            class: 'twoslash-completions-list',
+          },
+          children: [{
+            type: 'element',
+            tagName: 'ul',
+            properties: {},
+            children: query.completions!
+              .filter(i => i.name.startsWith(query.completionsPrefix || '____'))
+              .map(i => ({
+                type: 'element',
+                tagName: 'li',
+                properties: {
+                  class: i.kindModifiers?.split(',').includes('deprecated')
+                    ? 'deprecated'
+                    : undefined,
+                },
+                children: [{
+                  type: 'element',
+                  tagName: 'span',
+                  properties: {},
+                  children: [
+                    {
+                      type: 'element',
+                      tagName: 'span',
+                      properties: { class: 'twoslash-completions-matched' },
+                      children: [
+                        {
+                          type: 'text',
+                          value: query.completionsPrefix || '',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'text',
+                      value: i.name.slice(query.completionsPrefix?.length || 0),
+                    },
+                  ],
+                }],
+              })),
+          }],
+        },
+        {
+          type: 'text',
+          value: rightPart,
+        },
+      ],
+    }
+  },
+
   nodeError(_, node) {
     return {
       type: 'element',
@@ -118,68 +187,6 @@ export const rendererRich: TwoSlashRenderers = {
         ],
       },
     ]
-  },
-
-  lineCompletions(query) {
-    return [
-      {
-        type: 'element',
-        tagName: 'div',
-        properties: { class: 'twoslash-meta-line twoslash-completions-line' },
-        children: [
-          { type: 'text', value: ' '.repeat(query.offset) },
-          {
-            type: 'element',
-            tagName: 'span',
-            properties: { class: 'twoslash-completions' },
-            children: [{
-              type: 'element',
-              tagName: 'ul',
-              properties: { },
-              children: query.completions!
-                .filter(i => i.name.startsWith(query.completionsPrefix || '____'))
-                .map(i => ({
-                  type: 'element',
-                  tagName: 'li',
-                  properties: {
-                    class: i.kindModifiers?.split(',').includes('deprecated')
-                      ? 'deprecated'
-                      : undefined,
-                  },
-                  children: [{
-                    type: 'element',
-                    tagName: 'span',
-                    properties: {},
-                    children: [
-                      {
-                        type: 'element',
-                        tagName: 'span',
-                        properties: { class: 'twoslash-completions-matched' },
-                        children: [
-                          {
-                            type: 'text',
-                            value: query.completionsPrefix || '',
-                          },
-                        ],
-                      },
-                      {
-                        type: 'text',
-                        value: i.name.slice(query.completionsPrefix?.length || 0),
-                      },
-                    ],
-                  }],
-                })),
-            }],
-          },
-        ],
-      },
-    ]
-  },
-
-  lineQuery() {
-    // We don't insert lines for popup queries, instead of inject it directly into the token
-    // to use the same style as the info popup
-    return []
   },
 
   lineCustomTag(tag) {
