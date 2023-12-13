@@ -30,12 +30,12 @@
   position: relative;
 }
 
-.twoslash .twoslash-hover-info {
+.twoslash .twoslash-popup-info {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
-  transform: translate(0, 1.2em);
+  transform: translate(0, 1.4em);
   background: var(--twoslash-popup-bg);
   border: 1px solid var(--twoslash-border-color);
   transition: opacity 0.3s;
@@ -47,7 +47,13 @@
   box-shadow: var(--twoslash-popup-shadow);
 }
 
-.twoslash .twoslash-hover:hover .twoslash-hover-info {
+.twoslash-query-presisted .twoslash-popup-info {
+  z-index: 9;
+  transform: translate(0, 1.6em);
+}
+
+.twoslash .twoslash-hover:hover .twoslash-popup-info,
+.twoslash .twoslash-query-presisted .twoslash-popup-info {
   opacity: 1;
   pointer-events: auto;
   user-select: unset;
@@ -70,28 +76,16 @@
 }
 
 /* ===== Popover ===== */
-.twoslash .twoslash-popover {
-  position: relative;
-  background: var(--twoslash-popup-bg);
-  border: 1px solid var(--twoslash-border-color);
-  border-radius: 4px;
-  padding: 4px 6px;
-  margin: 0 -0.5em;
-  z-index: 9;
-  user-select: none;
-  box-shadow: var(--twoslash-popup-shadow);
-}
-
-.twoslash .twoslash-popover-arrow {
+.twoslash .twoslash-popup-arrow {
   position: absolute;
-  top: -5px;
+  top: -4px;
   left: 1em;
   border-top: 1px solid var(--twoslash-border-color);
   border-right: 1px solid var(--twoslash-border-color);
   background: var(--twoslash-popup-bg);
   transform: rotate(-45deg);
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   pointer-events: none;
 }
 

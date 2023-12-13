@@ -35,9 +35,57 @@ export const rendererRich: TwoSlashRenderers = {
           type: 'element',
           tagName: 'span',
           properties: {
-            class: 'twoslash-hover-info',
+            class: 'twoslash-popup-info',
           },
           children: themedContent,
+        },
+      ],
+    }
+  },
+
+  nodeQuery(query, node) {
+    if (!query.text)
+      return {}
+
+    let themedContent: ElementContent[]
+
+    try {
+      themedContent = ((this.codeToHast(query.text, {
+        ...this.options,
+        transformers: [],
+        transforms: undefined,
+      }).children[0] as Element).children[0] as Element).children
+    }
+    catch (e) {
+      themedContent = [{
+        type: 'text',
+        value: query.text,
+      }]
+    }
+
+    return {
+      type: 'element',
+      tagName: 'span',
+      properties: {
+        class: 'twoslash-hover twoslash-query-presisted',
+      },
+      children: [
+        node,
+        {
+          type: 'element',
+          tagName: 'span',
+          properties: {
+            class: 'twoslash-popup-info',
+          },
+          children: [
+            {
+              type: 'element',
+              tagName: 'div',
+              properties: { class: 'twoslash-popup-arrow' },
+              children: [],
+            },
+            ...themedContent,
+          ],
         },
       ],
     }
@@ -128,53 +176,10 @@ export const rendererRich: TwoSlashRenderers = {
     ]
   },
 
-  lineQuery(query, targetNode) {
-    if (!query.text)
-      return []
-
-    const targetText = targetNode?.type === 'text' ? targetNode.value : ''
-    const offset = Math.max(0, (query.offset || 0) + Math.floor(targetText.length / 2) - 1)
-
-    let themedContent: ElementContent[]
-
-    try {
-      themedContent = ((this.codeToHast(query.text, {
-        ...this.options,
-        transformers: [],
-        transforms: undefined,
-      }).children[0] as Element).children[0] as Element).children
-    }
-    catch (e) {
-      themedContent = [{
-        type: 'text',
-        value: query.text,
-      }]
-    }
-
-    return [
-      {
-        type: 'element',
-        tagName: 'div',
-        properties: { class: 'twoslash-meta-line twoslash-popover-line' },
-        children: [
-          { type: 'text', value: ' '.repeat(offset) },
-          {
-            type: 'element',
-            tagName: 'span',
-            properties: { class: 'twoslash-popover' },
-            children: [
-              {
-                type: 'element',
-                tagName: 'div',
-                properties: { class: 'twoslash-popover-arrow' },
-                children: [],
-              },
-              ...themedContent,
-            ],
-          },
-        ],
-      },
-    ]
+  lineQuery() {
+    // We don't insert lines for popup queries, instead of inject it directly into the token
+    // to use the same style as the info popup
+    return []
   },
 
   lineCustomTag(tag) {

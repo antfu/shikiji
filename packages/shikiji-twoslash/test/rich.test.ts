@@ -11,15 +11,21 @@ html, body { margin: 0; }
 .dark .shiki,
 .dark .shiki span {
   color: var(--shiki-dark, inherit);
-  background-color: var(--shiki-dark-bg, inherit);
   --twoslash-popup-bg: var(--shiki-dark-bg, inherit);
+}
+
+.dark .shiki {
+  background-color: var(--shiki-dark-bg, inherit);
 }
 
 html:not(.dark) .shiki,
 html:not(.dark) .shiki span {
   color: var(--shiki-light, inherit);
-  background-color: var(--shiki-light-bg, inherit);
   --twoslash-popup-bg: var(--shiki-light-bg, inherit);
+}
+
+html:not(.dark) .shiki {
+  background-color: var(--shiki-light-bg, inherit);
 }
 </style>
 `

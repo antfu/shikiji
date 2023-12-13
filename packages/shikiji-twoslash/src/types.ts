@@ -49,6 +49,7 @@ export interface TwoSlashRenderers {
   lineQuery(this: ShikijiTransformerContext, query: TwoSlashReturn['queries'][0], targetNode?: Element | Text): ElementContent[]
   lineCustomTag(this: ShikijiTransformerContext, tag: TwoSlashReturn['tags'][0]): ElementContent[]
 
-  nodeError(this: ShikijiTransformerContext, error: TwoSlashReturn['errors'][0], node: Element | Text): ElementContent
-  nodeStaticInfo(this: ShikijiTransformerContext, info: TwoSlashReturn['staticQuickInfos'][0], node: Element | Text): ElementContent
+  nodeError(this: ShikijiTransformerContext, error: TwoSlashReturn['errors'][0], node: Element | Text): Partial<ElementContent>
+  nodeQuery?(this: ShikijiTransformerContext, query: TwoSlashReturn['queries'][0], node: Element | Text): Partial<ElementContent>
+  nodeStaticInfo(this: ShikijiTransformerContext, info: TwoSlashReturn['staticQuickInfos'][0], node: Element | Text): Partial<ElementContent>
 }

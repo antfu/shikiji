@@ -48,6 +48,8 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
         return
 
       const insertAfterLine = (line: number, nodes: ElementContent[]) => {
+        if (!nodes.length)
+          return
         let index: number
         if (line >= this.lines.length) {
           index = codeEl.children.length
@@ -114,8 +116,15 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
         }
         else if (query.kind === 'query') {
           const token = locateTextToken(query.line - 1, query.offset)
-          if (token)
-            skipTokens.add(token)
+          if (!token)
+            throw new Error(`[shikiji-twoslash] Cannot find token at L${query.line}:${query.offset}`)
+          skipTokens.add(token)
+
+          if (renderer.nodeQuery) {
+            const clone = { ...token }
+            Object.assign(token, renderer.nodeQuery.call(this, query, clone))
+          }
+
           insertAfterLine(query.line, renderer.lineQuery.call(this, query, token))
         }
       }
