@@ -35,7 +35,7 @@
   top: 0;
   left: 0;
   opacity: 0;
-  transform: translate(0, 1.4em);
+  transform: translate(0, 1.2em);
   background: var(--twoslash-popup-bg);
   border: 1px solid var(--twoslash-border-color);
   transition: opacity 0.3s;
@@ -56,7 +56,10 @@
 .twoslash .twoslash-query-presisted .twoslash-popup-info {
   opacity: 1;
   pointer-events: auto;
-  user-select: unset;
+}
+
+.twoslash .twoslash-popup-info:hover {
+  user-select: auto;
 }
 
 /* ===== Error Line ===== */
@@ -90,6 +93,14 @@
 }
 
 /* ===== Completeions ===== */
+.twoslash .twoslash-completions {
+  user-select: none;
+}
+
+.twoslash .twoslash-completions:hover {
+  user-select: auto;
+}
+
 .twoslash .twoslash-completions ul {
   display: inline-block;
   position: absolute;
