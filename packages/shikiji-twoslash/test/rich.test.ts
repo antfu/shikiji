@@ -112,9 +112,9 @@ obj.boo
 
 it('custom-tags', async () => {
   const code = `
-import { getHighlighter } from 'shikiji'
+import { getHighlighterCore } from 'shikiji/core'
 
-const result = await getHighlighter({})
+const shiki = await getHighlighterCore({})
 // @log: Custom log message
 const a = 1
 // @error: Custom error message

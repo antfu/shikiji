@@ -21,6 +21,12 @@ export interface RendererRichOptions {
    * @default defaultCustomTagIcons
    */
   customTagIcons?: Partial<Record<string, ElementContent>> | false
+
+  /**
+   * Custom formatter for the type info text.
+   * Note that it might not be valid TypeScript syntax.
+   */
+  formatInfo?(info: string): string
 }
 
 /**
@@ -31,10 +37,11 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
   const {
     completionIcons = defaultCompletionIcons,
     customTagIcons = defaultCustomTagIcons,
+    formatInfo = info => info,
   } = options
   return {
     nodeStaticInfo(info, node) {
-      const themedContent = ((this.codeToHast(info.text, {
+      const themedContent = ((this.codeToHast(formatInfo(info.text), {
         ...this.options,
         transformers: [],
         transforms: undefined,
@@ -64,7 +71,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
       if (!query.text)
         return {}
 
-      const themedContent = ((this.codeToHast(query.text, {
+      const themedContent = ((this.codeToHast(formatInfo(query.text), {
         ...this.options,
         transformers: [],
         transforms: undefined,
