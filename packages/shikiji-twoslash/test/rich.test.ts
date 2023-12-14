@@ -76,3 +76,36 @@ Number.parseInt("123", 10);
 
   expect(styleTag + html + colorToggle).toMatchFileSnapshot('./out/rich/rich.html')
 })
+
+it('no-icons', async () => {
+  const code = `
+const obj = {
+  boo: 1,
+  bar: () => 2,
+  baz: 'string'
+}
+obj.boo
+//   ^|
+`.trim()
+
+  const html = await codeToHtml(code, {
+    lang: 'ts',
+    theme: 'nord',
+    defaultColor: false,
+    transformers: [
+      transformerTwoSlash({
+        renderer: rendererRich({
+          completionIcons: false,
+        }),
+      }),
+    ],
+  })
+
+  expect(
+    /* eslint-disable prefer-template */
+    styleTag
+    + html
+    + '<style>:root {--twoslash-popup-bg: #2e3440;}</style>'
+    + colorToggle,
+  ).toMatchFileSnapshot('./out/rich/no-icons.html')
+})
