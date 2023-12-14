@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shikiji'
+import * as ts from 'typescript'
 import { rendererRich, transformerTwoSlash } from '../src'
 
 const styleTag = `
@@ -108,4 +109,33 @@ obj.boo
     + '<style>:root {--twoslash-popup-bg: #2e3440;}</style>'
     + colorToggle,
   ).toMatchFileSnapshot('./out/rich/no-icons.html')
+})
+
+it('custom-tags', async () => {
+  const code = `
+import { getHighlighter } from 'shikiji'
+
+const result = await getHighlighter({})
+// @log: Custom log message
+`.trim()
+
+  const html = await codeToHtml(code, {
+    lang: 'ts',
+    themes: {
+      light: 'min-light',
+      dark: 'min-dark',
+    },
+    defaultColor: false,
+    transformers: [
+      transformerTwoSlash({
+        renderer: rendererRich(),
+      }),
+    ],
+  })
+
+  expect(
+    styleTag
+    + html
+    + colorToggle,
+  ).toMatchFileSnapshot('./out/rich/custom-tags.html')
 })

@@ -1,9 +1,7 @@
 import type { Element, ElementContent } from 'hast'
-import type { TwoSlashReturn } from '@typescript/twoslash'
 import type { TwoSlashRenderers } from './types'
-import icons from './completion-icons.json'
-
-type CompletionItem = NonNullable<TwoSlashReturn['queries'][0]['completions']>[0]
+import type { CompletionItem } from './icons'
+import { defaultCompletionIcons, defaultCustomTagIcons } from './icons'
 
 export interface RendererRichOptions {
   /**
@@ -11,12 +9,19 @@ export interface RendererRichOptions {
    * A map from completion item kind to a HAST node.
    *
    * If `false`, no icons will be rendered.
-   * @default rendererRichCompletionIcons
+   * @default defaultCompletionIcons
    */
   completionIcons?: Partial<Record<CompletionItem['kind'], ElementContent>> | false
-}
 
-export const rendererRichCompletionIcons: Record<CompletionItem['kind'], Element> = icons as any
+  /**
+   * Custom icons for custom tags lines.
+   * A map from tag name to a HAST node.
+   *
+   * If `false`, no icons will be rendered.
+   * @default defaultCustomTagIcons
+   */
+  customTagIcons?: Partial<Record<string, ElementContent>> | false
+}
 
 /**
  * An alternative renderer that providers better prefixed class names,
@@ -24,25 +29,16 @@ export const rendererRichCompletionIcons: Record<CompletionItem['kind'], Element
  */
 export function rendererRich(options: RendererRichOptions = {}): TwoSlashRenderers {
   const {
-    completionIcons = rendererRichCompletionIcons,
+    completionIcons = defaultCompletionIcons,
+    customTagIcons = defaultCustomTagIcons,
   } = options
   return {
     nodeStaticInfo(info, node) {
-      let themedContent: ElementContent[]
-
-      try {
-        themedContent = ((this.codeToHast(info.text, {
-          ...this.options,
-          transformers: [],
-          transforms: undefined,
-        }).children[0] as Element).children[0] as Element).children
-      }
-      catch (e) {
-        themedContent = [{
-          type: 'text',
-          value: info.text,
-        }]
-      }
+      const themedContent = ((this.codeToHast(info.text, {
+        ...this.options,
+        transformers: [],
+        transforms: undefined,
+      }).children[0] as Element).children[0] as Element).children
 
       return {
         type: 'element',
@@ -68,21 +64,11 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
       if (!query.text)
         return {}
 
-      let themedContent: ElementContent[]
-
-      try {
-        themedContent = ((this.codeToHast(query.text, {
-          ...this.options,
-          transformers: [],
-          transforms: undefined,
-        }).children[0] as Element).children[0] as Element).children
-      }
-      catch (e) {
-        themedContent = [{
-          type: 'text',
-          value: query.text,
-        }]
-      }
+      const themedContent = ((this.codeToHast(query.text, {
+        ...this.options,
+        transformers: [],
+        transforms: undefined,
+      }).children[0] as Element).children[0] as Element).children
 
       return {
         type: 'element',
@@ -236,8 +222,20 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
         {
           type: 'element',
           tagName: 'div',
-          properties: { class: `twoslash-meta-line twoslash-tag-${tag.name}-line` },
+          properties: { class: `twoslash-tag-line twoslash-tag-${tag.name}-line` },
           children: [
+            ...customTagIcons
+              ? [
+                <Element>{
+                  type: 'element',
+                  tagName: 'span',
+                  properties: { class: `twoslash-tag-icon tag-${tag.name}-icon` },
+                  children: [
+                    customTagIcons[tag.name],
+                  ],
+                },
+                ]
+              : [],
             {
               type: 'text',
               value: tag.annotation || '',
