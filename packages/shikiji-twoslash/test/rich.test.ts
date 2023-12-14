@@ -69,7 +69,7 @@ Number.parseInt("123", 10);
     defaultColor: false,
     transformers: [
       transformerTwoSlash({
-        renderer: rendererRich,
+        renderer: rendererRich(),
       }),
     ],
   })

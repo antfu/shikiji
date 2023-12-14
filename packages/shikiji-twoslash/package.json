@@ -23,7 +23,7 @@
       "default": "./dist/index.mjs"
     },
     "./style-rich.css": "./style-rich.css",
-    "./style-shiki-twoslash.css": "./style-shiki-twoslash.css",
+    "./style-classic.css": "./style-classic.css",
     "./*": "./dist/*"
   },
   "main": "./dist/index.mjs",

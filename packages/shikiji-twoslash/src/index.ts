@@ -21,7 +21,7 @@ export function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): S
       yml: 'yaml',
     },
     explicitTrigger = false,
-    renderer = rendererClassic,
+    renderer = rendererClassic(),
     throws = true,
   } = options
   const filter = options.filter || ((lang, _, options) => langs.includes(lang) && (!explicitTrigger || /\btwoslash\b/.test(options.meta?.__raw || '')))
