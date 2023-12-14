@@ -47,6 +47,9 @@ await buildIcons(
 await buildIcons(
   './src/icons-tags.json',
   {
-    log: 'carbon:information',
+    log: 'carbon:information-square',
+    error: 'carbon:warning',
+    warn: 'carbon:warning-alt',
+    annotate: 'carbon:idea',
   },
 )

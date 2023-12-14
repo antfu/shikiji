@@ -11,6 +11,10 @@
   --twoslash-error-bg: #d4565620;
   --twoslash-tag-color: #3772cf;
   --twoslash-tag-bg: #3772cf20;
+  --twoslash-tag-warn-color: #c37d0d;
+  --twoslash-tag-warn-bg: #c37d0d20;
+  --twoslash-tag-annotate-color: #1ba673;
+  --twoslash-tag-annotate-bg: #1ba67320;
 }
 
 /* Respect people's wishes to not have animations */
@@ -162,9 +166,24 @@
   margin: 0.2em 0;
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.3em;
 }
 .twoslash .twoslash-tag-line .twoslash-tag-icon {
-  width: 1em;
-  color: inherit
+  width: 1.1em;
+  color: inherit;
+}
+.twoslash .twoslash-tag-line.twoslash-tag-error-line {
+  background-color: var(--twoslash-error-bg);
+  border-left: 3px solid var(--twoslash-error-color);
+  color: var(--twoslash-error-color);
+}
+.twoslash .twoslash-tag-line.twoslash-tag-warn-line {
+  background-color: var(--twoslash-tag-warn-bg);
+  border-left: 3px solid var(--twoslash-tag-warn-color);
+  color: var(--twoslash-tag-warn-color);
+}
+.twoslash .twoslash-tag-line.twoslash-tag-annotate-line {
+  background-color: var(--twoslash-tag-annotate-bg);
+  border-left: 3px solid var(--twoslash-tag-annotate-color);
+  color: var(--twoslash-tag-annotate-color);
 }

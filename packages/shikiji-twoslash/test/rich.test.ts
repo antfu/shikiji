@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shikiji'
-import * as ts from 'typescript'
 import { rendererRich, transformerTwoSlash } from '../src'
 
 const styleTag = `
@@ -117,6 +116,12 @@ import { getHighlighter } from 'shikiji'
 
 const result = await getHighlighter({})
 // @log: Custom log message
+const a = 1
+// @error: Custom error message
+const b = 1
+// @warn: Custom warning message
+const c = 1
+// @annotate: Custom annotation message
 `.trim()
 
   const html = await codeToHtml(code, {

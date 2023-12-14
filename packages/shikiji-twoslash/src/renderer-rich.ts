@@ -140,7 +140,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
                         properties: { class: `twoslash-completions-icon completions-${i.kind.replace(/\s/g, '-')}` },
                         children: [
                           completionIcons[i.kind] || completionIcons.property,
-                        ],
+                        ].filter(Boolean),
                       }]
                       : [],
                     {
@@ -232,7 +232,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
                   properties: { class: `twoslash-tag-icon tag-${tag.name}-icon` },
                   children: [
                     customTagIcons[tag.name],
-                  ],
+                  ].filter(Boolean),
                 },
                 ]
               : [],
