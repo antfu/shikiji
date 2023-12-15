@@ -6,21 +6,15 @@ export class Resolver implements RegistryOptions {
   private readonly scopeToLangMap: { [scope: string]: LanguageRegistration } = {}
 
   private readonly _onigLibPromise: Promise<IOnigLib>
-  private readonly _onigLibName: string
 
-  constructor(onigLibPromise: Promise<IOnigLib>, onigLibName: string, langs: LanguageRegistration[]) {
+  constructor(onigLibPromise: Promise<IOnigLib>, langs: LanguageRegistration[]) {
     this._onigLibPromise = onigLibPromise
-    this._onigLibName = onigLibName
 
     langs.forEach(i => this.addLanguage(i))
   }
 
   public get onigLib(): Promise<IOnigLib> {
     return this._onigLibPromise
-  }
-
-  public getOnigLibName(): string {
-    return this._onigLibName
   }
 
   public getLangRegistration(langIdOrAlias: string): LanguageRegistration {
