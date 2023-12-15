@@ -1,0 +1,14 @@
+diff --git a/dist/node/serve-y_rLLIfA.js b/dist/node/serve-y_rLLIfA.js
+index 46de989c9ff86d8e337362af0a5c9058324e3d51..ab8ae72dcc63cccd86453fedd4beb58bd2e920c3 100644
+--- a/dist/node/serve-y_rLLIfA.js
++++ b/dist/node/serve-y_rLLIfA.js
+@@ -46667,6 +46667,9 @@ The language '${lang}' is not loaded, falling back to '${defaultLang || "txt"}'
+         transformerCompactLineOptions(lineOptions),
+         ...userTransformers
+       ],
++      meta: {
++        __raw: attrs,
++      },
+       ...typeof theme === "string" || "name" in theme ? { theme } : {
+         themes: theme,
+         defaultColor: false
