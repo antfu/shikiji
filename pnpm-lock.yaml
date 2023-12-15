@@ -17,7 +17,7 @@ overrides:
 
 patchedDependencies:
   vitepress@1.0.0-rc.30:
-    hash: hxsswxinbzfcqhh7py5ztcfbza
+    hash: nelf2aj7ccjkh42rwqra5cxx3e
     path: patches/vitepress@1.0.0-rc.30.patch
 
 importers:
@@ -172,6 +172,12 @@ importers:
       markdown-it-container:
         specifier: ^3.0.0
         version: 3.0.0
+      pinia:
+        specifier: ^2.1.7
+        version: 2.1.7(typescript@5.3.3)(vue@3.3.11)
+      shiki:
+        specifier: ^0.14.6
+        version: 0.14.6
       shikiji:
         specifier: workspace:*
         version: link:../packages/shikiji
@@ -189,7 +195,7 @@ importers:
         version: 0.26.0(rollup@4.9.0)(vue@3.3.11)
       vitepress:
         specifier: 1.0.0-rc.30
-        version: 1.0.0-rc.30(patch_hash=hxsswxinbzfcqhh7py5ztcfbza)(@algolia/client-search@4.22.0)(@types/node@20.10.4)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.13.0)(typescript@5.3.3)
+        version: 1.0.0-rc.30(patch_hash=nelf2aj7ccjkh42rwqra5cxx3e)(@algolia/client-search@4.22.0)(@types/node@20.10.4)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.13.0)(typescript@5.3.3)
       vue:
         specifier: ^3.3.10
         version: 3.3.11(typescript@5.3.3)
@@ -7164,6 +7170,24 @@ packages:
     hasBin: true
     dev: true
 
+  /pinia@2.1.7(typescript@5.3.3)(vue@3.3.11):
+    resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.1
+      typescript: 5.3.3
+      vue: 3.3.11(typescript@5.3.3)
+      vue-demi: 0.14.6(vue@3.3.11)
+    dev: true
+
   /pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
@@ -8930,7 +8954,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-rc.30(patch_hash=hxsswxinbzfcqhh7py5ztcfbza)(@algolia/client-search@4.22.0)(@types/node@20.10.4)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.13.0)(typescript@5.3.3):
+  /vitepress@1.0.0-rc.30(patch_hash=nelf2aj7ccjkh42rwqra5cxx3e)(@algolia/client-search@4.22.0)(@types/node@20.10.4)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.13.0)(typescript@5.3.3):
     resolution: {integrity: sha512-OolAbFU2hjs0KuIpPq0wRd4vJlTMvrFgHSh/hB+XQid7U31KtB6F1NxWihMwKkwncpxu9mt2Somet5AGiyTgPA==}
     hasBin: true
     peerDependencies:

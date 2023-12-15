@@ -30,21 +30,3 @@ features:
     icon: 🎄
     details: Fully tree-shakable ESM, runs on any JavaScript runtime, including Browser, Node.js, Cloudflare Workers, etc.
 ---
-
-<VPContent>
-<div class="vp-doc ">
-
-```ts twoslash
-import { codeToHtml } from 'shikiji'
-
-const html = await codeToHtml(
-  `console.log('Hello World!')`,
-  {
-    theme: 'nord',
-    lang: 'ts',
-  }
-)
-```
-
-</div>
-</VPContent>

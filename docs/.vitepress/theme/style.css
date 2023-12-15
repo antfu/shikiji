@@ -44,18 +44,18 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --vp-c-brand-1: #be8f4d;
-  --vp-c-brand-2: #cca25a;
-  --vp-c-brand-3: #E6CC78;
-  --vp-c-brand-soft: #E6CC7850;
+  --vp-c-brand-1: #5086a1;
+  --vp-c-brand-2: #6aa1b7;
+  --vp-c-brand-3: #8cccd5;
+  --vp-c-brand-soft: #83d0da50;
   --vp-c-bg-alt: #f9f9f9;
 }
 
 .dark {
-  --vp-c-brand-1: #E6CC78;
-  --vp-c-brand-2: #cca25a;
-  --vp-c-brand-3: #be8f4d;
-  --vp-c-brand-soft: #E6CC7850;
+  --vp-c-brand-1: #8cccd5;
+  --vp-c-brand-2: #6aa1b7;
+  --vp-c-brand-3: #5086a1;
+  --vp-c-brand-soft: #83d0da50;
   --vp-c-bg-alt: #18181b;
 }
 
@@ -64,7 +64,6 @@
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
   --vp-c-default-soft: var(--vp-c-gray-soft);
-
 
   --vp-c-tip-1: var(--vp-c-brand-1);
   --vp-c-tip-2: var(--vp-c-brand-2);
@@ -128,12 +127,11 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
     80deg,
-    #CB7676 22%,
-    #5DAAB5 23%,
+    #5daab5 5%,
     #89d4de 65%,
-    #E6CC78 66%,
-    #E6CC78 77%,
-    #4B9978 78%
+    #e6cc78 66%,
+    #e6cc78 77%,
+    #4b9978 78%
   );
 }
 

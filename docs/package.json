@@ -15,6 +15,8 @@
     "@vueuse/core": "^10.7.0",
     "gray-matter": "^4.0.3",
     "markdown-it-container": "^3.0.0",
+    "pinia": "^2.1.7",
+    "shiki": "^0.14.6",
     "shikiji": "workspace:*",
     "shikiji-transformers": "workspace:*",
     "shikiji-twoslash": "workspace:*",
