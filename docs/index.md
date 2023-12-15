@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/getting-started
+      link: /guide/
     - theme: alt
       text: Integrations
       link: /integrations
@@ -22,10 +22,13 @@ features:
     details: TextMate grammar powered, as accurate as your Text Editor.
   - title: Ahead of time
     icon: ⏱️
-    details: Runs on build time, ZERO runtime.
+    details: Runs on ahead of time, ship Zero JavaScript but get the perfect syntax highlight.
   - title: Customizable
-    icon: 📦
-    details: Addons, transformations, highly customizable.
+    icon: 🧩
+    details: HAST based. Addons, transformations, highly customizable.
+  - title: ESM & Runtime-agnostic
+    icon: 🎄
+    details: Fully tree-shakable ESM, runs on any JavaScript runtime, including Browser, Node.js, Cloudflare Workers, etc.
 ---
 
 <VPContent>
