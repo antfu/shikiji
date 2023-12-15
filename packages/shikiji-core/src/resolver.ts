@@ -1,5 +1,4 @@
 import type { IOnigLib, RegistryOptions } from './textmate'
-
 import type { LanguageRegistration } from './types'
 
 export class Resolver implements RegistryOptions {

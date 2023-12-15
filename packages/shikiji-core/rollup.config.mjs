@@ -63,9 +63,6 @@ export default defineConfig([
       dts({
         respectExternal: true,
       }),
-      copy({
-        targets: [{ src: './node_modules/vscode-oniguruma/release/onig.wasm', dest: 'dist' }],
-      }),
       {
         name: 'post',
         async buildEnd() {

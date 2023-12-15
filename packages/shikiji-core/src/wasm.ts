@@ -7,3 +7,5 @@ export async function getWasmInlined(): Promise<{ data: ArrayBuffer }> {
   }
   return _onigurumaPromise
 }
+
+export default getWasmInlined

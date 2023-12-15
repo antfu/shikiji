@@ -3,9 +3,8 @@
  *-------------------------------------------------------- */
 import type { IGrammar, IRawTheme } from './textmate'
 import { INITIAL } from './textmate'
-import type { CodeToThemedTokensOptions, ShikiInternal, ThemedToken, ThemedTokenScopeExplanation } from './types'
-import type { FontStyle } from './stackElementMetadata'
-import { StackElementMetadata } from './stackElementMetadata'
+import type { CodeToThemedTokensOptions, FontStyle, ShikiInternal, ThemedToken, ThemedTokenScopeExplanation } from './types'
+import { StackElementMetadata } from './stack-element-metadata'
 import { isPlaintext } from './utils'
 import { tokenizeAnsiWithTheme } from './tokenizer-ansi'
 

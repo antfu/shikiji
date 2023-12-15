@@ -5,16 +5,22 @@ import type {
   IRawGrammar as RawGrammar,
   IRawTheme as RawTheme,
 } from './textmate'
-import type { FontStyle } from './stackElementMetadata'
 import type { OnigurumaLoadOptions } from './oniguruma'
 
 export {
   Grammar,
   RawGrammar,
-  FontStyle,
-  // TODO: move these in the next major version
+  // TODO: remove these in the next major version
   Grammar as IGrammar,
   RawGrammar as IRawGrammar,
+}
+
+export enum FontStyle {
+  NotSet = -1,
+  None = 0,
+  Italic = 1,
+  Bold = 2,
+  Underline = 4,
 }
 
 export type PlainTextLanguage = 'text' | 'plaintext' | 'txt'

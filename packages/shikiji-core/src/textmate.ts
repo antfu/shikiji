@@ -10,3 +10,4 @@ export type {
   RegistryOptions,
 } from '../vendor/vscode-textmate/src/main'
 export type { IRawThemeSetting } from '../vendor/vscode-textmate/src/theme'
+export * from './stack-element-metadata'
