@@ -165,7 +165,6 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/antfu/shikiji' },
-      { icon: 'discord', link: 'https://eslint.style/chat' },
     ],
 
     footer: {
@@ -178,11 +177,11 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'author', content: 'Pine Wu, Anthony Fu' }],
-    // ['meta', { property: 'og:title', content: 'Shikiji' }],
-    // ['meta', { property: 'og:image', content: 'https://shikiji.netlify.app/og.png' }],
-    // ['meta', { property: 'og:description', content: 'A beautiful and powerful syntax highlighter' }],
-    // ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    // ['meta', { name: 'twitter:image', content: 'https://shikiji.netlify.app/og.png' }],
-    // ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }],
+    ['meta', { property: 'og:title', content: 'Shikiji' }],
+    ['meta', { property: 'og:image', content: 'https://shikiji.netlify.app/og.png' }],
+    ['meta', { property: 'og:description', content: 'A beautiful and powerful syntax highlighter' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://shikiji.netlify.app/og.png' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }],
   ],
 })
