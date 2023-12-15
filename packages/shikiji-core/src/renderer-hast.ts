@@ -8,7 +8,7 @@ import type {
   ThemedToken,
   ThemedTokenWithVariants,
   TokenStyles,
-} from '../types'
+} from './types'
 import { codeToThemedTokens } from './tokenizer'
 import { FontStyle } from './stackElementMetadata'
 import { codeToTokensWithThemes } from './renderer-html-themes'

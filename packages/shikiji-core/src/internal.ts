@@ -1,5 +1,5 @@
-import type { HighlighterCoreOptions, LanguageInput, MaybeGetter, ShikiInternal, ThemeInput, ThemeRegistration } from '../types'
-import { createOnigScanner, createOnigString, loadWasm } from '../oniguruma'
+import type { HighlighterCoreOptions, LanguageInput, MaybeGetter, ShikiInternal, ThemeInput, ThemeRegistration } from './types'
+import { createOnigScanner, createOnigString, loadWasm } from './oniguruma'
 import { Registry } from './registry'
 import { Resolver } from './resolver'
 

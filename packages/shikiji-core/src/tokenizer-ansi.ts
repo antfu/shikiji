@@ -1,5 +1,5 @@
 import { createAnsiSequenceParser, createColorPalette, namedColors } from 'ansi-sequence-parser'
-import type { ThemeRegistration, ThemedToken } from '../types'
+import type { ThemeRegistration, ThemedToken } from './types'
 import { FontStyle } from './stackElementMetadata'
 
 export function tokenizeAnsiWithTheme(theme: ThemeRegistration, fileContents: string): ThemedToken[][] {

@@ -1,9 +1,9 @@
 /* ---------------------------------------------------------
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *-------------------------------------------------------- */
-import type { IGrammar, IRawTheme } from 'vscode-textmate'
-import { INITIAL } from 'vscode-textmate'
-import type { CodeToThemedTokensOptions, ShikiInternal, ThemedToken, ThemedTokenScopeExplanation } from '../types'
+import type { IGrammar, IRawTheme } from './textmate'
+import { INITIAL } from './textmate'
+import type { CodeToThemedTokensOptions, ShikiInternal, ThemedToken, ThemedTokenScopeExplanation } from './types'
 import type { FontStyle } from './stackElementMetadata'
 import { StackElementMetadata } from './stackElementMetadata'
 import { isPlaintext } from './utils'
