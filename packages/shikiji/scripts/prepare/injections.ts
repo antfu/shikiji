@@ -1,10 +1,15 @@
+// Download and prepare grammar injections
+
 import fs from 'fs-extra'
+import { fetch } from 'ofetch'
 import { COMMENT_HEAD } from './constants'
 
 interface Injection {
   name: string
-  displayName: string
   contents: any[]
+  /**
+   * Bundle into a language
+   */
   toLang?: string
 }
 
@@ -19,7 +24,7 @@ export async function prepareInjections() {
       `${COMMENT_HEAD}
 import type { LanguageRegistration } from 'shikiji-core'
 
-export default ${JSON.stringify(injection.contents, null, 2)} as LanguageRegistration[]
+export default ${JSON.stringify(injection.contents, null, 2)} as unknown as LanguageRegistration[]
 `,
       'utf-8',
     )
@@ -46,7 +51,6 @@ export async function prepareVueInjections(): Promise<Injection> {
 
   return {
     name: 'vue-injections',
-    displayName: 'Vue Injections',
     toLang: 'vue',
     contents: injections,
   }
