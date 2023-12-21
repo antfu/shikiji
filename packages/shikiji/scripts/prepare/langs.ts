@@ -30,13 +30,13 @@ export async function prepareLangs() {
       aliases: lang.aliases,
     }
 
-    // F# and Markdown has circular dependency
-    if (lang.name === 'fsharp' && json.embeddedLangs)
-      json.embeddedLangs = json.embeddedLangs.filter((i: string) => i !== 'markdown')
+    // We don't load all the embedded langs for markdown
+    if (lang.name === 'markdown' && json.embeddedLangs) {
+      json.embeddedLangsLazy = json.embeddedLangs
+      json.embeddedLangs = []
+    }
 
-    const deps: string[] = [
-      ...(json.embeddedLangs || []),
-    ]
+    const deps: string[] = json.embeddedLangs || []
 
     await fs.writeFile(`./src/assets/langs/${lang.name}.ts`, `${COMMENT_HEAD}
 import type { LanguageRegistration } from 'shikiji-core'
@@ -51,7 +51,7 @@ ${[
   '  lang',
 ].join(',\n') || ''}
 ]
-`, 'utf-8')
+`.replace(/\n\n+/g, '\n\n'), 'utf-8')
   }
 
   async function writeLanguageBundleIndex(
