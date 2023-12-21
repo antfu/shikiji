@@ -54,8 +54,12 @@ ${[
 `, 'utf-8')
   }
 
-  async function writeLanguageBundleIndex(fileName: string, ids: string[]) {
-    const bundled = ids.map(id => grammars.find(i => i.name === id)!)
+  async function writeLanguageBundleIndex(
+    fileName: string,
+    ids: string[],
+    exclude: string[] = [],
+  ) {
+    const bundled = ids.map(id => grammars.find(i => i.name === id)!).filter(i => !exclude.includes(i.name))
 
     const info = bundled.map(i => ({
       id: i.name,
@@ -89,6 +93,18 @@ export const bundledLanguages = {
     )
   }
 
-  await writeLanguageBundleIndex('langs-bundle-full', grammars.map(i => i.name))
-  await writeLanguageBundleIndex('langs-bundle-web', grammars.filter(i => i.categories?.includes('web')).map(i => i.name))
+  await writeLanguageBundleIndex(
+    'langs-bundle-full',
+    grammars.map(i => i.name),
+  )
+  await writeLanguageBundleIndex(
+    'langs-bundle-web',
+    [
+      ...grammars.filter(i => i.categories?.includes('web')).map(i => i.name),
+      'shellscript',
+    ],
+    [
+      'coffee',
+    ],
+  )
 }

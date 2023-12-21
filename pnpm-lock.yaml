@@ -26,7 +26,7 @@ importers:
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.4.6
-        version: 2.4.6(@vue/compiler-sfc@3.3.11)(eslint-plugin-format@0.1.0)(eslint-ts-patch@8.55.0-1)(typescript@5.3.3)(vitest@1.1.0)
+        version: 2.4.6(@vue/compiler-sfc@3.3.13)(eslint-plugin-format@0.1.0)(eslint-ts-patch@8.55.0-1)(typescript@5.3.3)(vitest@1.1.0)
       '@antfu/ni':
         specifier: ^0.21.12
         version: 0.21.12
@@ -245,8 +245,8 @@ importers:
         version: link:../shikiji-core
     devDependencies:
       tm-grammars:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       tm-themes:
         specifier: ^1.0.0
         version: 1.0.0
@@ -492,7 +492,7 @@ packages:
       '@jridgewell/trace-mapping': 0.3.20
     dev: true
 
-  /@antfu/eslint-config@2.4.6(@vue/compiler-sfc@3.3.11)(eslint-plugin-format@0.1.0)(eslint-ts-patch@8.55.0-1)(typescript@5.3.3)(vitest@1.1.0):
+  /@antfu/eslint-config@2.4.6(@vue/compiler-sfc@3.3.13)(eslint-plugin-format@0.1.0)(eslint-ts-patch@8.55.0-1)(typescript@5.3.3)(vitest@1.1.0):
     resolution: {integrity: sha512-dwRlY//llv3xnzLdSJzjEQQ/uS9p5rdNh7m4k2sqUlo4PsJ9EXBTWnZl6BPJZIGoVZGpDiGBpyO8hG/5I7yLrQ==}
     hasBin: true
     peerDependencies:
@@ -541,7 +541,7 @@ packages:
       eslint-plugin-vitest: 0.3.17(@typescript-eslint/eslint-plugin@6.14.0)(eslint-ts-patch@8.55.0-1)(typescript@5.3.3)(vitest@1.1.0)
       eslint-plugin-vue: 9.19.2(eslint-ts-patch@8.55.0-1)
       eslint-plugin-yml: 1.11.0(eslint-ts-patch@8.55.0-1)
-      eslint-processor-vue-blocks: 0.1.1(@vue/compiler-sfc@3.3.11)(eslint-ts-patch@8.55.0-1)
+      eslint-processor-vue-blocks: 0.1.1(@vue/compiler-sfc@3.3.13)(eslint-ts-patch@8.55.0-1)
       globals: 13.24.0
       jsonc-eslint-parser: 2.4.0
       local-pkg: 0.5.0
@@ -3103,21 +3103,6 @@ packages:
       '@vue/shared': 3.3.13
     dev: true
 
-  /@vue/compiler-sfc@3.3.11:
-    resolution: {integrity: sha512-U4iqPlHO0KQeK1mrsxCN0vZzw43/lL8POxgpzcJweopmqtoYy9nljJzWDIQS3EfjiYhfdtdk9Gtgz7MRXnz3GA==}
-    dependencies:
-      '@babel/parser': 7.23.5
-      '@vue/compiler-core': 3.3.11
-      '@vue/compiler-dom': 3.3.11
-      '@vue/compiler-ssr': 3.3.11
-      '@vue/reactivity-transform': 3.3.11
-      '@vue/shared': 3.3.11
-      estree-walker: 2.0.2
-      magic-string: 0.30.5
-      postcss: 8.4.32
-      source-map-js: 1.0.2
-    dev: true
-
   /@vue/compiler-sfc@3.3.13:
     resolution: {integrity: sha512-DQVmHEy/EKIgggvnGRLx21hSqnr1smUS9Aq8tfxiiot8UR0/pXKHN9k78/qQ7etyQTFj5em5nruODON7dBeumw==}
     dependencies:
@@ -3131,13 +3116,6 @@ packages:
       magic-string: 0.30.5
       postcss: 8.4.32
       source-map-js: 1.0.2
-    dev: true
-
-  /@vue/compiler-ssr@3.3.11:
-    resolution: {integrity: sha512-Zd66ZwMvndxRTgVPdo+muV4Rv9n9DwQ4SSgWWKWkPFebHQfVYRrVjeygmmDmPewsHyznCNvJ2P2d6iOOhdv8Qg==}
-    dependencies:
-      '@vue/compiler-dom': 3.3.11
-      '@vue/shared': 3.3.11
     dev: true
 
   /@vue/compiler-ssr@3.3.13:
@@ -3169,16 +3147,6 @@ packages:
       path-browserify: 1.0.1
       typescript: 5.3.3
       vue-template-compiler: 2.7.15
-    dev: true
-
-  /@vue/reactivity-transform@3.3.11:
-    resolution: {integrity: sha512-fPGjH0wqJo68A0wQ1k158utDq/cRyZNlFoxGwNScE28aUFOKFEnCBsvyD8jHn+0kd0UKVpuGuaZEQ6r9FJRqCg==}
-    dependencies:
-      '@babel/parser': 7.23.5
-      '@vue/compiler-core': 3.3.11
-      '@vue/shared': 3.3.11
-      estree-walker: 2.0.2
-      magic-string: 0.30.5
     dev: true
 
   /@vue/reactivity-transform@3.3.13:
@@ -4912,13 +4880,13 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-processor-vue-blocks@0.1.1(@vue/compiler-sfc@3.3.11)(eslint-ts-patch@8.55.0-1):
+  /eslint-processor-vue-blocks@0.1.1(@vue/compiler-sfc@3.3.13)(eslint-ts-patch@8.55.0-1):
     resolution: {integrity: sha512-9+dU5lU881log570oBwpelaJmOfOzSniben7IWEDRYQPPWwlvaV7NhOtsTuUWDqpYT+dtKKWPsgz4OkOi+aZnA==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.3.0
       eslint: ^8.50.0
     dependencies:
-      '@vue/compiler-sfc': 3.3.11
+      '@vue/compiler-sfc': 3.3.13
       eslint: /eslint-ts-patch@8.55.0-1
     dev: true
 
@@ -8586,8 +8554,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /tm-grammars@1.0.1:
-    resolution: {integrity: sha512-+KKd6RSSSv8l5AYQI1d9/WALvm5VCv6YKsYm7LTn4vH1HxkJKPn+C4hIWky78RLcC9R4vlSmw8r01e7xo2Wlew==}
+  /tm-grammars@1.0.2:
+    resolution: {integrity: sha512-05Ocoa6tPpCHydrlefbTl2qCGdOwJHjxtxp+284YT6yBVp0F+C175Q8kkscVYVc33MWNPIBMo6/DURz/hg/6Yw==}
     dev: true
 
   /tm-themes@1.0.0:

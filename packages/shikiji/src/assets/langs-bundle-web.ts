@@ -15,14 +15,6 @@ export const bundledLanguagesInfo: BundledLanguageInfo[] = [
     'import': (() => import('./langs/blade')) as DynamicImportLanguageRegistration
   },
   {
-    'id': 'coffee',
-    'name': 'CoffeeScript',
-    'aliases': [
-      'coffeescript'
-    ],
-    'import': (() => import('./langs/coffee')) as DynamicImportLanguageRegistration
-  },
-  {
     'id': 'css',
     'name': 'CSS',
     'import': (() => import('./langs/css')) as DynamicImportLanguageRegistration
@@ -155,6 +147,17 @@ export const bundledLanguagesInfo: BundledLanguageInfo[] = [
     'import': (() => import('./langs/scss')) as DynamicImportLanguageRegistration
   },
   {
+    'id': 'shellscript',
+    'name': 'Shell',
+    'aliases': [
+      'bash',
+      'sh',
+      'shell',
+      'zsh'
+    ],
+    'import': (() => import('./langs/shellscript')) as DynamicImportLanguageRegistration
+  },
+  {
     'id': 'stylus',
     'name': 'Stylus',
     'aliases': [
@@ -206,7 +209,7 @@ export const bundledLanguagesBase = Object.fromEntries(bundledLanguagesInfo.map(
 
 export const bundledLanguagesAlias = Object.fromEntries(bundledLanguagesInfo.flatMap(i => i.aliases?.map(a => [a, i.import]) || []))
 
-export type BundledLanguage = 'astro' | 'blade' | 'coffee' | 'coffeescript' | 'css' | 'gql' | 'graphql' | 'haml' | 'handlebars' | 'hbs' | 'html' | 'http' | 'imba' | 'jade' | 'javascript' | 'jinja' | 'jison' | 'js' | 'json' | 'jsonc' | 'jsonl' | 'jsx' | 'julia' | 'less' | 'marko' | 'mdc' | 'mdx' | 'php' | 'postcss' | 'pug' | 'sass' | 'scss' | 'styl' | 'stylus' | 'svelte' | 'ts' | 'tsx' | 'typescript' | 'vue' | 'vue-html' | 'wasm' | 'wgsl'
+export type BundledLanguage = 'astro' | 'bash' | 'blade' | 'css' | 'gql' | 'graphql' | 'haml' | 'handlebars' | 'hbs' | 'html' | 'http' | 'imba' | 'jade' | 'javascript' | 'jinja' | 'jison' | 'js' | 'json' | 'jsonc' | 'jsonl' | 'jsx' | 'julia' | 'less' | 'marko' | 'mdc' | 'mdx' | 'php' | 'postcss' | 'pug' | 'sass' | 'scss' | 'sh' | 'shell' | 'shellscript' | 'styl' | 'stylus' | 'svelte' | 'ts' | 'tsx' | 'typescript' | 'vue' | 'vue-html' | 'wasm' | 'wgsl' | 'zsh'
 
 export const bundledLanguages = {
   ...bundledLanguagesBase,
