@@ -1,4 +1,3 @@
-import { codeToHtml } from 'shikiji'
 import { expect, it } from 'vitest'
 
 it('bundle-full', async () => {
