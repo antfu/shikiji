@@ -11,7 +11,6 @@ import { COMMENT_HEAD } from './constants'
 const LANGS_LAZY_EMBEDDED = [
   'markdown',
   'mdx',
-  'jinlia',
 ]
 
 export async function prepareLangs() {
