@@ -4,6 +4,16 @@ import fg from 'fast-glob'
 import type { LanguageRegistration } from 'shikiji-core'
 import { COMMENT_HEAD } from './constants'
 
+/**
+ * Languages that includes a lot of embedded langs,
+ * We only load on-demand for these langs.
+ */
+const LANGS_LAZY_EMBEDDED = [
+  'markdown',
+  'mdx',
+  'jinlia',
+]
+
 export async function prepareLangs() {
   const allLangFiles = await fg('*.json', {
     cwd: './node_modules/tm-grammars/grammars',
@@ -31,7 +41,7 @@ export async function prepareLangs() {
     }
 
     // We don't load all the embedded langs for markdown
-    if (lang.name === 'markdown' && json.embeddedLangs) {
+    if (LANGS_LAZY_EMBEDDED.includes(lang.name)) {
       json.embeddedLangsLazy = json.embeddedLangs
       json.embeddedLangs = []
     }
@@ -57,9 +67,28 @@ ${[
   async function writeLanguageBundleIndex(
     fileName: string,
     ids: string[],
-    exclude: string[] = [],
   ) {
-    const bundled = ids.map(id => grammars.find(i => i.name === id)!).filter(i => !exclude.includes(i.name))
+    // We flatten all the embedded langs
+    const bundledIds = new Set<string>(ids)
+    let changed = true
+    while (changed) {
+      changed = false
+      for (const id of bundledIds) {
+        if (LANGS_LAZY_EMBEDDED.includes(id))
+          continue
+        const lang = grammars.find(i => i.name === id)
+        if (!lang)
+          continue
+        for (const e of lang.embedded || []) {
+          if (!bundledIds.has(e)) {
+            bundledIds.add(e)
+            changed = true
+          }
+        }
+      }
+    }
+
+    const bundled = Array.from(bundledIds).map(id => grammars.find(i => i.name === id)!).filter(Boolean)
 
     const info = bundled.map(i => ({
       id: i.name,
@@ -102,9 +131,6 @@ export const bundledLanguages = {
     [
       ...grammars.filter(i => i.categories?.includes('web')).map(i => i.name),
       'shellscript',
-    ],
-    [
-      'coffee',
     ],
   )
 }
