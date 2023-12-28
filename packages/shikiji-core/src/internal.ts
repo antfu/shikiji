@@ -47,6 +47,8 @@ export async function getShikiInternal(options: HighlighterCoreOptions = {}): Pr
   Object.assign(_registry.alias, options.langAlias)
   await _registry.init()
 
+  let _lastTheme: ThemeRegistrationResolved
+
   function getLangGrammar(name: string) {
     const _lang = _registry.getGrammar(name)
     if (!_lang)
@@ -63,7 +65,10 @@ export async function getShikiInternal(options: HighlighterCoreOptions = {}): Pr
 
   function setTheme(name: string | ThemeRegistrationResolved) {
     const theme = getTheme(name)
-    _registry.setTheme(theme)
+    if (_lastTheme !== theme) {
+      _registry.setTheme(theme)
+      _lastTheme = theme
+    }
     const colorMap = _registry.getColorMap()
     return {
       theme,
