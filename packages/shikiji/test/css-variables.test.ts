@@ -36,24 +36,24 @@ describe('should', () => {
       {
         "bg": "var(--bg)",
         "colorReplacements": {
-          "#000001": "var(--fg)",
-          "#000002": "var(--bg)",
-          "#000003": "var(--keyword)",
-          "#000004": "var(--string)",
+          "#00000001": "var(--fg)",
+          "#00000002": "var(--bg)",
+          "#00000003": "var(--keyword)",
+          "#00000004": "var(--string)",
         },
         "fg": "var(--fg)",
         "name": "my-css-variables",
         "settings": [
           {
             "settings": {
-              "background": "#000002",
-              "foreground": "#000001",
+              "background": "#00000002",
+              "foreground": "#00000001",
             },
           },
           {
             "scope": "keyword",
             "settings": {
-              "foreground": "#000003",
+              "foreground": "#00000003",
             },
           },
           {
@@ -61,7 +61,7 @@ describe('should', () => {
               "string",
             ],
             "settings": {
-              "foreground": "#000004",
+              "foreground": "#00000004",
             },
           },
         ],
@@ -69,7 +69,16 @@ describe('should', () => {
       }
     `)
 
-    expect(shiki.codeToHtml('console.log("Hello")', { lang: 'js', theme: 'my-css-variables' }))
-      .toMatchInlineSnapshot(`"<pre class="shiki my-css-variables" style="background-color:var(--bg);color:var(--fg)" tabindex="0"><code><span class="line"><span style="color:var(--fg)">console.log(</span><span style="color:var(--string)">"Hello"</span><span style="color:var(--fg)">)</span></span></code></pre>"`)
+    expect(shiki.codeToHtml('if ("Hello") {}', { lang: 'js', theme: 'my-css-variables' }))
+      .toMatchInlineSnapshot(`"<pre class="shiki my-css-variables" style="background-color:var(--bg);color:var(--fg)" tabindex="0"><code><span class="line"><span style="color:var(--keyword)">if</span><span style="color:var(--fg)"> (</span><span style="color:var(--string)">"Hello"</span><span style="color:var(--fg)">) {}</span></span></code></pre>"`)
+
+    expect(shiki.codeToHtml('if ("Hello") {}', {
+      lang: 'js',
+      theme: 'my-css-variables',
+      colorReplacements: {
+        '#00000003': 'var(--keyword-override)',
+      },
+    }))
+      .toMatchInlineSnapshot(`"<pre class="shiki my-css-variables" style="background-color:var(--bg);color:var(--fg)" tabindex="0"><code><span class="line"><span style="color:var(--keyword-override)">if</span><span style="color:var(--fg)"> (</span><span style="color:var(--string)">"Hello"</span><span style="color:var(--fg)">) {}</span></span></code></pre>"`)
   })
 })

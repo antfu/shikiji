@@ -215,18 +215,15 @@ export interface LanguageRegistration extends RawGrammar {
   injectTo?: string[]
 }
 
-export interface CodeToThemedTokensOptions<Languages = string, Themes = string> {
+export interface CodeToThemedTokensOptions<Languages = string, Themes = string> extends TokenizeWithThemeOptions {
   lang?: Languages | SpecialLanguage
   theme?: Themes | ThemeRegistrationAny
-  /**
-   * Include explanation of why a token is given a color.
-   *
-   * @default true
-   */
-  includeExplanation?: boolean
 }
 
-export interface CodeToHastOptionsCommon<Languages extends string = string> extends TransformerOptions {
+export interface CodeToHastOptionsCommon<Languages extends string = string> extends
+  TransformerOptions,
+  Pick<TokenizeWithThemeOptions, 'colorReplacements'> {
+
   lang: StringLiteralUnion<Languages | SpecialLanguage>
 
   /**
@@ -637,6 +634,24 @@ export interface BundledThemeInfo {
   displayName: string
   type: 'light' | 'dark'
   import: DynamicImportThemeRegistration
+}
+
+export interface TokenizeWithThemeOptions {
+  /**
+   * Include explanation of why a token is given a color.
+   *
+   * @default false
+   */
+  includeExplanation?: boolean
+
+  /**
+   * A map of color names to new color values.
+   *
+   * The color key starts with '#' and should be lowercased.
+   *
+   * This will be merged with theme's `colorReplacements` if any.
+   */
+  colorReplacements?: Record<string, string>
 }
 
 export {}

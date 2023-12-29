@@ -1,12 +1,17 @@
 import { createAnsiSequenceParser, createColorPalette, namedColors } from 'ansi-sequence-parser'
-import type { ThemeRegistrationResolved, ThemedToken } from './types'
+import type { ThemeRegistrationResolved, ThemedToken, TokenizeWithThemeOptions } from './types'
 import { FontStyle } from './types'
 import { applyColorReplacements } from './tokenizer'
 
 export function tokenizeAnsiWithTheme(
   theme: ThemeRegistrationResolved,
   fileContents: string,
+  options?: TokenizeWithThemeOptions,
 ): ThemedToken[][] {
+  const colorReplacements = {
+    ...theme.colorReplacements,
+    ...options?.colorReplacements,
+  }
   const lines = fileContents.split(/\r?\n/)
 
   const colorPalette = createColorPalette(
@@ -31,7 +36,7 @@ export function tokenizeAnsiWithTheme(
       if (token.decorations.has('dim'))
         color = dimColor(color)
 
-      color = applyColorReplacements(color, theme.colorReplacements)
+      color = applyColorReplacements(color, colorReplacements)
 
       let fontStyle: FontStyle = FontStyle.None
       if (token.decorations.has('bold'))

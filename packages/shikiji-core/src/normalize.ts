@@ -88,7 +88,7 @@ export function normalizeTheme(rawTheme: ThemeRegistrationAny): ThemeRegistratio
     if (replacementMap.has(value))
       return replacementMap.get(value)!
     replacementCount += 1
-    const hex = `#${replacementCount.toString(16).padStart(6, '0').toLowerCase()}`
+    const hex = `#${replacementCount.toString(16).padStart(8, '0').toLowerCase()}`
     if (theme.colorReplacements?.[`#${hex}`]) // already exists
       return getReplacementColor(value)
     replacementMap.set(value, hex)
