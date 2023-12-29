@@ -413,9 +413,9 @@ export interface ThemeRegistrationResolved extends RawTheme {
   colorReplacements?: Record<string, string>
 
   /**
-   * Color map of the theme file
+   * Color map of VS Code options
    *
-   * @field not used by shikiji
+   * Will be used by shikiji on `lang: 'ansi'` to find ANSI colors, and to find the default foreground/background colors.
    */
   colors?: Record<string, string>
 

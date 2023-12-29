@@ -33,10 +33,10 @@ export function tokenizeAnsiWithTheme(
       else
         color = token.foreground ? colorPalette.value(token.foreground) : theme.fg
 
+      color = applyColorReplacements(color, colorReplacements)
+
       if (token.decorations.has('dim'))
         color = dimColor(color)
-
-      color = applyColorReplacements(color, colorReplacements)
 
       let fontStyle: FontStyle = FontStyle.None
       if (token.decorations.has('bold'))
@@ -82,7 +82,7 @@ function dimColor(color: string) {
     }
   }
 
-  const cssVarMatch = color.match(/var\((--shiki-color-ansi-[\w-]+)\)/)
+  const cssVarMatch = color.match(/var\((--[\w-]+-ansi-[\w-]+)\)/)
   if (cssVarMatch)
     return `var(${cssVarMatch[1]}-dim)`
 

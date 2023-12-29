@@ -81,7 +81,7 @@ export function normalizeTheme(rawTheme: ThemeRegistrationAny): ThemeRegistratio
     })
   }
 
-  // Push non-hex colors to color replacements, as VS Code doesn't support them
+  // Push non-hex colors to color replacements, as `vscode-textmate` doesn't support them
   let replacementCount = 0
   const replacementMap = new Map<string, string>()
   function getReplacementColor(value: string) {
@@ -117,6 +117,16 @@ export function normalizeTheme(rawTheme: ThemeRegistrationAny): ThemeRegistratio
     }
     return clone
   })
+  for (const key of Object.keys(theme.colors || {})) {
+    // Only patch for known keys
+    if (key === 'editor.foreground' || key === 'editor.background' || key.startsWith('terminal.ansi')) {
+      if (!theme.colors![key]?.startsWith('#')) {
+        const replacement = getReplacementColor(theme.colors![key])
+        theme.colorReplacements![replacement] = theme.colors![key]
+        theme.colors![key] = replacement
+      }
+    }
+  }
 
   Object.defineProperty(theme, RESOLVED_KEY, {
     enumerable: false,
