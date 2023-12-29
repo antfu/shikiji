@@ -370,11 +370,15 @@ export interface ThemeRegistrationResolved extends RawTheme {
 
   /**
    * Display name
+   *
+   * @field shikiji custom property
    */
   displayName?: string
 
   /**
    * Light/dark theme
+   *
+   * @field shikiji custom property
    */
   type: 'light' | 'dark'
 
@@ -384,37 +388,58 @@ export interface ThemeRegistrationResolved extends RawTheme {
   settings: IRawThemeSetting[]
 
   /**
+   * Same as `settings`, will use as fallback if `settings` is not present.
+   */
+  tokenColors?: IRawThemeSetting[]
+
+  /**
    * Default foreground color
+   *
+   * @field shikiji custom property
    */
   fg: string
 
   /**
    * Background color
+   *
+   * @field shikiji custom property
    */
   bg: string
 
   /**
-   * Same as `settings`
+   * A map of color names to new color values.
+   *
+   * The color key starts with '#' and should be lowercased.
+   *
+   * @field shikiji custom property
    */
-  tokenColors?: IRawThemeSetting[]
+  colorReplacements?: Record<string, string>
 
   /**
-   * Color map of the theme file (not used by shikiji)
+   * Color map of the theme file
+   *
+   * @field not used by shikiji
    */
   colors?: Record<string, string>
 
   /**
-   * JSON schema path (not used by shikiji)
+   * JSON schema path
+   *
+   * @field not used by shikiji
    */
   $schema?: string
 
   /**
-   * Enable semantic highlighting (not used by shikiji)
+   * Enable semantic highlighting
+   *
+   * @field not used by shikiji
    */
   semanticHighlighting?: boolean
 
   /**
-   * Tokens for semantic highlighting (not used by shikiji)
+   * Tokens for semantic highlighting
+   *
+   * @field not used by shikiji
    */
   semanticTokenColors?: Record<string, string>
 }
