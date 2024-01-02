@@ -24,7 +24,7 @@ const entries = [
 
 const external = [
   'shikiji-core',
-  'shikiji-core/wasm',
+  'shikiji-core/wasm-inlined',
   'shikiji-core/types',
   'shikiji/wasm',
 ]

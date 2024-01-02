@@ -7,11 +7,12 @@
     "moduleResolution": "Bundler",
     "paths": {
       "shikiji-core/types": ["./packages/shikiji-core/src/types.ts"],
-      "shikiji-core/wasm": ["./packages/shikiji-core/src/wasm.ts"],
+      "shikiji-core/wasm-inlined": ["./packages/shikiji-core/src/wasm.ts"],
       "shikiji-core": ["./packages/shikiji-core/src/index.ts"],
       "shikiji-transformers": ["./packages/shikiji-transformers/src/index.ts"],
       "shikiji-twoslash": ["./packages/shikiji-twoslash/src/index.ts"],
       "shikiji/core": ["./packages/shikiji/src/core.ts"],
+      "shikiji/wasm": ["./packages/shikiji/src/wasm.ts"],
       "shikiji/langs": ["./packages/shikiji/src/langs.ts"],
       "shikiji/themes": ["./packages/shikiji/src/themes.ts"],
       "shikiji": ["./packages/shikiji/src/index.ts"],
