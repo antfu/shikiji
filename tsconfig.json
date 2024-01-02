@@ -14,7 +14,6 @@
       "shikiji/core": ["./packages/shikiji/src/core.ts"],
       "shikiji/langs": ["./packages/shikiji/src/langs.ts"],
       "shikiji/themes": ["./packages/shikiji/src/themes.ts"],
-      "shikiji/auto.wasm": ["./packages/shikiji/src/wasm.ts"],
       "shikiji": ["./packages/shikiji/src/index.ts"],
       "markdown-it-shikiji": ["./packages/markdown-it-shikiji/src/index.ts"]
     },

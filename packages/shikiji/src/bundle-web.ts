@@ -1,5 +1,5 @@
 import type { HighlighterGeneric } from 'shikiji-core'
-import getWasm from 'shikiji/auto.wasm'
+import getWasm from 'shikiji/wasm'
 import { createSingletonShorthands, createdBundledHighlighter } from './core'
 import type { BundledLanguage } from './assets/langs-bundle-web'
 import type { BundledTheme } from './themes'
@@ -9,7 +9,7 @@ import { bundledThemes } from './themes'
 export * from './core'
 export * from './themes'
 export * from './assets/langs-bundle-web'
-export * from './wasm'
+export { default as getWasmInline } from 'shikiji/wasm'
 
 export type Highlighter = HighlighterGeneric<BundledLanguage, BundledTheme>
 
