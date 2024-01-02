@@ -9,7 +9,7 @@ import { bundledThemes } from './themes'
 export * from './core'
 export * from './themes'
 export * from './assets/langs-bundle-web'
-export { default as getWasmInline } from 'shikiji/wasm'
+export { default as getWasmInlined } from 'shikiji/wasm'
 
 export type Highlighter = HighlighterGeneric<BundledLanguage, BundledTheme>
 
