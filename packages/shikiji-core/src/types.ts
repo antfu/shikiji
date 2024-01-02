@@ -380,7 +380,7 @@ export interface ThemeRegistrationResolved extends RawTheme {
    *
    * @field shikiji custom property
    */
-  type: 'light' | 'dark'
+  type: 'light' | 'dark' | 'hcLight' | 'hcDark'
 
   /**
    * Token rules
