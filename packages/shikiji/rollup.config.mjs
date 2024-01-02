@@ -26,6 +26,7 @@ const external = [
   'shikiji-core',
   'shikiji-core/wasm',
   'shikiji-core/types',
+  'shikiji/auto.wasm',
 ]
 
 const plugins = [
