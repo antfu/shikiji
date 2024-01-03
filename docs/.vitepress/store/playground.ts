@@ -8,6 +8,10 @@ import { ref, shallowRef, watch } from 'vue'
 export const usePlayground = defineStore('playground', () => {
   const lang = useLocalStorage('shikiji-playground-lang', 'typescript')
   const theme = useLocalStorage('shikiji-playground-theme', 'vitesse-dark')
+  const langName = shallowRef('TypeScript')
+  const themeName = shallowRef('Vitesse Dark')
+  const langFilter = ref('')
+  const themeFilter = ref('')
   const allThemes = shallowRef<BundledThemeInfo[]>([
     {
       id: 'vitesse-dark',
@@ -32,6 +36,8 @@ export const usePlayground = defineStore('playground', () => {
   const isLoading = ref(true)
 
   function randomize() {
+    langFilter.value = ''
+    themeFilter.value = ''
     if (allLanguages.value.length && allThemes.value.length) {
       lang.value = allLanguages.value[Math.floor(Math.random() * allLanguages.value.length)].id as any
       theme.value = allThemes.value[Math.floor(Math.random() * allThemes.value.length)].id as any
@@ -71,6 +77,8 @@ export const usePlayground = defineStore('playground', () => {
       watch(input, run, { immediate: true })
 
       watch([lang, theme], async (n, o) => {
+        langName.value = allLanguages.value.find(i => i.id === n[0])?.name || ''
+        themeName.value = allThemes.value.find(i => i.id === n[1])?.displayName || ''
         isLoading.value = true
         await Promise.all([
           highlighter.loadTheme(theme.value as any),
@@ -84,6 +92,17 @@ export const usePlayground = defineStore('playground', () => {
         }
         run()
       }, { immediate: true })
+
+      watch(langFilter, (kw) => {
+        allLanguages.value = kw
+          ? bundleFull.filter(i => i.name.toLowerCase().includes(kw.toLowerCase()) || i.id.includes(kw.toLowerCase()))
+          : allLanguages.value = bundleFull
+      })
+      watch(themeFilter, (kw) => {
+        allThemes.value = kw
+          ? bundledThemesInfo.filter(i => i.displayName.toLowerCase().includes(kw.toLowerCase()) || i.id.includes(kw.toLowerCase()))
+          : bundledThemesInfo
+      })
 
       function run() {
         output.value = highlighter.codeToHtml(input.value, {
@@ -106,8 +125,12 @@ export const usePlayground = defineStore('playground', () => {
   return {
     lang,
     theme,
+    langName,
+    themeName,
     allLanguages,
     allThemes,
+    langFilter,
+    themeFilter,
     bundledLangsFull,
     bundledLangsWeb,
     input,

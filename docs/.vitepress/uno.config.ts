@@ -12,6 +12,7 @@ export default defineConfig({
     'text-brand': 'color-$vp-c-brand-1',
     'text-brand-yellow': 'color-$vp-c-yellow-1',
     'text-brand-red': 'color-$vp-c-red-1',
+    'search-input': ' block py-1 px2  shadow-inset  rounded-md sticky top-0 text-md  border-1  border-solid border-gray/40  placeholder-gray::placeholder w-full',
   },
   blocklist: [
     'container',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { usePlayground } from '../store/playground'
 
 const play = usePlayground()
@@ -16,6 +16,10 @@ const langs = computed(() => {
   if (bundle.value === 'web')
     return play.bundledLangsWeb
   return play.bundledLangsFull
+})
+
+watch(showModel, (v) => {
+  document.body.style.overflow = v ? 'hidden' : ''
 })
 </script>
 
@@ -62,7 +66,7 @@ const langs = computed(() => {
     </table>
     <div v-if="showModel" fixed inset-0 z-100 flex items-center justify-center>
       <div bg-black:50 absolute inset-0 backdrop-blur-sm @click="showModel = false" />
-      <ShikijiMiniPlayground max-h-80vh w-full md:w-150 lg:w-200 />
+      <MiniPlayground h-90vh w-90vw lg:w-60vw lg:h-80vh />
     </div>
   </div>
 </template>
