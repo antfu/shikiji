@@ -276,10 +276,7 @@ import nord from 'shikiji/themes/nord.mjs'
 import js from 'shikiji/langs/javascript.mjs'
 
 // import wasm as assets
-import wasm from 'shikiji/onig.wasm'
-
-// load wasm outside of `fetch` so it can be reused
-await loadWasm(obj => WebAssembly.instantiate(wasm, obj))
+await loadWasm(import('shikiji/onig.wasm'))
 
 export default {
   async fetch() {

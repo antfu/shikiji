@@ -27,7 +27,6 @@
     },
     "./wasm": {
       "unwasm": "./dist/onig.wasm",
-      "wasm": "./dist/onig.wasm",
       "types": "./dist/wasm.d.mts",
       "default": "./dist/wasm.mjs"
     },
