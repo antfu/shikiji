@@ -346,11 +346,6 @@ export interface TransformerOptions {
    * Transform the generated HAST tree.
    */
   transformers?: ShikijiTransformer[]
-
-  /**
-   * @deprecated use `transformers` instead
-   */
-  transforms?: ShikijiTransformer
 }
 
 export type CodeToHastOptions<Languages extends string = string, Themes extends string = string> =
