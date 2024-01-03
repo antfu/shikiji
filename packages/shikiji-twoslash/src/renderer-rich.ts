@@ -66,7 +66,6 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
     const themedContent = ((codeToHast(formatInfo(info.text), {
       ...options,
       transformers: [],
-      transforms: undefined,
     }).children[0] as Element).children[0] as Element).children
 
     if (jsdoc && info.docs) {
