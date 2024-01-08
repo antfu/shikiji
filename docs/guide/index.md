@@ -34,7 +34,7 @@ Oh btw, the code blocks in this document is highlighted by Shikiji, as you'd exp
 
 Here is a little playground for you to try out how Shikiji highlights your code. Unlike other code blocks that ran on the build time, this playground is rendered on the client side in the browser. Themes and languages are loaded on demand.
 
-<ShikijiMiniPlayground />
+<MiniPlayground />
 
 [Install Shikiji](/guide/install) to use it in your project.
 
