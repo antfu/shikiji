@@ -11,7 +11,6 @@ function createFloatingVueWarpper(this: ShikijiTransformerContext, text: string,
   const themedContent = (this.codeToHast(text, {
     ...this.options,
     transformers: [],
-    transforms: undefined,
   }).children[0] as Element).children
 
   if (docs) {
