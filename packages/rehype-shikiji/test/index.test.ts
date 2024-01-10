@@ -53,7 +53,7 @@ it('add-custom-cache', async () => {
       cache,
     })
     .use(rehypeStringify)
-    .process(await fs.readFile(new URL('./fixtures/b.md', import.meta.url)))
+    .process(await fs.readFile(new URL('./fixtures/c.md', import.meta.url)))
 
-  expect(file.toString()).toMatchFileSnapshot('./fixtures/b.out.html')
+  expect(file.toString()).toMatchFileSnapshot('./fixtures/c.out.html')
 })
