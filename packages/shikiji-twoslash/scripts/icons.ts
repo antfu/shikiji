@@ -2,9 +2,9 @@ import fs from 'node:fs/promises'
 import { icons as codicon } from '@iconify-json/codicon'
 import { icons as carbon } from '@iconify-json/carbon'
 import { fromHtml } from 'hast-util-from-html'
-import type { TwoSlashReturn } from '@typescript/twoslash'
+import type { TokenCompletion } from 'twoslashes'
 
-type CompletionItem = NonNullable<TwoSlashReturn['queries'][0]['completions']>[0]
+type CompletionItem = NonNullable<TokenCompletion['completions']>[number]
 
 async function buildIcons(filepath: string, map: Record<string, string>) {
   const result = Object.fromEntries(

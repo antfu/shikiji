@@ -1,6 +1,6 @@
 import type { Element, ElementContent } from 'hast'
 import type { ShikijiTransformerContextCommon } from 'shikiji-core'
-import type { TwoSlashRenderers } from './types'
+import type { TwoSlashRenderer } from './types'
 import type { CompletionItem } from './icons'
 import { defaultCompletionIcons, defaultCustomTagIcons } from './icons'
 
@@ -65,7 +65,7 @@ export interface RendererRichOptions {
  * An alternative renderer that providers better prefixed class names,
  * with syntax highlight for the info text.
  */
-export function rendererRich(options: RendererRichOptions = {}): TwoSlashRenderers {
+export function rendererRich(options: RendererRichOptions = {}): TwoSlashRenderer {
   const {
     completionIcons = defaultCompletionIcons,
     customTagIcons = defaultCustomTagIcons,
@@ -85,7 +85,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
       return []
 
     const text = processHoverInfo(info.text) ?? info.text
-    if (!text)
+    if (!text.trim())
       return []
 
     const themedContent = ((codeToHast(text, {
@@ -118,6 +118,9 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
   return {
     nodeStaticInfo(info, node) {
       const themedContent = hightlightPopupContent(this.codeToHast, this.options, info)
+
+      if (!themedContent.length)
+        return node
 
       return {
         type: 'element',
@@ -283,7 +286,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
           children: [
             {
               type: 'text',
-              value: error.renderedMessage,
+              value: error.text,
             },
           ],
         },
@@ -313,7 +316,7 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
               : [],
             {
               type: 'text',
-              value: tag.annotation || '',
+              value: tag.text || '',
             },
           ],
         },

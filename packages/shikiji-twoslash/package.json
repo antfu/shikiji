@@ -56,7 +56,8 @@
   },
   "dependencies": {
     "@typescript/twoslash": "^3.2.4",
-    "shikiji-core": "workspace:*"
+    "shikiji-core": "workspace:*",
+    "twoslashes": "^0.0.2"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.27",

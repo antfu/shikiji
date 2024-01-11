@@ -350,6 +350,9 @@ importers:
       shikiji-core:
         specifier: workspace:*
         version: link:../shikiji-core
+      twoslashes:
+        specifier: ^0.0.2
+        version: 0.0.2(typescript@5.3.3)
     devDependencies:
       '@iconify-json/carbon':
         specifier: ^1.1.27
@@ -8381,6 +8384,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /twoslashes@0.0.2(typescript@5.3.3):
+    resolution: {integrity: sha512-JccHqWlC+cOLyxiULLRh/MIaQg+SSeax3vshU0eeXU6N0Nmgpqudy68uQwJ7/bzU+KM0k0+kZ0uWJBhXTB7cew==}
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@typescript/vfs': 1.5.0
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
