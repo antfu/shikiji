@@ -21,6 +21,7 @@ const TwoSlashFloatingVue: Plugin<[FloatingVueConfig?]> = {
           handleResize: false,
           autoHide: true,
           instantMove: true,
+          flip: false,
         },
         ...options.theme,
       },
