@@ -1,4 +1,4 @@
-import type { TokenCompletion, TokenError, TokenHover, TokenQuery, TokenTag, TwoSlashOptions, TwoSlashReturn, twoslasher } from 'twoslashes'
+import type { NodeCompletion, NodeError, NodeHover, NodeQuery, NodeTag, TwoSlashOptions, TwoSlashReturn, twoslasher } from 'twoslashes'
 import type { CodeToHastOptions, ShikijiTransformerContext } from 'shikiji-core'
 import type { Element, ElementContent, Text } from 'hast'
 
@@ -48,13 +48,13 @@ export interface TransformerTwoSlashOptions {
 }
 
 export interface TwoSlashRenderer {
-  lineError?(this: ShikijiTransformerContext, error: TokenError): ElementContent[]
-  lineCustomTag?(this: ShikijiTransformerContext, tag: TokenTag): ElementContent[]
-  lineQuery?(this: ShikijiTransformerContext, query: TokenQuery, targetNode?: Element | Text): ElementContent[]
-  lineCompletions?(this: ShikijiTransformerContext, query: TokenCompletion): ElementContent[]
+  lineError?(this: ShikijiTransformerContext, error: NodeError): ElementContent[]
+  lineCustomTag?(this: ShikijiTransformerContext, tag: NodeTag): ElementContent[]
+  lineQuery?(this: ShikijiTransformerContext, query: NodeQuery, targetNode?: Element | Text): ElementContent[]
+  lineCompletions?(this: ShikijiTransformerContext, query: NodeCompletion): ElementContent[]
 
-  nodeError?(this: ShikijiTransformerContext, error: TokenError, node: Element | Text): Partial<ElementContent>
-  nodeStaticInfo(this: ShikijiTransformerContext, info: TokenHover, node: Element | Text): Partial<ElementContent>
-  nodeQuery?(this: ShikijiTransformerContext, query: TokenQuery, node: Element | Text): Partial<ElementContent>
-  nodeCompletions?(this: ShikijiTransformerContext, query: TokenCompletion, node: Element | Text): Partial<ElementContent>
+  nodeError?(this: ShikijiTransformerContext, error: NodeError, node: Element | Text): Partial<ElementContent>
+  nodeStaticInfo(this: ShikijiTransformerContext, info: NodeHover, node: Element | Text): Partial<ElementContent>
+  nodeQuery?(this: ShikijiTransformerContext, query: NodeQuery, node: Element | Text): Partial<ElementContent>
+  nodeCompletions?(this: ShikijiTransformerContext, query: NodeCompletion, node: Element | Text): Partial<ElementContent>
 }
