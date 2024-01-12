@@ -8,7 +8,6 @@ import { visit } from 'unist-util-visit'
 import { parseHighlightLines } from '../../shared/line-highlight'
 
 export interface MapLike<K = any, V = any> {
-  has(key: K): boolean
   get(key: K): V | undefined
   set(key: K, value: V): this
 }
@@ -39,7 +38,9 @@ export interface RehypeShikijiExtraOptions {
   ) => Record<string, any> | undefined | null
 
   /**
-   * Custom cache to cache transformed codeToHast result
+   * Custom map to cache transformed codeToHast result
+   *
+   * @default undefined
    */
   cache?: MapLike
 
@@ -99,7 +100,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
 
       const code = toString(head as any)
 
-      const cachedValue = cache?.has(code) && cache.get(code)
+      const cachedValue = cache?.get(code)
 
       if (cachedValue) {
         parent.children.splice(index, 1, ...cachedValue)
