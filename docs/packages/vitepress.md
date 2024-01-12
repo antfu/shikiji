@@ -87,7 +87,7 @@ console.log('hello')
 
 <br> <!-- leaving some space for the query above -->
 
-### Vue Simple File Component
+### Vue Single File Component
 
 In addition, this plugin also integrated [`twoslash-vue`](https://github.com/antfu/twoslash-vue) for you, so that you can also highlight Vue SFC blocks with `vue twoslash`:
 
