@@ -1,7 +1,7 @@
 {
   "name": "shikiji",
   "type": "module",
-  "version": "0.9.18",
+  "version": "0.9.19",
   "description": "An ESM-focused rewrite of shiki",
   "author": "Pine Wu <octref@gmail.com>; Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -99,8 +99,8 @@
     "shikiji-core": "workspace:*"
   },
   "devDependencies": {
-    "tm-grammars": "^1.0.11",
-    "tm-themes": "^1.0.7",
+    "tm-grammars": "^1.0.13",
+    "tm-themes": "^1.0.9",
     "vscode-oniguruma": "^1.7.0"
   }
 }
