@@ -4,6 +4,10 @@
   --twoslash-border-color: #8884;
 }
 
+.v-popper--theme-twoslash {
+  z-index: calc(var(--vp-z-index-local-nav) - 1);
+}
+
 .v-popper--theme-twoslash .v-popper__inner {
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);

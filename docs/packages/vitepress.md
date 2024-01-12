@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # VitePress Integration
 
 [VitePress](https://vitepress.dev/) uses Shikiji under the hood, so you don't need explicit integration.
@@ -9,6 +13,8 @@ VitePress provides [a few options for customizing Shikiji](https://github.com/vu
 To enable [TypeScript TwoSlash](/packages/twoslash) (type hover on code snippets) in VitePress, we provide a VitePress plugin for easy setup. Pre-styled, with [Floating Vue](https://floating-vue.starpad.dev/) to display the type information out side of the code container.
 
 <Badges name="vitepress-plugin-twoslash" />
+
+### Setup
 
 ```bash
 npm i -D vitepress-plugin-twoslash
@@ -81,9 +87,9 @@ console.log('hello')
 
 <br> <!-- leaving some space for the query above -->
 
-### Vue SFC
+### Vue Simple File Component
 
-In addition, this plugin also installs `twoslash-vue` for you, so that you can also highlight Vue SFC blocks with `vue twoslash`:
+In addition, this plugin also integrated [`twoslash-vue`](https://github.com/antfu/twoslash-vue) for you, so that you can also highlight Vue SFC blocks with `vue twoslash`:
 
 ```vue twoslash
 <script setup>
