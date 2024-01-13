@@ -6,6 +6,7 @@ import type { Plugin } from 'unified'
 import { toString } from 'hast-util-to-string'
 import { visit } from 'unist-util-visit'
 import { parseHighlightLines } from '../../shared/line-highlight'
+import { parseHighlightWords } from '../../shared/word-highlight'
 
 export interface MapLike<K = any, V = any> {
   get(key: K): V | undefined
@@ -19,6 +20,13 @@ export interface RehypeShikijiExtraOptions {
    * @default true
    */
   highlightLines?: boolean | string
+
+  /**
+   * Add `highlighted-word` class to words defined in after codeblock
+   *
+   * @default true
+   */
+  highlightWords?: boolean | string
 
   /**
    * Add `language-*` class to code element
@@ -64,6 +72,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
   const {
     highlightLines = true,
     addLanguageClass = false,
+    highlightWords = true,
     parseMetaString,
     cache,
     ...rest
@@ -144,6 +153,29 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
             line(node, line) {
               if (lines.includes(line))
                 addClassToHast(node, className)
+              return node
+            },
+          })
+        }
+      }
+
+      if (highlightWords && typeof attrs === 'string') {
+        const words = parseHighlightWords(attrs)
+
+        if (words) {
+          const className = highlightWords === true
+            ? 'highlighted-word'
+            : highlightWords
+
+          codeOptions.transformers ||= []
+          codeOptions.transformers.push({
+            name: 'rehype-shikiji:word-class',
+            token(node) {
+              const word = toString(node)
+
+              if (words.includes(word))
+                addClassToHast(node, className)
+
               return node
             },
           })

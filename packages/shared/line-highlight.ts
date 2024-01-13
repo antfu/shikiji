@@ -1,4 +1,4 @@
-export function parseHighlightLines(attrs: string) {
+export function parseHighlightLines(attrs: string): number[] | null {
   if (!attrs)
     return null
   const match = attrs.match(/{([\d,-]+)}/)
