@@ -69,7 +69,7 @@ console.log('4') // highlighted
 
 ## Compatibility
 
-If you notice the [line highlight feature](#line-highlight) not working, it may be due to compatibility issues with another markdown-it extension.
+If you notice the [line highlight feature](#line-highlight) not working, it may be due to compatibility issues with another markdown-it plugin.
 
 ### markdown-it-attrs
 
