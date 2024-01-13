@@ -2,7 +2,7 @@
 
 <Badges name="shikiji-twoslash" />
 
-A Shikiji transformer for [TypeScript TwoSlash](https://www.typescriptlang.org/dev/twoslash/) (via [`twoslashes`](https://github.com/antfu/twoslashes)), provide inline type hover inside code blocks. Inspired by [`shiki-twoslash`](https://shikijs.github.io/twoslash/).
+A Shikiji transformer for [`twoslash`](https://github.com/twoslashes/twoslash), provide inline type hover inside code blocks. Inspired by [`shiki-twoslash`](https://shikijs.github.io/twoslash/).
 
 ## Install
 

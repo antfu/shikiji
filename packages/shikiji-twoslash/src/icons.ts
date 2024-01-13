@@ -1,5 +1,5 @@
 import type { Element } from 'hast'
-import type { NodeCompletion } from 'twoslashes'
+import type { NodeCompletion } from 'twoslash'
 import completionIcons from './icons-completions.json'
 import tagIcons from './icons-tags.json'
 

@@ -1,4 +1,4 @@
-import type { NodeCompletion, NodeError, NodeHover, NodeQuery, NodeTag, TwoSlashOptions, TwoSlashReturn, twoslasher } from 'twoslashes'
+import type { NodeCompletion, NodeError, NodeHover, NodeQuery, NodeTag, TwoSlashOptions, TwoSlashReturn, twoslasher } from 'twoslash'
 import type { CodeToHastOptions, ShikijiTransformerContext } from 'shikiji-core'
 import type { Element, ElementContent, Text } from 'hast'
 

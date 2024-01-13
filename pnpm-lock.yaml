@@ -347,9 +347,9 @@ importers:
       shikiji-core:
         specifier: workspace:*
         version: link:../shikiji-core
-      twoslashes:
-        specifier: ^0.0.5
-        version: 0.0.5(typescript@5.3.3)
+      twoslash:
+        specifier: ^0.0.6
+        version: 0.0.6(typescript@5.3.3)
     devDependencies:
       '@iconify-json/carbon':
         specifier: ^1.1.27
@@ -397,8 +397,8 @@ importers:
         specifier: workspace:*
         version: link:../shikiji-twoslash
       twoslash-vue:
-        specifier: ^0.0.1
-        version: 0.0.1(typescript@5.3.3)
+        specifier: ^0.0.6
+        version: 0.0.6(typescript@5.3.3)
       vue:
         specifier: ^3.4.11
         version: 3.4.11(typescript@5.3.3)
@@ -2920,26 +2920,11 @@ packages:
       estree-walker: 2.0.2
       source-map-js: 1.0.2
 
-  /@vue/compiler-core@3.4.7:
-    resolution: {integrity: sha512-hhCaE3pTMrlIJK7M/o3Xf7HV8+JoNTGOQ/coWS+V+pH6QFFyqtoXqQzpqsNp7UK17xYKua/MBiKj4e1vgZOBYw==}
-    dependencies:
-      '@babel/parser': 7.23.6
-      '@vue/shared': 3.4.7
-      entities: 4.5.0
-      estree-walker: 2.0.2
-      source-map-js: 1.0.2
-
   /@vue/compiler-dom@3.4.11:
     resolution: {integrity: sha512-cRVLROlY7D72WK2xS91L126Dd6xHNTWDWPUBRh1Syk7+TahCk8Eown1/fSi+VX9c76sMMqEZROQSbwV0HSJnhg==}
     dependencies:
       '@vue/compiler-core': 3.4.11
       '@vue/shared': 3.4.11
-
-  /@vue/compiler-dom@3.4.7:
-    resolution: {integrity: sha512-qDKBAIurCTub4n/6jDYkXwgsFuriqqmmLrIq1N2QDfYJA/mwiwvxi09OGn28g+uDdERX9NaKDLji0oTjE3sScg==}
-    dependencies:
-      '@vue/compiler-core': 3.4.7
-      '@vue/shared': 3.4.7
 
   /@vue/compiler-sfc@3.4.11:
     resolution: {integrity: sha512-1y5xHAD4a/AhK5+dgsZwFg145J6/rl1c8ILC7Gokca+ql51tTpduz/njCHeNmU15XiE7O62LjJFNOtSZ9vxKOQ==}
@@ -2974,8 +2959,8 @@ packages:
     dependencies:
       '@volar/language-core': 1.11.1
       '@volar/source-map': 1.11.1
-      '@vue/compiler-dom': 3.4.7
-      '@vue/shared': 3.4.7
+      '@vue/compiler-dom': 3.4.11
+      '@vue/shared': 3.4.11
       computeds: 0.0.1
       minimatch: 9.0.3
       muggle-string: 0.3.1
@@ -3012,9 +2997,6 @@ packages:
 
   /@vue/shared@3.4.11:
     resolution: {integrity: sha512-BtC+vE8kHf/jZoyJnTFd0PmY8NejyUeUkshXm8LriHs8KmQUmcZXIbrifjA3WDmvzg7C8D6gBSvdl49pOfU2lQ==}
-
-  /@vue/shared@3.4.7:
-    resolution: {integrity: sha512-G+i4glX1dMJk88sbJEcQEGWRQnVm9eIY7CcQbO5dpdsD9SF8jka3Mr5OqZYGjczGN1+D6EUwdu6phcmcx9iuPA==}
 
   /@vueuse/core@10.7.1(vue@3.4.11):
     resolution: {integrity: sha512-74mWHlaesJSWGp1ihg76vAnfVq9NTv1YT0SYhAQ6zwFNdBkkP+CKKJmVOEHcdSnLXCXYiL5e7MaewblfiYLP7g==}
@@ -8386,21 +8368,20 @@ packages:
       - supports-color
     dev: true
 
-  /twoslash-vue@0.0.1(typescript@5.3.3):
-    resolution: {integrity: sha512-7tUJTa1mzy2SxMhc1UKcsCgtP9TjKct7FXxMXPNSqAaSALABnQ+OamWgDN8FrSwjgvZs24vI0yHP+KkrS1fPvA==}
+  /twoslash-vue@0.0.6(typescript@5.3.3):
+    resolution: {integrity: sha512-Q//jJsS/JthGTTfAuWA3qZF65PZWuejCC9tp7XO9anhZfq61TgUsE6EFJuyEUhIzAB4L2L9uq5yRrgV/SU3sTA==}
     peerDependencies:
       typescript: '*'
     dependencies:
       '@vue/language-core': 1.8.27(typescript@5.3.3)
-      twoslashes: 0.0.5(typescript@5.3.3)
+      twoslash: 0.0.6(typescript@5.3.3)
       typescript: 5.3.3
-      vue: 3.4.11(typescript@5.3.3)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /twoslashes@0.0.5(typescript@5.3.3):
-    resolution: {integrity: sha512-VIyzw7JbiAiPGoT3BAnrwwFBfFq62Y4uv3DhAzmcrHiM977xPO+33d3R8/26ZW2LiF1JciKEh7wb1/CRv3dM6A==}
+  /twoslash@0.0.6(typescript@5.3.3):
+    resolution: {integrity: sha512-DwqhLMF2LDJ5SBcKu1cIEe8RgMVP/UVoxrPFsIARqsD5OmBiX+k0S6yd/yHvv/m1Nx2SId0sE0NpEHf6NAVeLw==}
     peerDependencies:
       typescript: '*'
     dependencies:

@@ -1,4 +1,4 @@
-import { createTwoSlasher } from 'twoslashes'
+import { createTwoSlasher } from 'twoslash'
 import { createTransformerFactory, rendererClassic } from './core'
 
 export * from './core'

@@ -2,7 +2,7 @@
  * This file is the core of the shikiji-twoslash package,
  * Decoupled from twoslash's implementation and allowing to introduce custom implementation or cache system.
  */
-import type { TwoSlashExecuteOptions, TwoSlashReturn } from 'twoslashes'
+import type { TwoSlashExecuteOptions, TwoSlashReturn } from 'twoslash'
 import type { ShikijiTransformer } from 'shikiji-core'
 import type { Element, ElementContent, Text } from 'hast'
 import type { ModuleKind, ScriptTarget } from 'typescript'
