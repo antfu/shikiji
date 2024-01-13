@@ -1,5 +1,5 @@
 import { addClassToHast } from 'shikiji/core'
-import type { CodeOptionsMeta, CodeOptionsThemes, CodeToHastOptions, HighlighterGeneric, TransformerOptions } from 'shikiji/core'
+import type { CodeOptionsMeta, CodeOptionsThemes, CodeToHastOptions, HighlighterGeneric, ShikijiTransformer, TransformerOptions } from 'shikiji/core'
 import type { Element, Root } from 'hast'
 import type { BuiltinTheme } from 'shikiji'
 import type { Plugin } from 'unified'
@@ -168,17 +168,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
             : highlightWords
 
           codeOptions.transformers ||= []
-          codeOptions.transformers.push({
-            name: 'rehype-shikiji:word-class',
-            token(node) {
-              const word = toString(node).trim()
-
-              if (words.includes(word))
-                addClassToHast(node, className)
-
-              return node
-            },
-          })
+          codeOptions.transformers.push(transformerWordHighlight(words, className))
         }
       }
 
@@ -194,6 +184,59 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
           throw error
       }
     })
+  }
+}
+
+function inheritElement(original: Element, overrides: Partial<Element>): Element {
+  return {
+    // Dereference properties
+    ...structuredClone(original),
+    ...overrides,
+  }
+}
+
+function transformerWordHighlight(words: string[], className: string): ShikijiTransformer {
+  return {
+    name: 'rehype-shikiji:word-class',
+    token(node, _line, _col, lineEl) {
+      const textNode = node.children[0]
+
+      if (textNode.type !== 'text')
+        return node
+      // This may include whitespaces, we should only highlight the specified word
+      const originalText = textNode.value
+      const trimmedText = textNode.value.trim()
+
+      const createNode = (value: string) => inheritElement(node, {
+        children: [
+          {
+            type: 'text',
+            value,
+          },
+        ],
+      })
+
+      for (const word of words) {
+        if (trimmedText !== word)
+          continue
+        const index = textNode.value.indexOf(word)
+        const nodes: Element[] = []
+
+        if (index > 0)
+          nodes.push(createNode(originalText.slice(0, index)))
+
+        const highlightedNode = createNode(word)
+        addClassToHast(highlightedNode, className)
+        nodes.push(highlightedNode)
+
+        if (index + word.length < originalText.length)
+          nodes.push(createNode(originalText.slice(index + word.length)))
+
+        // To insert
+        lineEl.children.push(...nodes.slice(0, -1))
+        return nodes[nodes.length - 1]
+      }
+    },
   }
 }
 
