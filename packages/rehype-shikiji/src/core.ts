@@ -171,7 +171,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
           codeOptions.transformers.push({
             name: 'rehype-shikiji:word-class',
             token(node) {
-              const word = toString(node)
+              const word = toString(node).trim()
 
               if (words.includes(word))
                 addClassToHast(node, className)
