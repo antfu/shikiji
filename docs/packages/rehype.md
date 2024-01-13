@@ -32,7 +32,7 @@ const file = await unified()
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
-    }
+    },
   })
   .use(rehypeStringify)
   .process(await fs.readFile('./input.md'))
@@ -55,13 +55,9 @@ import { getHighlighterCore } from 'shikiji/core'
 import { getWasmInlined } from 'shikiji/wasm'
 
 const highlighter = await getHighlighterCore({
-  themes: [
-    import('shikiji/themes/vitesse-light.mjs')
-  ],
-  langs: [
-    import('shikiji/langs/javascript.mjs'),
-  ],
-  loadWasm: getWasmInlined
+  themes: [import('shikiji/themes/vitesse-light.mjs')],
+  langs: [import('shikiji/langs/javascript.mjs')],
+  loadWasm: getWasmInlined,
 })
 
 const raw = await fs.readFile('./input.md')
@@ -73,7 +69,7 @@ const file = await unified()
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
-    }
+    },
   })
   .use(rehypeStringify)
   .processSync(raw) // it's also possible to process synchronously
@@ -87,9 +83,20 @@ In addition to the features of `shikiji`, this plugin also supports line highlig
 
 ````md
 ```js {1,3-4}
-console.log('1') // highlighted
-console.log('2')
-console.log('3') // highlighted
-console.log('4') // highlighted
+console.log("1"); // highlighted
+console.log("2");
+console.log("3"); // highlighted
+console.log("4"); // highlighted
+```
+````
+
+### Word Highlight
+
+It is also possible to highlight a specific word by wrapping it in slashes.
+
+````md
+```js /hello/
+// "hello" is highlighted
+const hello = "Hello World";
 ```
 ````
