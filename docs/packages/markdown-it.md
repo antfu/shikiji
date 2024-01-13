@@ -66,3 +66,11 @@ console.log('3') // highlighted
 console.log('4') // highlighted
 ```
 ````
+
+## Compatibility
+
+If you notice the [line highlight feature](#line-highlight) not working, it may be due to compatibility issues with another markdown-it extension.
+
+### markdown-it-attrs
+
+The syntax of the [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) plugin uses curly braces (`{}`) and "intercepts" the line number highlight syntax that this plugin uses. If you wish to continue using `markdown-it-attrs`, consider [changing the delimiter/syntax](https://github.com/arve0/markdown-it-attrs#custom-delimiters) of `markdown-it-attrs` to use a different character, such as `%`.
