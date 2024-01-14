@@ -38,6 +38,8 @@ export interface RehypeShikijiExtraOptions {
   /**
    * Custom meta string parser
    * Return an object to merge with `meta`
+   *
+   * The special key `_attrs` will be used to filter meta string before processing highlights
    */
   parseMetaString?: (
     metaString: string,
@@ -116,8 +118,9 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         return
       }
 
-      const attrs = (head.data as any)?.meta
-      const meta = parseMetaString?.(attrs, node, tree) || {}
+      const raw = head.data && 'meta' in head.data ? head.data.meta as string : ''
+      const meta = parseMetaString?.(raw, node, tree) || {}
+      const highlightMeta = typeof meta._attrs === 'string' ? meta._attrs : raw
 
       const codeOptions: CodeToHastOptions = {
         ...rest,
@@ -125,7 +128,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         meta: {
           ...rest.meta,
           ...meta,
-          __raw: attrs,
+          __raw: raw,
         },
       }
 
@@ -140,8 +143,8 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         })
       }
 
-      if (highlightLines && typeof attrs === 'string') {
-        const lines = parseHighlightLines(attrs)
+      if (highlightLines) {
+        const lines = parseHighlightLines(highlightMeta)
         if (lines) {
           const className = highlightLines === true
             ? 'highlighted'
@@ -159,8 +162,8 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         }
       }
 
-      if (highlightWords && typeof attrs === 'string') {
-        const words = parseHighlightWords(attrs)
+      if (highlightWords) {
+        const words = parseHighlightWords(highlightMeta)
 
         if (words) {
           const className = highlightWords === true

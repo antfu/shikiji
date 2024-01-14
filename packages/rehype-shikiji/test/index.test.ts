@@ -6,6 +6,8 @@ import rehypeStringify from 'rehype-stringify'
 import { expect, it } from 'vitest'
 import rehypeShikiji from '../src'
 
+export const FILENAME_REGEX = /fileName="([^"]+)"/
+
 it('run', async () => {
   const file = await unified()
     .use(remarkParse)
@@ -13,13 +15,10 @@ it('run', async () => {
     .use(rehypeShikiji, {
       theme: 'vitesse-light',
       parseMetaString: (str) => {
-        return Object.fromEntries(str.split(' ').reduce((prev: [string, boolean | string][], curr: string) => {
-          const [key, value] = curr.split('=')
-          const isNormalKey = /^[A-Za-z0-9]+$/.test(key)
-          if (isNormalKey)
-            prev = [...prev, [key, value || true]]
-          return prev
-        }, []))
+        return {
+          fileName: str.match(FILENAME_REGEX)?.[1],
+          _attrs: str.replace(FILENAME_REGEX, ''),
+        }
       },
     })
     .use(rehypeStringify)

@@ -22,13 +22,11 @@ const rehypeShikiji: Plugin<[RehypeShikijiOptions], Root> = function (
   const themeNames = ('themes' in options ? Object.values(options.themes) : [options.theme]).filter(Boolean) as BuiltinTheme[]
   const langs = options.langs || Object.keys(bundledLanguages)
 
-  // eslint-disable-next-line ts/no-this-alias
-  const ctx = this
   const promise = getHighlighter({
     themes: themeNames,
     langs,
   })
-    .then(highlighter => rehypeShikijiFromHighlighter.call(ctx, highlighter, options))
+    .then(highlighter => rehypeShikijiFromHighlighter.call(this, highlighter, options))
 
   return async function (tree) {
     const handler = await promise as any
