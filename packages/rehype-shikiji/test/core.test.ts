@@ -7,7 +7,6 @@ import { expect, it } from 'vitest'
 
 import { getHighlighter } from 'shikiji'
 import rehypeShikijiFromHighlighter from '../src/core'
-import { FILENAME_REGEX } from './index.test'
 
 it('run', async () => {
   const highlighter = await getHighlighter({
@@ -24,11 +23,7 @@ it('run', async () => {
     .use(remarkRehype)
     .use(rehypeShikijiFromHighlighter, highlighter, {
       theme: 'vitesse-light',
-      parseMetaString(metaString) {
-        return {
-          _attrs: metaString.replace(FILENAME_REGEX, ''),
-        }
-      },
+      highlightLines: true,
     })
     .use(rehypeStringify)
     .processSync(await fs.readFile(new URL('./fixtures/a.md', import.meta.url)))

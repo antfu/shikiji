@@ -1,7 +1,7 @@
 {
   "name": "shikiji",
   "type": "module",
-  "version": "0.9.19",
+  "version": "0.10.0-beta.0",
   "description": "An ESM-focused rewrite of shiki",
   "author": "Pine Wu <octref@gmail.com>; Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -26,6 +26,7 @@
       "default": "./dist/core.mjs"
     },
     "./wasm": {
+      "unwasm": "./dist/onig.wasm",
       "types": "./dist/wasm.d.mts",
       "default": "./dist/wasm.mjs"
     },
@@ -49,6 +50,7 @@
       "types": "./dist/bundle-web.d.mts",
       "default": "./dist/bundle-web.mjs"
     },
+    "./onig.wasm": "./dist/onig.wasm",
     "./dist/*": "./dist/*",
     "./*": "./dist/*"
   },
@@ -99,8 +101,8 @@
     "shikiji-core": "workspace:*"
   },
   "devDependencies": {
-    "tm-grammars": "^1.0.13",
-    "tm-themes": "^1.0.9",
+    "tm-grammars": "^1.0.16",
+    "tm-themes": "^1.1.0",
     "vscode-oniguruma": "^1.7.0"
   }
 }

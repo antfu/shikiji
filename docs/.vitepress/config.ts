@@ -2,6 +2,7 @@ import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { bundledThemes } from 'shikiji'
 import { defaultHoverInfoProcessor, transformerTwoslash } from 'vitepress-plugin-twoslash'
+import { transformerRenderWhitespace } from 'shikiji-transformers'
 import { version } from '../../package.json'
 import vite from './vite.config'
 
@@ -58,7 +59,7 @@ export default defineConfig({
         processHoverInfo(info) {
           return defaultHoverInfoProcessor(info)
             // Remove shikiji_core namespace
-            .replace(/\bshikiji_core\./g, '')
+            .replace(/shikiji_core\./g, '')
             // Remove member access
             .replace(/^[a-zA-Z0-9_]*(\<[^\>]*\>)?\./, '')
         },
