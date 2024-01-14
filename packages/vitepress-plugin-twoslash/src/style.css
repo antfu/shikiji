@@ -57,11 +57,13 @@
   max-width: 700px;
   overflow-y: auto;
   overflow-x: hidden;
+  text-wrap: balance;
 }
 
 .floating-vue-twoslash .twoslash-popup-jsdoc p {
   margin: 0;
   padding: 6px 0;
+  text-wrap: balance;
 }
 
 .floating-vue-twoslash .twoslash-popup-jsdoc pre {

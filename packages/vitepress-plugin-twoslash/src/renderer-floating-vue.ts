@@ -94,8 +94,8 @@ export function rendererFloatingVue(options: VitePressPluginTwoSlashOptions & Re
         ':auto-boundary-max-size': 'true',
         ...presisted && {
           ':shown': 'true',
-          ':triggers': '[]',
-          ':popper-triggers': '[]',
+          ':triggers': '["click"]',
+          ':popper-triggers': '["click"]',
           ':auto-hide': 'false',
         },
       },
