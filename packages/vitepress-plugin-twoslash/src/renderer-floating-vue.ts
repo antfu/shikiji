@@ -32,7 +32,6 @@ export function rendererFloatingVue(options: VitePressPluginTwoSlashOptions & Re
       {
         ...this.options,
         transformers: [],
-        transforms: undefined,
         lang: this.options.lang === 'vue' ? 'tsx' : this.options.lang,
       },
     ).children[0] as Element).children as Element[]
@@ -57,7 +56,6 @@ export function rendererFloatingVue(options: VitePressPluginTwoSlashOptions & Re
                 {
                   ...this.options,
                   transformers: [],
-                  transforms: undefined,
                   lang,
                 },
               ).children[0] as Element
