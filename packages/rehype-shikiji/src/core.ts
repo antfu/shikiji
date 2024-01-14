@@ -1,5 +1,5 @@
 import { addClassToHast } from 'shikiji/core'
-import type { CodeOptionsMeta, CodeOptionsThemes, CodeToHastOptions, HighlighterGeneric, ShikijiTransformer, TransformerOptions } from 'shikiji/core'
+import type { CodeOptionsMeta, CodeOptionsThemes, CodeToHastOptions, HighlighterGeneric, TransformerOptions } from 'shikiji/core'
 import type { Element, Root } from 'hast'
 import type { BuiltinTheme } from 'shikiji'
 import type { Plugin } from 'unified'

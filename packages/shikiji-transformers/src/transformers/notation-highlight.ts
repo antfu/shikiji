@@ -27,6 +27,7 @@ export function transformerNotationHighlight(
     {
       classMap: {
         highlight: classActiveLine,
+        // TODO: Remove shortcut in next major
         hl: classActiveLine,
       },
       classActivePre,

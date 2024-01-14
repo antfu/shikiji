@@ -84,6 +84,16 @@ export function foo() {
 }
 ```
 
+### `transformerNotationWordHighlight`
+
+Use `[!code highlight[word]]` to highlight a word (adding `highlighted-word` class).
+
+```ts
+export function foo() {
+  const a = 'Hello World' // [!code highlight[a]]
+}
+```
+
 ### `transformerNotationFocus`
 
 Use `[!code focus]` to focus a line (adding `focused` class).
