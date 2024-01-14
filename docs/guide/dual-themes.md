@@ -4,7 +4,7 @@ outline: deep
 
 # Light/Dark Dual Themes
 
-Shikiji supports outputing light/dark dual themes. Different from [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki#dark-mode)'s approach which renders the code twice, Shikiji's dual themes approach uses CSS variables to store the colors on each token. It's more performant with a smaller bundle size.
+Shikiji supports outputting light/dark dual themes. Different from [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki#dark-mode)'s approach which renders the code twice, Shikiji's dual themes approach uses CSS variables to store the colors on each token. It's more performant with a smaller bundle size.
 
 Change the `theme` option in `codeToHtml` to `options` with `light` and `dark` keys to generate two themes.
 
@@ -84,7 +84,14 @@ html.dark .shiki span {
 
 It's also possible to support more than two themes. In the `themes` object, you can have an arbitrary number of themes, and specify the default theme with `defaultColor` option.
 
-```js
+```ts twoslash
+import { getHighlighter } from 'shikiji'
+
+const highlighter = await getHighlighter({
+  themes: ['nord', 'min-light'],
+  langs: ['javascript'],
+})
+// ---cut---
 const code = highlighter.codeToHtml('console.log("hello")', {
   lang: 'javascript',
   themes: {
@@ -114,7 +121,14 @@ Then update your CSS snippet to control when each theme takes effect. Here is an
 
 If you want to take full control of the colors or avoid using `!important` to override, you can optionally disable the default color by setting `defaultColor` to `false`.
 
-```js
+```ts twoslash
+import { getHighlighter } from 'shikiji'
+
+const highlighter = await getHighlighter({
+  themes: ['nord', 'min-light'],
+  langs: ['javascript'],
+})
+// ---cut---
 const code = highlighter.codeToHtml('console.log("hello")', {
   lang: 'javascript',
   themes: {
@@ -137,17 +151,20 @@ It's also possible to control the theme in CSS variables. For more, refer to the
 
 ## Custom Language Aliases
 
-You can register custom language aliases with `langAlias` option. For example:
+You can register custom language aliases with the `langAlias` option. For example:
 
-```js
+```ts twoslash
 import { getHighlighter } from 'shikiji'
 
 const highlighter = await getHighlighter({
   langs: ['javascript'],
-  langAlias: {
+  langAlias: { // [!code hl:3]
     mylang: 'javascript',
   },
 })
 
-const code = highlighter.codeToHtml('const a = 1', { lang: 'mylang' })
+const code = highlighter.codeToHtml('const a = 1', {
+  lang: 'mylang', // [!code hl]
+  theme: 'nord'
+})
 ```

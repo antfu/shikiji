@@ -12,7 +12,7 @@ npm i -D markdown-it-shikiji
 
 ## Usage
 
-```ts
+```ts twoslash
 import MarkdownIt from 'markdown-it'
 import Shikiji from 'markdown-it-shikiji'
 
@@ -28,13 +28,14 @@ md.use(await Shikiji({
 
 ## Fine-grained Bundle
 
-By default, the full bundle of `shikiji` will be imported. If you are Shikiji's [fine-grained bundle](/guide/install#fine-grained-bundle), you can import from `markdown-it-shikiji/core` and pass your own highlighter:
+By default, the full bundle of `shikiji` will be imported. If you are using a [fine-grained bundle](/guide/install#fine-grained-bundle), you can import from `markdown-it-shikiji/core` and pass your own highlighter:
 
-```ts
+```ts twoslash
+// @noErrors: true
 import MarkdownIt from 'markdown-it'
 import { fromHighlighter } from 'markdown-it-shikiji/core'
 import { getHighlighterCore } from 'shikiji/core'
-import { getWasmInlined } from 'shikiji/wasm'
+import getWasm from 'shikiji/wasm'
 
 const highlighter = await getHighlighterCore({
   themes: [
@@ -43,7 +44,7 @@ const highlighter = await getHighlighterCore({
   langs: [
     import('shikiji/langs/javascript.mjs'),
   ],
-  loadWasm: getWasmInlined
+  loadWasm: getWasm
 })
 
 const md = MarkdownIt()
@@ -55,15 +56,17 @@ md.use(fromHighlighter(highlighter, { /* options */ }))
 
 ### Line Highlight
 
-In addition to the features of `shikiji`, this plugin also supports line highlighting. You can add `{1,3-4}` after the language name to highlight the specified lines. For example:
+In addition to the features of `shikiji`, this plugin also supports line highlighting. You can specify line numbers to highlight after the language name in the format `{<line-numbers>}` - a comma separated list of `<line-number>`s, wrapped in curly braces. Each line number can be a single number (e.g. `{2}` highlights line 2 and `{1,4}` highlights lines 1 and 4) or a range (e.g. `{5-7}` highlights lines 1 through 7, and `{1-3,5-6}` highlights lines 1 through 3 and 5 through 6). For example:
 
 ````md
-# Hello World
-
 ```js {1,3-4}
-console.log('line1') // highlighted
-console.log('line2')
-console.log('line3') // highlighted
-console.log('line4') // highlighted
+console.log('1') // highlighted
+console.log('2')
+console.log('3') // highlighted
+console.log('4') // highlighted
 ```
 ````
+
+::: note
+If line highlighting is not working, it may be due to compatibility issues with the [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) plugin. The syntax of `markdown-it-attrs` uses the same curly brace (`{}`) syntax that this plugin uses, which causes line highlighting to not work. If you wish to continue using `markdown-it-attrs` alongside this plugin, consider [changing the delimiter/syntax](https://github.com/arve0/markdown-it-attrs#custom-delimiters) of `markdown-it-attrs` to use a different character, such as `%`.
+:::

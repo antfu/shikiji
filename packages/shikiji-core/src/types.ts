@@ -65,6 +65,9 @@ export interface ShikiInternal {
   updateAlias(alias: Record<string, string>): void
 }
 
+/**
+ * Generic instance interface of Shikiji
+ */
 export interface HighlighterGeneric<BundledLangKeys extends string, BundledThemeKeys extends string> {
   /**
    * Get highlighted code in HTML string
@@ -269,12 +272,12 @@ export interface CodeOptionsMultipleThemes<Themes extends string = string> {
    * This allows you to specify multiple themes for the generated code.
    *
    * ```ts
-   * shiki.codeToHtml(code, {
-   *  lang: 'js',
-   *  themes: {
-   *    light: 'vitesse-light',
-   *    dark: 'vitesse-dark',
-   *  }
+   * highlighter.codeToHtml(code, {
+   *   lang: 'js',
+   *   themes: {
+   *     light: 'vitesse-light',
+   *     dark: 'vitesse-dark',
+   *   }
    * })
    * ```
    *
@@ -343,7 +346,7 @@ export interface CodeOptionsMeta {
 
 export interface TransformerOptions {
   /**
-   * Transform the generated HAST tree.
+   * Transformers for the Shikiji pipeline.
    */
   transformers?: ShikijiTransformer[]
 }
@@ -443,12 +446,18 @@ export type ThemeRegistrationAny = ThemeRegistrationRaw | ThemeRegistration | Th
 
 export interface ShikijiTransformerContextMeta {}
 
+/**
+ * Common transformer context for all transformers hooks
+ */
 export interface ShikijiTransformerContextCommon {
   meta: ShikijiTransformerContextMeta
   options: CodeToHastOptions
   codeToHast: (code: string, options: CodeToHastOptions) => Root
 }
 
+/**
+ * Transformer context for HAST related hooks
+ */
 export interface ShikijiTransformerContext extends ShikijiTransformerContextCommon {
   readonly tokens: ThemedToken[][]
   readonly root: Root
@@ -530,6 +539,7 @@ export interface ThemedTokenExplanation {
  *
  * For example:
  *
+ * ```json
  * {
  *   "content": "shiki",
  *   "color": "#D8DEE9",
@@ -576,7 +586,7 @@ export interface ThemedTokenExplanation {
  *     }
  *   ]
  * }
- *
+ * ```
  */
 export interface ThemedToken extends TokenStyles, TokenBase {}
 

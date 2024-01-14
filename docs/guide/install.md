@@ -6,7 +6,7 @@ outline: deep
 
 <Badges name="shikiji" />
 
-Install via npm, or [CDN Usage](#cdn-usage):
+Install via npm, or see [CDN Usage](#cdn-usage):
 ::: code-group
 
 ```sh [npm]
@@ -80,9 +80,9 @@ const hast = codeToHast('.text-red { color: red; }', {
 
 ### Highlighter Usage
 
-The [shorthands](#shorthands) we provided are executed asynchronously as we use WASM and load themes and languages on demand internally. In some cases, you may need to highlight code synchronously, we provide the `getHighlighter` function to create a highlighter instance that can later be used synchronously.
+The [shorthands](#shorthands) we provided are executed asynchronously as we use WASM and load themes and languages on demand internally. In some cases, you may need to highlight code synchronously, so we provide the `getHighlighter` function to create a highlighter instance that can later be used synchronously.
 
-The usage is pretty much the same as `shiki`, while each theme and language file is a dynamically imported ES module. It would be better to list the languages and themes **explicitly** to have the best performance.
+The usage is pretty much the same as `shiki`, where each theme and language file is a dynamically imported ES module. It would be better to list the languages and themes **explicitly** to have the best performance.
 
 ```ts twoslash theme:nord
 import { getHighlighter } from 'shikiji'
@@ -155,7 +155,7 @@ When importing `shikiji`, all the themes and languages are bundled as async chun
 import { getHighlighterCore } from 'shikiji/core'
 
 // `shikiji/wasm` contains the wasm binary inlined as base64 string.
-import { getWasmInlined } from 'shikiji/wasm'
+import getWasm from 'shikiji/wasm'
 
 // directly import the theme and language modules, only the ones you imported will be bundled.
 import nord from 'shikiji/themes/nord.mjs'
@@ -174,7 +174,7 @@ const highlighter = await getHighlighterCore({
     // or a getter that returns custom grammar
     async () => JSON.parse(await fs.readFile('my-grammar.json', 'utf-8'))
   ],
-  loadWasm: getWasmInlined
+  loadWasm: getWasm
 })
 
 // optionally, load themes and languages after creation
@@ -187,12 +187,12 @@ const code = highlighter.codeToHtml('const a = 1', {
 ```
 
 ::: info
-[Shorthands](#shorthands) are only avaliable in [bundled usage](#bundled-usage). For fine-grained bundle, you can create your own shorthands using [`createSingletonShorthands`](https://github.com/antfu/shikiji/blob/main/packages/shikiji-core/src/bundle-factory.ts) or port it your own.
+[Shorthands](#shorthands) are only avaliable in [bundled usage](#bundled-usage). For a fine-grained bundle, you can create your own shorthands using [`createSingletonShorthands`](https://github.com/antfu/shikiji/blob/main/packages/shikiji-core/src/bundle-factory.ts) or port it yourself.
 :::
 
 ### Bundle Presets
 
-We also provide some pre-composed bundles for you to use easily, learn more about them in the [bundles section](/guide/bundles).
+We also provide some pre-composed bundles for you to use easily, you can learn more about them in the [bundles section](/guide/bundles).
 
 ### CJS Usage
 
@@ -276,10 +276,7 @@ import nord from 'shikiji/themes/nord.mjs'
 import js from 'shikiji/langs/javascript.mjs'
 
 // import wasm as assets
-import wasm from 'shikiji/onig.wasm'
-
-// load wasm outside of `fetch` so it can be reused
-await loadWasm(obj => WebAssembly.instantiate(wasm, obj))
+await loadWasm(import('shikiji/onig.wasm'))
 
 export default {
   async fetch() {
