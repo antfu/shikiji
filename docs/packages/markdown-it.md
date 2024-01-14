@@ -66,3 +66,14 @@ console.log('3') // highlighted
 console.log('4') // highlighted
 ```
 ````
+
+### Word Highlight
+
+It is also possible to highlight a specific word by wrapping it in slashes.
+
+````md
+```js /hello/
+// "hello" is highlighted
+const hello = "Hello World";
+```
+````

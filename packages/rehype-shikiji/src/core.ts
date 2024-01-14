@@ -5,29 +5,14 @@ import type { BuiltinTheme } from 'shikiji'
 import type { Plugin } from 'unified'
 import { toString } from 'hast-util-to-string'
 import { visit } from 'unist-util-visit'
-import { parseHighlightLines } from '../../shared/line-highlight'
-import { parseHighlightWords } from '../../shared/word-highlight'
+import { type HighlightOptions, configureHighlights } from '../../shared/highlight-transformer'
 
 export interface MapLike<K = any, V = any> {
   get(key: K): V | undefined
   set(key: K, value: V): this
 }
 
-export interface RehypeShikijiExtraOptions {
-  /**
-   * Add `highlighted` class to lines defined in after codeblock
-   *
-   * @default true
-   */
-  highlightLines?: boolean | string
-
-  /**
-   * Add `highlighted-word` class to words defined in after codeblock
-   *
-   * @default true
-   */
-  highlightWords?: boolean | string
-
+export interface RehypeShikijiExtraOptions extends HighlightOptions {
   /**
    * Add `language-*` class to code element
    *
@@ -72,9 +57,9 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
   options,
 ) {
   const {
-    highlightLines = true,
+    highlightLines,
     addLanguageClass = false,
-    highlightWords = true,
+    highlightWords,
     parseMetaString,
     cache,
     ...rest
@@ -118,9 +103,9 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         return
       }
 
-      const raw = head.data && 'meta' in head.data ? head.data.meta as string : ''
-      const meta = parseMetaString?.(raw, node, tree) || {}
-      const highlightMeta = typeof meta._attrs === 'string' ? meta._attrs : raw
+      const attrs = head.data && 'meta' in head.data ? head.data.meta as string : ''
+      const meta = parseMetaString?.(attrs, node, tree) || {}
+      const highlightMeta = typeof meta._attrs === 'string' ? meta._attrs : attrs
 
       const codeOptions: CodeToHastOptions = {
         ...rest,
@@ -128,12 +113,14 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         meta: {
           ...rest.meta,
           ...meta,
-          __raw: raw,
+          __raw: attrs,
         },
       }
 
+      codeOptions.transformers ||= []
+      codeOptions.transformers.push(...configureHighlights(highlightMeta, { highlightLines, highlightWords }))
+
       if (addLanguageClass) {
-        codeOptions.transformers ||= []
         codeOptions.transformers.push({
           name: 'rehype-shikiji:code-language-class',
           code(node) {
@@ -141,38 +128,6 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
             return node
           },
         })
-      }
-
-      if (highlightLines) {
-        const lines = parseHighlightLines(highlightMeta)
-        if (lines) {
-          const className = highlightLines === true
-            ? 'highlighted'
-            : highlightLines
-
-          codeOptions.transformers ||= []
-          codeOptions.transformers.push({
-            name: 'rehype-shikiji:line-class',
-            line(node, line) {
-              if (lines.includes(line))
-                addClassToHast(node, className)
-              return node
-            },
-          })
-        }
-      }
-
-      if (highlightWords) {
-        const words = parseHighlightWords(highlightMeta)
-
-        if (words) {
-          const className = highlightWords === true
-            ? 'highlighted-word'
-            : highlightWords
-
-          codeOptions.transformers ||= []
-          codeOptions.transformers.push(transformerWordHighlight(words, className))
-        }
       }
 
       try {
@@ -187,59 +142,6 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
           throw error
       }
     })
-  }
-}
-
-function inheritElement(original: Element, overrides: Partial<Element>): Element {
-  return {
-    // Dereference properties
-    ...structuredClone(original),
-    ...overrides,
-  }
-}
-
-function transformerWordHighlight(words: string[], className: string): ShikijiTransformer {
-  return {
-    name: 'rehype-shikiji:word-class',
-    token(node, _line, _col, lineEl) {
-      const textNode = node.children[0]
-
-      if (textNode.type !== 'text')
-        return node
-      // This may include whitespaces, we should only highlight the specified word
-      const originalText = textNode.value
-      const trimmedText = textNode.value.trim()
-
-      const createNode = (value: string) => inheritElement(node, {
-        children: [
-          {
-            type: 'text',
-            value,
-          },
-        ],
-      })
-
-      for (const word of words) {
-        if (trimmedText !== word)
-          continue
-        const index = textNode.value.indexOf(word)
-        const nodes: Element[] = []
-
-        if (index > 0)
-          nodes.push(createNode(originalText.slice(0, index)))
-
-        const highlightedNode = createNode(word)
-        addClassToHast(highlightedNode, className)
-        nodes.push(highlightedNode)
-
-        if (index + word.length < originalText.length)
-          nodes.push(createNode(originalText.slice(index + word.length)))
-
-        // To insert
-        lineEl.children.push(...nodes.slice(0, -1))
-        return nodes[nodes.length - 1]
-      }
-    },
   }
 }
 
