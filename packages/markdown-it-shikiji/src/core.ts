@@ -1,14 +1,19 @@
 import type MarkdownIt from 'markdown-it'
 import type { BuiltinTheme, CodeOptionsMeta, CodeOptionsThemes, CodeToHastOptions, HighlighterGeneric, ShikijiTransformer, TransformerOptions } from 'shikiji'
-import type { HighlightOptions } from '../../shared/highlight-transformer'
-import { configureHighlights } from '../../shared/highlight-transformer'
+import { transformerMetaHighlight } from 'shikiji-transformers'
 
-export interface MarkdownItShikijiExtraOptions extends HighlightOptions {
+export interface MarkdownItShikijiExtraOptions {
+  /**
+   * Add `highlighted` class to lines defined in after codeblock
+   *
+   * @deprecated Use [transformerNotationHighlight](https://shikiji.netlify.app/packages/transformers#transformernotationhighlight) instead
+   * @default false
+   */
+  highlightLines?: boolean | string
+
   /**
    * Custom meta string parser
    * Return an object to merge with `meta`
-   *
-   * The special key `_attrs` will be used to filter meta string before processing highlights
    */
   parseMetaString?: (
     metaString: string,
@@ -29,14 +34,12 @@ export function setupMarkdownIt(
   options: MarkdownItShikijiSetupOptions,
 ) {
   const {
-    highlightLines,
-    highlightWords,
+    highlightLines = false,
     parseMetaString,
   } = options
 
   markdownit.options.highlight = (code, lang = 'text', attrs) => {
     const meta = parseMetaString?.(attrs, code, lang) || {}
-    const highlightMeta = typeof meta._attrs === 'string' ? meta._attrs : attrs
     const codeOptions: CodeToHastOptions = {
       ...options,
       lang,
@@ -49,7 +52,15 @@ export function setupMarkdownIt(
 
     const builtInTransformer: ShikijiTransformer[] = []
 
-    builtInTransformer.push(...configureHighlights(highlightMeta, { highlightLines, highlightWords }))
+    if (highlightLines) {
+      builtInTransformer.push(
+        transformerMetaHighlight({
+          className: highlightLines === true
+            ? 'highlighted'
+            : highlightLines,
+        }),
+      )
+    }
 
     builtInTransformer.push({
       name: 'markdown-it-shikiji:block-class',

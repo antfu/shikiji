@@ -5,14 +5,22 @@ import type { BuiltinTheme } from 'shikiji'
 import type { Plugin } from 'unified'
 import { toString } from 'hast-util-to-string'
 import { visit } from 'unist-util-visit'
-import { type HighlightOptions, configureHighlights } from '../../shared/highlight-transformer'
+import { transformerMetaHighlight } from 'shikiji-transformers'
 
 export interface MapLike<K = any, V = any> {
   get(key: K): V | undefined
   set(key: K, value: V): this
 }
 
-export interface RehypeShikijiExtraOptions extends HighlightOptions {
+export interface RehypeShikijiExtraOptions {
+  /**
+   * Add `highlighted` class to lines defined in after codeblock
+   *
+   * @deprecated Use [transformerNotationHighlight](https://shikiji.netlify.app/packages/transformers#transformernotationhighlight) instead
+   * @default false
+   */
+  highlightLines?: boolean | string
+
   /**
    * Add `language-*` class to code element
    *
@@ -23,8 +31,6 @@ export interface RehypeShikijiExtraOptions extends HighlightOptions {
   /**
    * Custom meta string parser
    * Return an object to merge with `meta`
-   *
-   * The special key `_attrs` will be used to filter meta string before processing highlights
    */
   parseMetaString?: (
     metaString: string,
@@ -57,9 +63,8 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
   options,
 ) {
   const {
-    highlightLines,
+    highlightLines = false,
     addLanguageClass = false,
-    highlightWords,
     parseMetaString,
     cache,
     ...rest
@@ -105,7 +110,6 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
 
       const attrs = head.data && 'meta' in head.data ? head.data.meta as string : ''
       const meta = parseMetaString?.(attrs, node, tree) || {}
-      const highlightMeta = typeof meta._attrs === 'string' ? meta._attrs : attrs
 
       const codeOptions: CodeToHastOptions = {
         ...rest,
@@ -118,7 +122,6 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
       }
 
       codeOptions.transformers ||= []
-      codeOptions.transformers.push(...configureHighlights(highlightMeta, { highlightLines, highlightWords }))
 
       if (addLanguageClass) {
         codeOptions.transformers.push({
@@ -128,6 +131,17 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
             return node
           },
         })
+      }
+
+      if (highlightLines && typeof attrs === 'string') {
+        codeOptions.transformers ||= []
+        codeOptions.transformers.push(
+          transformerMetaHighlight({
+            className: highlightLines === true
+              ? 'highlighted'
+              : highlightLines,
+          }),
+        )
       }
 
       try {

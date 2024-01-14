@@ -14,6 +14,7 @@ it('run', async () => {
     .use(remarkRehype)
     .use(rehypeShikiji, {
       theme: 'vitesse-light',
+      highlightLines: true,
       parseMetaString: (str) => {
         return {
           fileName: str.match(FILENAME_REGEX)?.[1],

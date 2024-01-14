@@ -1,7 +1,7 @@
 {
   "name": "shikiji-core",
   "type": "module",
-  "version": "0.9.19",
+  "version": "0.10.0-beta.0",
   "description": "Core of Shikiji",
   "author": "Pine Wu <octref@gmail.com>; Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -21,9 +21,9 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     },
-    "./wasm": {
-      "types": "./dist/wasm.d.mts",
-      "default": "./dist/wasm.mjs"
+    "./wasm-inlined": {
+      "types": "./dist/wasm-inlined.d.mts",
+      "default": "./dist/wasm-inlined.mjs"
     },
     "./textmate": {
       "types": "./dist/textmate.d.mts",
