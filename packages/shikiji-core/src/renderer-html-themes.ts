@@ -13,7 +13,7 @@ export function codeToTokensWithThemes(
   internal: ShikiInternal,
   code: string,
   options: CodeToTokensWithThemesOptions,
-) {
+): ThemedTokenWithVariants[][] {
   const themes = Object.entries(options.themes)
     .filter(i => i[1])
     .map(i => ({ color: i[0], theme: i[1]! }))
@@ -32,12 +32,14 @@ export function codeToTokensWithThemes(
         const mergedToken: ThemedTokenWithVariants = {
           content: _token.content,
           variants: {},
+          offset: _token.offset,
         }
 
         tokens.forEach((t, themeIdx) => {
           const {
             content: _,
             explanation: __,
+            offset: ___,
             ...styles
           } = t[lineIdx][tokenIdx]
 

@@ -86,6 +86,18 @@ export function codeToHast(
     throw new Error('[shikiji] Invalid options, either `theme` or `themes` must be provided')
   }
 
+  const {
+    mergeWhitespaces = true,
+  } = options
+
+  if (mergeWhitespaces === true)
+    tokens = mergeWhitespaceTokens(tokens)
+  else if (mergeWhitespaces === 'never')
+    tokens = splitWhitespaceTokens(tokens)
+
+  for (const transformer of options.transformers || [])
+    tokens = transformer.tokens?.call(transformerContext, tokens) || tokens
+
   return tokensToHast(
     tokens,
     {
@@ -99,9 +111,6 @@ export function codeToHast(
   )
 }
 
-/**
- *
- */
 function mergeToken(
   merged: ThemedTokenWithVariants,
   variantsOrder: string[],
@@ -111,6 +120,7 @@ function mergeToken(
   const token: ThemedToken = {
     content: merged.content,
     explanation: merged.explanation,
+    offset: merged.offset,
   }
 
   const styles = variantsOrder.map(t => getTokenStyleObject(merged.variants[t]))
@@ -147,14 +157,8 @@ export function tokensToHast(
   transformerContext: ShikijiTransformerContextCommon,
 ) {
   const {
-    mergeWhitespaces = true,
     transformers = [],
   } = options
-
-  if (mergeWhitespaces === true)
-    tokens = mergeWhitespaceTokens(tokens)
-  else if (mergeWhitespaces === 'never')
-    tokens = splitWhitespaceTokens(tokens)
 
   const lines: (Element | Text)[] = []
   const tree: Root = {
@@ -236,7 +240,7 @@ export function tokensToHast(
         tokenNode.properties.style = style
 
       for (const transformer of transformers)
-        tokenNode = transformer?.token?.call(context, tokenNode, idx + 1, col, lineNode) || tokenNode
+        tokenNode = (transformer?.span || transformer?.token)?.call(context, tokenNode, idx + 1, col, lineNode) || tokenNode
 
       lineNode.children.push(tokenNode)
       col += token.content.length
@@ -289,10 +293,13 @@ function mergeWhitespaceTokens(tokens: ThemedToken[][]) {
   return tokens.map((line) => {
     const newLine: ThemedToken[] = []
     let carryOnContent = ''
+    let firstOffset = 0
     line.forEach((token, idx) => {
       const isUnderline = token.fontStyle && token.fontStyle & FontStyle.Underline
       const couldMerge = !isUnderline
       if (couldMerge && token.content.match(/^\s+$/) && line[idx + 1]) {
+        if (!firstOffset)
+          firstOffset = token.offset
         carryOnContent += token.content
       }
       else {
@@ -307,6 +314,7 @@ function mergeWhitespaceTokens(tokens: ThemedToken[][]) {
             newLine.push(
               {
                 content: carryOnContent,
+                offset: firstOffset,
               },
               token,
             )
@@ -336,12 +344,21 @@ function splitWhitespaceTokens(tokens: ThemedToken[][]) {
 
       const expanded = [{
         ...token,
+        offset: token.offset + leading.length,
         content,
       }]
-      if (leading)
-        expanded.unshift({ content: leading })
-      if (trailing)
-        expanded.push({ content: trailing })
+      if (leading) {
+        expanded.unshift({
+          content: leading,
+          offset: token.offset,
+        })
+      }
+      if (trailing) {
+        expanded.push({
+          content: trailing,
+          offset: token.offset + leading.length + content.length,
+        })
+      }
       return expanded
     })
   })

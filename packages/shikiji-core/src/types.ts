@@ -472,6 +472,15 @@ export interface ShikijiTransformer {
    */
   name?: string
   /**
+   * Transform the raw input code before passing to the highlighter.
+   */
+  preprocess?(this: ShikijiTransformerContextCommon, code: string, options: CodeToHastOptions): string | void
+  /**
+   * Transform the full tokens list before converting to HAST.
+   * Return a new tokens list will replace the original one.
+   */
+  tokens?(this: ShikijiTransformerContextCommon, tokens: ThemedToken[][]): ThemedToken[][] | void
+  /**
    * Transform the entire generated HAST tree. Return a new Node will replace the original one.
    */
   root?(this: ShikijiTransformerContext, hast: Root): Root | void
@@ -493,18 +502,18 @@ export interface ShikijiTransformer {
   /**
    * Transform each token `<span>` element.
    */
-  token?(this: ShikijiTransformerContext, hast: Element, line: number, col: number, lineElement: Element): Element | void
-
-  /**
-   * Transform the raw input code before passing to the highlighter.
-   * This hook will only be called with `codeToHtml` or `codeToHast`.
-   */
-  preprocess?(this: ShikijiTransformerContextCommon, code: string, options: CodeToHastOptions): string | void
+  span?(this: ShikijiTransformerContext, hast: Element, line: number, col: number, lineElement: Element): Element | void
   /**
    * Transform the generated HTML string before returning.
    * This hook will only be called with `codeToHtml`.
    */
   postprocess?(this: ShikijiTransformerContextCommon, html: string, options: CodeToHastOptions): string | void
+
+  // deprecated
+  /**
+   * @deprecated Use `span` instead
+   */
+  token?(this: ShikijiTransformerContext, hast: Element, line: number, col: number, lineElement: Element): Element | void
 }
 
 export interface HtmlRendererOptionsCommon extends TransformerOptions {
@@ -595,6 +604,10 @@ export interface TokenBase {
    * The content of the token
    */
   content: string
+  /**
+   * The start offset of the token, relative to the input code. 0-indexed.
+   */
+  offset: number
   /**
    * Explanation of
    *
