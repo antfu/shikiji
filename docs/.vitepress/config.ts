@@ -2,7 +2,7 @@ import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { bundledThemes } from 'shikiji'
 import { defaultHoverInfoProcessor, transformerTwoslash } from 'vitepress-plugin-twoslash'
-import { transformerRenderWhitespace } from 'shikiji-transformers'
+import { transformerNotationWordHighlight } from 'shikiji-transformers'
 import { version } from '../../package.json'
 import vite from './vite.config'
 
@@ -55,6 +55,7 @@ export default defineConfig({
       }))
     },
     codeTransformers: [
+      transformerNotationWordHighlight(),
       transformerTwoslash({
         processHoverInfo(info) {
           return defaultHoverInfoProcessor(info)
