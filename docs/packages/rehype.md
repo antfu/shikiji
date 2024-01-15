@@ -32,7 +32,7 @@ const file = await unified()
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
-    },
+    }
   })
   .use(rehypeStringify)
   .process(await fs.readFile('./input.md'))
@@ -73,7 +73,7 @@ const file = await unified()
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
-    },
+    }
   })
   .use(rehypeStringify)
   .processSync(raw) // it's also possible to process synchronously
@@ -91,9 +91,9 @@ In addition to the features of `shikiji`, this plugin also supports line highlig
 
 ````md
 ```js {1,3-4}
-console.log("1"); // highlighted
-console.log("2");
-console.log("3"); // highlighted
-console.log("4"); // highlighted
+console.log('1') // highlighted
+console.log('2')
+console.log('3') // highlighted
+console.log('4') // highlighted
 ```
 ````
