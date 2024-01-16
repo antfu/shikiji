@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.10.0-beta.2",
+  "version": "0.10.0-beta.3",
   "private": true,
   "packageManager": "pnpm@8.14.1",
   "scripts": {
@@ -25,7 +25,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@types/fs-extra": "^11.0.4",
     "@types/hast": "^3.0.3",
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.11.4",
     "@vitest/coverage-v8": "^1.2.0",
     "ansi-sequence-parser": "^1.1.1",
     "bumpp": "^9.2.1",

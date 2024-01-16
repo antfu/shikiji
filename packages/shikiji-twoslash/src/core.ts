@@ -2,39 +2,35 @@
  * This file is the core of the shikiji-twoslash package,
  * Decoupled from twoslash's implementation and allowing to introduce custom implementation or cache system.
  */
-import type { TwoSlashExecuteOptions, TwoSlashReturn } from 'twoslash'
+import type { TwoslashExecuteOptions, TwoslashReturn } from 'twoslash'
 import type { ShikijiTransformer } from 'shikiji-core'
 import type { Element, ElementContent, Text } from 'hast'
 import type { ModuleKind, ScriptTarget } from 'typescript'
 
 import { addClassToHast } from 'shikiji-core'
-import type { TransformerTwoSlashOptions, TwoSlashRenderer } from './types'
+import type { TransformerTwoslashOptions, TwoslashRenderer } from './types'
 
 export * from './types'
 export * from './renderer-rich'
 export * from './renderer-classic'
 export * from './icons'
 
-export function defaultTwoSlashOptions(): TwoSlashExecuteOptions {
+export function defaultTwoslashOptions(): TwoslashExecuteOptions {
   return {
     customTags: ['annotate', 'log', 'warn', 'error'],
-    compilerOptions: {
-      module: 99 satisfies ModuleKind.ESNext,
-      target: 99 satisfies ScriptTarget.ESNext,
-    },
   }
 }
 
-type TwoSlashFunction = (code: string, lang?: string, options?: TwoSlashExecuteOptions) => TwoSlashReturn
+type TwoslashFunction = (code: string, lang?: string, options?: TwoslashExecuteOptions) => TwoslashReturn
 
 export function createTransformerFactory(
-  defaultTwoslasher: TwoSlashFunction,
-  defaultRenderer?: TwoSlashRenderer,
+  defaultTwoslasher: TwoslashFunction,
+  defaultRenderer?: TwoslashRenderer,
 ) {
-  return function transformerTwoSlash(options: TransformerTwoSlashOptions = {}): ShikijiTransformer {
+  return function transformerTwoslash(options: TransformerTwoslashOptions = {}): ShikijiTransformer {
     const {
       langs = ['ts', 'tsx'],
-      twoslashOptions = defaultTwoSlashOptions(),
+      twoslashOptions = defaultTwoslashOptions(),
       langAlias = {
         typescript: 'ts',
         json5: 'json',
@@ -51,15 +47,16 @@ export function createTransformerFactory(
 
     const filter = options.filter || ((lang, _, options) => langs.includes(lang) && (!explicitTrigger || /\btwoslash\b/.test(options.meta?.__raw || '')))
     return {
-      preprocess(code, shikijiOptions) {
-        let lang = shikijiOptions.lang
+      preprocess(code) {
+        let lang = this.options.lang
         if (lang in langAlias)
-          lang = langAlias[shikijiOptions.lang]
+          lang = langAlias[this.options.lang]
 
-        if (filter(lang, code, shikijiOptions)) {
-          shikijiOptions.mergeWhitespaces = 'never'
+        if (filter(lang, code, this.options)) {
+          this.options.mergeWhitespaces = 'never'
           const twoslash = twoslasher(code, lang, twoslashOptions)
           this.meta.twoslash = twoslash
+          this.options.lang = twoslash.meta.extension || lang
           return twoslash.code
         }
       },
