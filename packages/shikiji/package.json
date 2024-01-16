@@ -23,8 +23,8 @@
     },
     "./core": {
       "types": "./dist/core.d.mts",
-      "default": "./dist/core.mjs",
-      "unwasm": "./dist/core-unwasm.mjs"
+      "unwasm": "./dist/core-unwasm.mjs",
+      "default": "./dist/core.mjs"
     },
     "./wasm": {
       "unwasm": "./dist/onig.wasm",
