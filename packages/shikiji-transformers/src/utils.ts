@@ -17,8 +17,10 @@ export function createCommentNotationTransformer(
     name,
     code(code) {
       const lines = code.children.filter(i => i.type === 'element') as Element[]
+      const linesToRemove: Element[] = []
       lines.forEach((line, idx) => {
         let nodeToRemove: Element | undefined
+
         for (const child of line.children) {
           if (child.type !== 'element')
             continue
@@ -37,9 +39,18 @@ export function createCommentNotationTransformer(
           if (replaced && !text.value.trim())
             nodeToRemove = child
         }
-        if (nodeToRemove)
+
+        if (nodeToRemove) {
           line.children.splice(line.children.indexOf(nodeToRemove), 1)
+
+          // Remove if empty
+          if (line.children.length === 0)
+            linesToRemove.push(line)
+        }
       })
+
+      for (const line of linesToRemove)
+        code.children.splice(code.children.indexOf(line), 1)
     },
   }
 }

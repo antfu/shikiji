@@ -108,7 +108,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         return
       }
 
-      const attrs = head.data && 'meta' in head.data ? head.data.meta as string : ''
+      const attrs = (head.data as any)?.meta
       const meta = parseMetaString?.(attrs, node, tree) || {}
 
       const codeOptions: CodeToHastOptions = {
@@ -121,9 +121,8 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         },
       }
 
-      codeOptions.transformers ||= []
-
       if (addLanguageClass) {
+        codeOptions.transformers ||= []
         codeOptions.transformers.push({
           name: 'rehype-shikiji:code-language-class',
           code(node) {

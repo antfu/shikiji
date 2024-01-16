@@ -100,11 +100,14 @@ Alternatively, you can use the [`transformerMetaHighlight`](#transformermetahigh
 
 ### `transformerNotationWordHighlight`
 
-Use `[!code highlight[word]]` to highlight a word (adding `highlighted-word` class).
+Use `[!code word:xxx]` to highlight a word (adding `highlighted-word` class).
+
+Notice that you cannot place anything before the comment.
 
 ```ts
 export function foo() {
-  const a = 'Hello World' // [!code highlight[a]]
+  // [!code word:a]
+  const a = 'Hello World'
 }
 ```
 

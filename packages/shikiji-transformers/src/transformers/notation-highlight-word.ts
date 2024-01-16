@@ -23,12 +23,13 @@ export function transformerNotationWordHighlight(
 
   return createCommentNotationTransformer(
     'shikiji-transformers:notation-highlight-word',
-    /\s*(?:\/\/|\/\*|<!--|#)\s+\[!code highlight\[(\w+)\](:\d+)?\]\s*(?:\*\/|-->)?/,
-    function ([_, word, range = ':1'], _line, comment, lines, index) {
-      const lineNum = Number.parseInt(range.slice(1), 10)
+    /^\s*(?:\/\/|\/\*|<!--|#)\s+\[!code word:(\w+)(:\d+)?\]\s*(?:\*\/|-->)?/,
+    function ([_, word, range], _line, comment, lines, index) {
+      const lineNum = range ? Number.parseInt(range.slice(1), 10) : lines.length
 
       lines
-        .slice(index, index + lineNum)
+      // Don't include the comment itself
+        .slice(index + 1, index + 1 + lineNum)
         .forEach((line) => {
           line.children = line.children.flatMap((span) => {
             if (span.type !== 'element' || span.tagName !== 'span' || span === comment)

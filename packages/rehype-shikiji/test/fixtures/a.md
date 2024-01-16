@@ -2,10 +2,9 @@
 
 …world!
 
-```js {3-4} fileName="/test/md" /a/
+```js {3-4} fileName=test
 console.log('it works!')
 
 const a = 1
-const test = "fds"
 console.log(a)
 ```

@@ -1,7 +1,8 @@
 export function transformerNotationFocus(
-  options = {}, // [!code highlight[options]:10]
+  // [!code word:options:4]
+  options = {},
 ) {
   const options = 'options'
   console.log(options)
-  options.a = "HELLO"
+  options.a = "HELLO" // should not be highlighted
 }

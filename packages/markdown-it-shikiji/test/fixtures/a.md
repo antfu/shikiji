@@ -2,7 +2,7 @@
 
 …world!
 
-```js {3-4} /a/
+```js {3-4}
 console.log('it works!')
 
 const a = 1
