@@ -102,8 +102,6 @@ Alternatively, you can use the [`transformerMetaHighlight`](#transformermetahigh
 
 Use `[!code word:xxx]` to highlight a word (adding `highlighted-word` class).
 
-Notice that you cannot place anything before the comment.
-
 ```ts
 export function foo() {
   // [!code word:a]
@@ -194,6 +192,24 @@ console.log('1')
 console.log('2')
 console.log('3')
 console.log('4')
+```
+
+### `transformerMetaWordHighlight`
+
+Highlight words based on the meta string provided on the code snippet. Requires integrations supports.
+
+````md
+```js /a/
+const a = 'Hello World'
+console.log(a)
+```
+````
+
+Results in
+
+```js /a/
+const a = 'Hello World'
+console.log(a)
 ```
 
 ---
