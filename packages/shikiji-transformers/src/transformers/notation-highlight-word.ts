@@ -1,6 +1,6 @@
 import { type ShikijiTransformer, addClassToHast } from 'shikiji'
 import { createCommentNotationTransformer } from '../utils'
-import { highlightWordInLine } from '../highlight-word'
+import { highlightWordInLine } from '../shared/highlight-word'
 
 export interface TransformerNotationWordHighlightOptions {
   /**
@@ -28,7 +28,7 @@ export function transformerNotationWordHighlight(
       const lineNum = range ? Number.parseInt(range.slice(1), 10) : lines.length
 
       lines
-      // Don't include the comment itself
+        // Don't include the comment itself
         .slice(index + 1, index + 1 + lineNum)
         .forEach(line => highlightWordInLine(line, comment, word, classActiveWord))
 

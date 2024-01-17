@@ -1,5 +1,5 @@
 import type { ShikijiTransformer } from 'shikiji'
-import { highlightWordInLine } from '../highlight-word'
+import { highlightWordInLine } from '../shared/highlight-word'
 
 export function parseMetaHighlightWords(meta: string): string[] {
   if (!meta)
