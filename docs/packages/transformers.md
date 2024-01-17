@@ -88,6 +88,16 @@ export function foo() {
 
 Use `[!code highlight]` to highlight a line (adding `highlighted` class).
 
+````md
+```ts
+export function foo() {
+  console.log('Highlighted') // [\!code highlight]
+}
+```
+````
+
+Results in
+
 ```ts
 export function foo() {
   console.log('Highlighted') // [!code highlight]
@@ -102,11 +112,40 @@ Alternatively, you can use the [`transformerMetaHighlight`](#transformermetahigh
 
 Use `[!code word:xxx]` to highlight a word (adding `highlighted-word` class).
 
+````md
 ```ts
-export function foo() {
-  // [!code word:a]
-  const a = 'Hello World'
+export function foo() { // [\!code word:Hello]
+  const msg = 'Hello World'
+  console.log(msg) // prints Hello World
 }
+```
+````
+
+Results in
+
+```ts
+export function foo() { // [!code word:Hello]
+  const msg = 'Hello World'
+  console.log(msg) // prints Hello World
+}
+```
+
+You can also specify the number of occurrences to highlight, e.g. `[!code word:options:2]` will highlight the next 2 occurrences of `options`.
+
+````md
+```ts
+// [\!code word:options:2]
+const options = { foo: 'bar' }
+options.foo = 'baz'
+console.log(options.foo) // this one will not be highlighted
+```
+````
+
+```ts
+// [!code word:options:2]
+const options = { foo: 'bar' }
+options.foo = 'baz'
+console.log(options.foo) // this one will not be highlighted
 ```
 
 ---
@@ -114,6 +153,16 @@ export function foo() {
 ### `transformerNotationFocus`
 
 Use `[!code focus]` to focus a line (adding `focused` class).
+
+````md
+```ts
+export function foo() {
+  console.log('Focused') // [\!code focus]
+}
+```
+````
+
+Results in
 
 ```ts
 export function foo() {
@@ -126,6 +175,17 @@ export function foo() {
 ### `transformerNotationErrorLevel`
 
 Use `[!code error]`, `[!code warning]`, to mark a line with an error level (adding `highlighted error`, `highlighted warning` class).
+
+````md
+```ts
+export function foo() {
+  console.error('Error') // [\!code error]
+  console.warn('Warning') // [\!code warning]
+}
+```
+````
+
+Results in
 
 ```ts
 export function foo() {
@@ -199,17 +259,18 @@ console.log('4')
 Highlight words based on the meta string provided on the code snippet. Requires integrations supports.
 
 ````md
-```js /a/
-const a = 'Hello World'
-console.log(a)
+```js /Hello/
+const msg = 'Hello World'
+console.log(msg)
+console.log(msg) // prints Hello World
 ```
 ````
 
 Results in
 
-```js /a/
-const a = 'Hello World'
-console.log(a)
+```js /Hello/
+const msg = 'Hello World'
+console.log(msg) // prints Hello World
 ```
 
 ---
