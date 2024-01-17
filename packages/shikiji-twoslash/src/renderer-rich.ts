@@ -1,6 +1,6 @@
 import type { Element, ElementContent } from 'hast'
 import type { ShikijiTransformerContextCommon } from 'shikiji-core'
-import type { TwoSlashRenderer } from './types'
+import type { TwoslashRenderer } from './types'
 import type { CompletionItem } from './icons'
 import { defaultCompletionIcons, defaultCustomTagIcons } from './icons'
 
@@ -65,7 +65,7 @@ export interface RendererRichOptions {
  * An alternative renderer that providers better prefixed class names,
  * with syntax highlight for the info text.
  */
-export function rendererRich(options: RendererRichOptions = {}): TwoSlashRenderer {
+export function rendererRich(options: RendererRichOptions = {}): TwoslashRenderer {
   const {
     completionIcons = defaultCompletionIcons,
     customTagIcons = defaultCustomTagIcons,
@@ -204,7 +204,6 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
                 class: ['twoslash-completion-list', classExtra].filter(Boolean).join(' '),
               },
               children: query.completions!
-                .filter(i => i.name.startsWith(query.completionsPrefix || '____'))
                 .map(i => ({
                   type: 'element',
                   tagName: 'li',
@@ -236,7 +235,9 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
                           children: [
                             {
                               type: 'text',
-                              value: query.completionsPrefix || '',
+                              value: i.name.startsWith(query.completionsPrefix)
+                                ? query.completionsPrefix
+                                : '',
                             },
                           ],
                         },
@@ -247,7 +248,9 @@ export function rendererRich(options: RendererRichOptions = {}): TwoSlashRendere
                           children: [
                             {
                               type: 'text',
-                              value: i.name.slice(query.completionsPrefix?.length || 0),
+                              value: i.name.startsWith(query.completionsPrefix)
+                                ? i.name.slice(query.completionsPrefix.length || 0)
+                                : i.name,
                             },
                           ],
                         },
