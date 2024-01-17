@@ -1,4 +1,4 @@
-import type { Element } from 'hast'
+import type { Element, Text } from 'hast'
 import type { ShikijiTransformer, ShikijiTransformerContext } from 'shikiji'
 
 export function createCommentNotationTransformer(
@@ -12,12 +12,13 @@ export function createCommentNotationTransformer(
     lines: Element[],
     index: number,
   ) => boolean,
+  removeEmptyLines = false,
 ): ShikijiTransformer {
   return {
     name,
     code(code) {
       const lines = code.children.filter(i => i.type === 'element') as Element[]
-      const linesToRemove: Element[] = []
+      const linesToRemove: (Element | Text)[] = []
       lines.forEach((line, idx) => {
         let nodeToRemove: Element | undefined
 
@@ -44,8 +45,14 @@ export function createCommentNotationTransformer(
           line.children.splice(line.children.indexOf(nodeToRemove), 1)
 
           // Remove if empty
-          if (line.children.length === 0)
+          if (line.children.length === 0) {
             linesToRemove.push(line)
+            if (removeEmptyLines) {
+              const next = code.children[code.children.indexOf(line) + 1]
+              if (next && next.type === 'text' && next.value === '\n')
+                linesToRemove.push(next)
+            }
+          }
         }
       })
 

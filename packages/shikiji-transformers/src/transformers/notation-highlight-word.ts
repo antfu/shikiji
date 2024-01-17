@@ -36,5 +36,6 @@ export function transformerNotationWordHighlight(
         addClassToHast(this.pre, classActivePre)
       return true
     },
+    true, // remove empty lines
   )
 }
