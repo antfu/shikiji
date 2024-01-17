@@ -17,8 +17,10 @@ export function highlightWordInLine(line: Element, ignoredElement: Element | nul
 
 function inheritElement(original: Element, overrides: Partial<Element>): Element {
   return {
-    // Dereference properties
-    ...structuredClone(original),
+    ...original,
+    properties: {
+      ...original.properties,
+    },
     ...overrides,
   }
 }
