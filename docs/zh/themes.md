@@ -1,9 +1,9 @@
-# Themes
+# 主题
 
-Themes listed below are re-distributed via [`tm-themes`](https://github.com/antfu/textmate-grammars-themes/tree/main/packages/tm-themes) into the `shikiji` package.
+以下列出的主题是通过 [`tm-themes`](https://github.com/antfu/textmate-grammars-themes/tree/main/packages/tm-themes) 重新分发到 `shikiji` 包的。
 
 <ThemesList />
 
-Themes are covered by their repositories’ respective licenses, which are permissive (apache-2.0, mit, etc), and made available in [this NOTICE](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-themes/NOTICE).
+语法支持由其代码库的相应许可证覆盖，它们的许可证是宽松的（Apache-2.0、MIT 等），在 [此通知](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-grammars/NOTICE) 中查看。
 
-For loading your custom themes, please reference to [this guide](/guide/load-theme).
+如果你要加载自定义语言，请参考 [这个指南](/zh/guide/load-theme)。

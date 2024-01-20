@@ -2,7 +2,7 @@
 
 请先查看 [所有内建语言](/languages)。
 
-您可以通过将 TextMate 语法对象传递到 `langs` 数组中来加载自定义语言。
+你可以通过将 TextMate 语法对象传递到 `langs` 数组中来加载自定义语言。
 
 ```ts twoslash
 // @noErrors
