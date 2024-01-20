@@ -186,7 +186,7 @@ const code = highlighter.codeToHtml('const a = 1', {
 })
 ```
 
-::: info 注意
+::: info
 [Shorthands](#shorthands) are only avaliable in [bundled usage](#bundled-usage). For a fine-grained bundle, you can create your own shorthands using [`createSingletonShorthands`](https://github.com/antfu/shikiji/blob/main/packages/shikiji-core/src/bundle-factory.ts) or port it yourself.
 :::
 
