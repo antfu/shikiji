@@ -1,49 +1,14 @@
-import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { bundledThemes } from 'shikiji'
 import { transformerMetaWordHighlight, transformerNotationWordHighlight } from '../../packages/shikiji-transformers/src'
 import { defaultHoverInfoProcessor, transformerTwoslash } from '../../packages/vitepress-plugin-twoslash/src/index'
-import { version } from '../../package.json'
 import vite from './vite.config'
-
-const GUIDES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Getting Started', link: '/guide/' },
-  { text: 'Installation', link: '/guide/install' },
-  { text: 'Bundles', link: '/guide/bundles' },
-  { text: 'Dual Themes', link: '/guide/dual-themes' },
-  { text: 'Transformers', link: '/guide/transformers' },
-  { text: 'Theme Colors Manipulation', link: '/guide/theme-colors' },
-  { text: 'Compatibility Build', link: '/guide/compat' },
-  { text: 'Custom Themes', link: '/guide/load-theme' },
-  { text: 'Custom Languages', link: '/guide/load-lang' },
-]
-
-const REFERENCES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Themes', link: '/themes' },
-  { text: 'Languages', link: '/languages' },
-]
-
-const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
-  { text: 'TypeScript Twoslash', link: '/packages/twoslash' },
-  { text: 'Markdown It', link: '/packages/markdown-it' },
-  { text: 'Rehype', link: '/packages/rehype' },
-  { text: 'Monaco Editor', link: '/packages/monaco' },
-  { text: 'VitePress', link: '/packages/vitepress' },
-  { text: 'Astro', link: '/packages/astro' },
-  { text: 'Common Transformers', link: '/packages/transformers' },
-  { text: 'CLI', link: '/packages/cli' },
-]
-
-const VERSIONS: DefaultTheme.NavItemWithLink[] = [
-  { text: `v${version} (current)`, link: '/' },
-  { text: `Release Notes`, link: 'https://github.com/antfu/shikiji/releases' },
-  { text: `Contributing`, link: 'https://github.com/antfu/shikiji/blob/main/CONTRIBUTING.md' },
-]
+import { enConfig } from './en'
+import { zhConfig } from './zh'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Shikiji',
-  description: 'A beautiful and powerful syntax highlighter',
   markdown: {
     theme: {
       light: 'vitesse-light',
@@ -112,57 +77,7 @@ export default defineConfig({
   vite,
   themeConfig: {
     logo: '/logo.svg',
-    nav: [
-      {
-        text: 'Guide',
-        items: [
-          {
-            items: GUIDES,
-          },
-        ],
-      },
-      {
-        text: 'Integrations',
-        items: INTEGRATIONS,
-      },
-      {
-        text: 'References',
-        items: REFERENCES,
-      },
-      // {
-      //   text: 'Play',
-      //   link: '/play',
-      // },
-      {
-        text: `v${version}`,
-        items: VERSIONS,
-      },
-    ],
 
-    sidebar: Object.assign(
-      {},
-      {
-        '/': [
-          {
-            text: 'Guide',
-            items: GUIDES,
-          },
-          {
-            text: 'Integrations',
-            items: INTEGRATIONS,
-          },
-          {
-            text: 'References',
-            items: REFERENCES,
-          },
-        ],
-      },
-    ),
-
-    editLink: {
-      pattern: 'https://github.com/antfu/shikiji/edit/main/docs/:path',
-      text: 'Suggest changes to this page',
-    },
     search: {
       provider: 'local',
     },
@@ -170,11 +85,6 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/antfu/shikiji' },
     ],
-
-    footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2021 Pine Wu, 2023-PRESENT Anthony Fu.',
-    },
   },
 
   head: [
@@ -188,4 +98,15 @@ export default defineConfig({
     ['meta', { name: 'twitter:image', content: 'https://shikiji.netlify.app/og.png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }],
   ],
+
+  locales: {
+    root: {
+      label: 'English',
+      ...enConfig,
+    },
+    zh: {
+      label: '简体中文',
+      ...zhConfig,
+    },
+  },
 })
