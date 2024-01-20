@@ -2,15 +2,15 @@
 outline: deep
 ---
 
-# Compatibility Build
+# 兼容构建
 
-We took the chance of the rewrite to make some breaking changes that we think are beneficial for the future. We'd suggest you try to migrate those changes if possible, as most of them should be straightforward. If you have very deep integration, you can try our compatibility build which aligns better with `shiki`'s current API.
+我们趁着重写的机会做了一些重大的改变，我们认为这些改变对未来发展是有益的。可能的话，我们建议你尝试迁移这些变更，因为其中大部分应该都很简单。如果你有非常深层的集成，请尝试使用与 `shiki` 当前 API 更好兼容性的兼容构建。
 
-## Install `shikiji-compat`
+## 安装 `shikiji-compat`
 
 <Badges name="shikiji-compat" />
 
-Set the alias to `shiki` in your `package.json`:
+在 `package.json` 中将别名设置为 `shiki`：
 
 ```json
 {
@@ -20,27 +20,27 @@ Set the alias to `shiki` in your `package.json`:
 }
 ```
 
-## Breaking Changes from Shiki
+## 破坏性改动
 
-Compare to [`shiki@0.14.3`](https://github.com/shikijs/shiki/releases/tag/v0.14.3), the breaking changes between Shiki and Shikiji are:
+相比 [`shiki@0.14.3`](https://github.com/shikijs/shiki/releases/tag/v0.14.3)，有如下的破坏性改动：
 
-### Hard Breaking Changes
+### 硬性破坏性改动
 
-Breaking changes applied to both `shikiji` and `shikiji-compat`:
+`shikiji` 及 `shikiji-compat` 都具有的破坏性改动：
 
-- CJS and IIFE builds are dropped. See [CJS Usage](/guide/install#cjs-usage) and [CDN Usage](/guide/install#cdn-usage) for more details.
-- `codeToHtml` uses [`hast`](https://github.com/syntax-tree/hast) internally. The generated HTML will be a bit different but should behave the same.
-- `css-variables` theme is not supported. Use the [dual themes](/guide/dual-themes) approach instead, or learn more at the [Theme Colors Manipulation](/guide/theme-colors) page.
+- CJS 和 IIFE 构建被移除。查看 [使用 CJS](/guide/install#cjs-usage) 和 [使用 CDN](/guide/install#cdn-usage) 获取更多详细信息。
+- `codeToHtml` 在内部使用了 [`hast`](https://github.com/syntax-tree/hast)。 生成的 HTML 会略有不同，但行为一致。
+- 不支持 `css-variables` 主题。请使用 [双主题](/guide/dual-themes)，或在 [主题颜色控制](/guide/theme-colors) 查看更多。
 
-### Soft Breaking Changes
+### 软性破坏性改动
 
-Breaking changes applies to `shikiji`, but are shimmed by `shikiji-compat`:
+`shikiji` 包含的破坏性更改，而 `shikiji-compat` 中不具有（屏蔽）：
 
-- Top-level named exports `setCDN`, `loadLanguage`, `loadTheme`, `setWasm` are dropped as they are not needed anymore.
-- `BUNDLED_LANGUAGES`, `BUNDLED_THEMES` are moved to `shikiji/langs` and `shikiji/themes` and renamed to `bundledLanguages` and `bundledThemes` respectively.
-- `theme` option for `getHighlighter` is dropped, use `themes` with an array instead.
-- Highlighter does not maintain an internal default theme context. `theme` option is required for `codeToHtml` and `codeToThemedTokens`.
-- `codeToThemedTokens` sets `includeExplanation` to `false` by default.
-- `.ansiToHtml` is merged into `.codeToHtml` as a special language, `ansi`. Use `.codeToHtml(code, { lang: 'ansi' })` instead.
-- `lineOptions` is dropped in favor of the fully customizable `transforms` option.
-- `LanguageRegistration`'s `grammar` field is flattened to `LanguageRegistration` itself, refer to the types for more details.
+- 顶级命名导出项 `setCDN`、`loadLanguage`、`loadTheme` 和 i877`setWasm` 被移除，因为其不再被需要。
+- `BUNDLED_LANGUAGES`、`BUNDLED_THEMES` 被移动至 `shikiji/langs` 和 `shikiji/themes` 中并分别更名为 `bundledLanguages` 和 `bundledThemes`。
+- `getHighlighter` 的 `theme` 选项被移除，请改用数组形式的 `themes`。
+- 高亮器不再具有内部的默认主题上下文。 对于 `codeToHtml` 和 `codeToThemedTokens`，`theme` 选项是必须的。
+- `codeToThemedTokens` 默认情况下将 `includeExplanation` 设置为 `false`。
+- `.ansiToHtml` 作为一个特殊的语言 `ansi` 被合并至 `.codeToHtml`。请使用 `.codeToHtml(code, { lang: 'ansi' })`。
+- `lineOptions` 被移除，取而代之的是完全可定制的 `transforms` 选项。
+- `LanguageRegistration` 的 `grammar` 字段被展开到 `LanguageRegistration` 本身，参考类型定义获取详细信息。
