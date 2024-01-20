@@ -1,8 +1,8 @@
-# Theme Colors Manipulation
+# 主题颜色控制
 
-## Arbitrary Color Values
+## 多种颜色值
 
-Usually, TextMate themes expect the color values of each token to be a valid hex color value. This limitation is inherited from [`vscode-textmate`](https://github.com/microsoft/vscode-textmate). However, in Shikiji v0.9.15 we introduced an automatic workaround by replacing non-hex color values with a placeholder and replacing them back on tokenization. This would allows you to use themes with arbitrary color values for rendering without worrying about the technical details:
+通常，TextMate 主题需要每个标记的颜色值是有效的十六进制颜色值。这个限制来自于 [`vscode-textmate`](https://github.com/microsoft/vscode-textmate)。然而，在 Shikiji v0.9.15 中，我们引入了一个自动解决的方法，通过用占位符替换非十六进制颜色值，并在标记化时将其替换回来。这样可以让你使用具有多种颜色值的主题进行渲染，而不必担心技术细节：
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
@@ -16,20 +16,20 @@ const highlighter = await getHighlighter({
         {
           scope: ['comment'],
           settings: {
-            // use `rgb`, `hsl`, `hsla`, // [!code hl:3]
-            // or any anything supported by your renderer
+            // 使用 `rgb`、`hsl`、`hsla`，// [!code hl:3]
+            // 或者任何你的渲染器支持的颜色。
             foreground: 'rgb(128, 128, 128)'
           }
         },
         {
           scope: ['string'],
           settings: {
-            foreground: 'var(--code-string)' // CSS variable // [!code hl:1]
+            foreground: 'var(--code-string)' // CSS 变量 // [!code hl:1]
           }
         },
-        // ...more
+        // 更多
       ],
-      // Background and foreground colors // [!code hl:3]
+      // 背景和前景颜色 // [!code hl:3]
       bg: 'var(--code-bg)',
       fg: 'var(--code-fg)'
     }
@@ -39,32 +39,32 @@ const highlighter = await getHighlighter({
 const html = highlighter.codeToHtml('const foo = "bar"', { lang: 'javascript', theme: 'my-theme' })
 ```
 
-::: info Notice
-Use this carefully as this will diverge from TextMate theme compatibility.
+::: info 注意
+谨慎使用，这将与 TextMate 主题不兼容。
 
-This may make the theme incompatible with non-web usage such as [`shikiji-cli`](/packages/cli) and [`shikiji-monaco`](/packages/monaco).
+这也可能会使主题与非 Web 用例不兼容，例如 [`shikiji-cli`](/packages/cli) 和 [`shikiji-monaco`](/packages/monaco)。
 :::
 
-Learn more about how to [load themes](./load-theme).
+了解如何 [载入主题](./load-theme)。
 
-## Color Replacements
+## 颜色替换
 
-You can also use the `colorReplacements` option to replace the color values of the theme. This is useful when you want to use a theme with a different color palette. It can be provided on both the theme object and the `codeToHast` `codeToHtml` options.
+你还可以使用 `colorReplacements` 选项来替换主题的颜色值。当你想要使用具有不同调色的主题时，这么做非常有用。它在主题对象和 `codeToHast` 以及 `codeToHtml` 的选项上可用。
 
-## CSS Variables Theme
+## CSS 变量主题
 
-::: warning Experimental
-This feature is experimental and may change without following semver.
+::: warning 实验性
+此功能是实验性的，可能会在不遵循如下语义化版本控制规范（semver）的情况下进行更改。
 :::
 
-Shikiji provides a factory function helper `createCssVariablesTheme` for creating a theme that uses CSS variables easier. Note that this theme is a lot less granular than most of the other themes and requires to define the CSS variables in your app. This is provided for easier migration from Shiki's [`css-variables theme`](https://github.com/shikijs/shiki/blob/main/docs/themes.md#theming-with-css-variables). For better highlighting result, we recommend construct the theme manually with [Arbitrary Color Values](#arbitrary-color-values) or use [Color Replacements](#color-replacements) to override an existing theme.
+Shikiji 提供了一个工厂函数助手（Factory Function Helper）`createCssVariablesTheme`，用于更方便地创建使用 CSS 变量的主题。请注意，这个主题形式比大多数其他主题的细粒度要低，并且需要在你的应用程序中定义 CSS 变量。这是为了更容易地从 Shiki 的 [`css-variables` 主题](https://github.com/shikijs/shiki/blob/main/docs/themes.md#theming-with-css-variables) 迁移而提供的。但为了更好的显示效果，我们建议使用 [多种颜色值](#多种颜色值) 或 [颜色替换](#颜色替换) 来覆盖现有的主题。
 
-This theme is **not included by default** and must be registered explicitly:
+此主题形式**不包含在默认设置**中，必须显式注册：
 
 ```ts twoslash
 import { createCssVariablesTheme, getHighlighter } from 'shikiji'
 
-// Create a custom CSS variables theme, the following are the default values
+// 创建一个自定义的 CSS 变量主题，以下是默认值。
 const myTheme = createCssVariablesTheme({ // [!code hl:6]
   name: 'css-variables',
   variablePrefix: '--shiki-',
@@ -74,16 +74,16 @@ const myTheme = createCssVariablesTheme({ // [!code hl:6]
 
 const highlighter = await getHighlighter({
   langs: ['javascript'],
-  themes: [myTheme] // register the theme // [!code hl]
+  themes: [myTheme] // 注册主题 // [!code hl]
 })
 
 const html = highlighter.codeToHtml('const foo = "bar"', {
   lang: 'javascript',
-  theme: 'css-variables' // use the theme // [!code hl]
+  theme: 'css-variables' // 使用主题 // [!code hl]
 })
 ```
 
-CSS variables example:
+CSS 变量的示例如下：
 
 ```css
 :root {
@@ -135,7 +135,7 @@ CSS variables example:
 }
 ```
 
-If you are migrating from Shiki, some variables are renamed from Shiki's `css-variables`:
+如果你是从 Shiki 迁移而来，以下是一些对 Shiki 的 `css-variables` 条目的更名供你参考：
 
 | Shiki                      | Shikiji              |
 | -------------------------- | -------------------- |

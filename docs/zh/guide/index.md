@@ -12,7 +12,7 @@ outline: deep
 
 没有需要维护的自定义正则表达式，没有需要维护的自定义 CSS，也没有需要维护的自定义 HTML；并随着你在 VS Code 中喜欢使用的语言和主题的发展，你的语法高亮也会相应的发展。
 
-Shikiji 是对 [Shiki](https://github.com/shikijs/shiki) 的 ESM 重写，并做了一些改进。我们的目标是 [将本项目作为里程碑更新合并回 Shiki](https://github.com/shikijs/shiki/issues/510)。如果你要进行迁移，请查看 [Shikiji 兼容版本相对于 Shiki 的破坏性改动](/guide/compat)。
+Shikiji 是对 [Shiki](https://github.com/shikijs/shiki) 的 ESM 重写，并做了一些改进。我们的目标是 [将本项目作为里程碑更新合并回 Shiki](https://github.com/shikijs/shiki/issues/510)。如果你要进行迁移，请查看 [Shikiji 兼容构建相对于 Shiki 的破坏性改动](/guide/compat)。
 
 至于这个名字，<ruby text-lg text-brand-yellow>式<rt>shiki</rt></ruby><ruby text-lg text-brand-red>辞<rt>ji</rt></ruby> 是一个日语词汇，意为 [“仪式演讲（Ceremonial Speech）”](https://jisho.org/word/%E5%BC%8F%E8%BE%9E)。 <ruby text-brand-yellow text-lg>式<rt>shiki</rt></ruby> 继承自 [Shiki](https://github.com/shikijs/shiki)，意为 [“风格”](https://jisho.org/word/%E5%BC%8F)；<ruby text-brand-red text-lg>辞<rt>ji</rt></ruby> 意为 [“词”](https://jisho.org/word/%E8%BE%9E)。
 
@@ -28,7 +28,7 @@ Shikiji 是对 [Shiki](https://github.com/shikijs/shiki) 的 ESM 重写，并做
 - [基于 AST 的转换器插件](/zh/guide/transformers)
 - [`hast` 支持](/zh/guide/transformers#codetohast)
 - [TypeScript Twoslash](/zh/packages/twoslash)
-- [Shiki 兼容版本](/zh/guide/compat)
+- [Shiki 兼容构建](/zh/guide/compat)
 
 ## 演练场
 
