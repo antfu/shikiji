@@ -1,8 +1,8 @@
-# Load Custom Themes
+# 加载自定义主题
 
-See [All Builtin Themes](/themes) first.
+请先查看 [所有内建主题](/themes)。
 
-You can load custom themes by passing a `Theme` object into the `themes` array.
+你可以通过向 `themes` 数组传递一个 `Theme` 对象来载入自定义主题。
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
@@ -31,13 +31,13 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-You can also load themes after the highlighter has been created.
+同样的，你也可以在高亮器创建后载入自定义主题。
 
 ```ts twoslash
 // @noErrors
 import { getHighlighter } from 'shikiji'
 
-// Load the theme object from a file, a network request, or anywhere
+// 从文件、网络请求或其他任何地方载入主题对象
 const myTheme = JSON.parse(fs.readFileSync('my-theme.json', 'utf8'))
 
 const highlighter = await getHighlighter()
@@ -51,4 +51,4 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-The theme is a TextMate theme in JavaScript object. For example, [it should looks like this](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-themes/themes/dark-plus.json).
+主题是一个以 JavaScript 对象形式的 TextMate 主题。 例如，[它应该看起来像这样](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-themes/themes/dark-plus.json)。

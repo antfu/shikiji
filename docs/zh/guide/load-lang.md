@@ -1,8 +1,8 @@
-# Load Custom Languages
+# 加载自定义语言
 
-See [All Builtin Languages](/languages) first.
+请先查看 [所有内建语言](/languages)。
 
-You can load custom languages by passing a TextMate grammar object into the `langs` array.
+您可以通过将 TextMate 语法对象传递到 `langs` 数组中来加载自定义语言。
 
 ```ts twoslash
 // @noErrors
@@ -19,7 +19,7 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-You can also load languages after the highlighter has been created.
+同样的，你也可以在高亮器创建后载入自定义语言。
 
 ```ts twoslash
 // @noErrors
@@ -36,11 +36,11 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-## Migrate from Shiki
+## 从 Shiki 迁移
 
-Since `shikiji` is environment agnostic, we don't have access to the file system. That means the `path` property `shiki` supports is not available in `shikiji`, and you must to read the files yourself and pass in the object.
+由于 `shikiji` 是与环境无关的，所以我们无法访问文件系统。这意味着在 `shikiji` 中不可以使用 `shiki` 支持的路径属性，并且你必须手动读取文件并传入对象。
 
-For example, the following would not work:
+例如，以下代码不会工作：
 
 ```ts
 const highlighter = await getHighlighter({
@@ -48,7 +48,7 @@ const highlighter = await getHighlighter({
     {
       name: 'vue-vine',
       scopeName: 'source.vue-vine',
-      // ‼️ This would not work!
+      // ‼️ 这不会工作！
       path: join(__dirname, './vine-ts.tmLanguage.json'),
       embeddedLangs: [
         'vue-html',
@@ -63,7 +63,7 @@ const highlighter = await getHighlighter({
 })
 ```
 
-Instead, load that file yourself (via `fs`, `import()`, `fetch()`, etc.):
+相反，手动加载文件（通过 `fs`，`import()` 或 `fetch()` 等）:
 
 ```ts
 const vineGrammar = JSON.parse(fs.readFileSync(join(__dirname, './vine-ts.tmLanguage.json'), 'utf8'))
