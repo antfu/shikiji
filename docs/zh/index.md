@@ -3,32 +3,32 @@ layout: home
 
 hero:
   name: "式辞 Shikiji"
-  text: "Syntax highlighter"
-  tagline: A beautiful and powerful syntax highlighter
+  text: "语法高亮器"
+  tagline: 美观而强大的语法高亮器
   image:
     src: /logo.svg
     alt: Shikiji Logo
   actions:
     - theme: brand
-      text: Get Started
-      link: /guide/
+      text: 开始
+      link: /zh/guide/
     - theme: alt
-      text: Installation
-      link: /guide/install/
+      text: 安装
+      link: /zh/guide/install/
 
 features:
-  - title: Accurate & Beautiful
+  - title: 精确 & 美观
     icon: 🌈
-    details: TextMate grammar powered, as accurate as your Text Editor. Improves as your Text Editor improves.
-  - title: Zero Runtime
+    details: TextMate 语法驱动，与你的编辑器一样准确。并随着你的编辑器的改进不断改善。
+  - title: 零运行时
     icon: ⏱️
-    details: Runs ahead of time, ship zero JavaScript and get the perfect syntax highlight.
-  - title: Customizable
+    details: 预先运行，不载入任何 JavaScript 代码，并获得完美的语法高亮。
+  - title: 高度自定义化
     icon: 🧩
-    details: HAST based. Addons, transformations, highly customizable.
-  - title: ESM & Universal
+    details: 基于 HAST，提供高度可定制化的插件和转换功能。
+  - title: ESM & 通用
     icon: 🎄
-    details: Fully tree-shakable ESM, runs on any JavaScript runtime, including Browser, Node.js, Cloudflare Workers, etc.
+    details: 高度可除屑优化（Tree-shaking）的 ESM，在任何 JavaScript 运行时上运行，包括但不限于浏览器，Node.js，Cloudflare Worker。
 ---
 
 <HomeDemo />

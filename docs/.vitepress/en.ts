@@ -41,6 +41,9 @@ export const enConfig = defineConfig({
   description: 'A beautiful and powerful syntax highlighter',
 
   themeConfig: {
+    outline: {
+      label: 'On this page',
+    },
     nav: [
       {
         text: 'Guide',
