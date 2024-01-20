@@ -1,8 +1,8 @@
-# Transformers
+# 转换器
 
-Shikiji uses [`hast`](https://github.com/syntax-tree/hast), a AST format for HTML, to process the result and generate the HTML.
+Shikiji 使用 [`hast`](https://github.com/syntax-tree/hast)，一种用于 HTML 的 AST 格式，来处理结果并生成 HTML。
 
-You can provide your own `transformers` to customize the generated HTML by manipulating the hast tree. You can pass custom functions to modify the tree for different types of nodes. For example:
+你可以使用自己的 `transformers` 操作修改 hast 树来自定义生成的 HTML。你可以传递自定义函数来修改不同类型节点的树。例如：
 
 ```ts twoslash
 import { addClassToHast, codeToHtml } from 'shikiji'
@@ -28,11 +28,11 @@ const code = await codeToHtml('foo\bar', {
 })
 ```
 
-We also provide some common transformers for you to use, see [`shikiji-transforms`](/packages/transformers) for more details.
+我们也提供了一些常用转换器供你使用，查看 [`shikiji-transforms`](/zh/packages/transformers) 获取更多信息。
 
 ## `codeToHast`
 
-You can also get the intermediate `hast` to do custom rendering without serializing them into HTML with `codeToHast`. You can also further integrate the AST with the [unified](https://github.com/unifiedjs) ecosystem.
+你可以使用 `codeToHast`，通过 `hast` 进行自定义渲染，而无需将其序列化为 HTML 代码。你还可以进一步将 AST 与 [unified](https://github.com/unifiedjs) 生态系统集成。
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
