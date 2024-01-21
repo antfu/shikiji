@@ -37,6 +37,5 @@
     "jsonc",
     "yaml"
   ],
-  "references.preferredLocation": "peek",
-  "r.lsp.promptToInstall": false
+  "references.preferredLocation": "peek"
 }
