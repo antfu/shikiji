@@ -2,19 +2,19 @@
 
 <Badges name="shikiji-cli" />
 
-Shikiji in the command line.
+在命令行中使用 Shikiji。
 
-## Usage
+## 使用方法
 
-The Shikiji CLI works like `cat` command, but with syntax highlighting.
+Shikiji CLI 与 `cat` 命令类似，不过它会输出具有语法高亮的内容。
 
 ```bash
 npx shikiji-cli README.md
 ```
 
-## Install
+## 安装
 
-You can also install it globally. Command aliases `shikiji-cli`, `shikiji`, `skat` are registered.
+你可以将它全局安装。命令别名有 `shikiji-cli`、`shikiji` 和 `skat`。
 
 ```bash
 npm i -g shikiji-cli
@@ -22,11 +22,11 @@ npm i -g shikiji-cli
 skat src/index.ts
 ```
 
-## Options
+## 选项
 
 ### `--theme`
 
-Specify the theme to use. Defaults to `vitesse-dark`.
+指定使用的主题。默认为 `vitesse-dark`。
 
 ```bash
 npx shikiji-cli README.md --theme=nord
@@ -34,7 +34,7 @@ npx shikiji-cli README.md --theme=nord
 
 ### `--lang`
 
-Language is auto-inferred from the file extension. You can override it with `--lang`.
+语言默认从文件拓展名自动推断。你可以使用 `--lang` 选项覆盖。
 
 ```bash
 npx shikiji-cli src/index.js --lang=ts
