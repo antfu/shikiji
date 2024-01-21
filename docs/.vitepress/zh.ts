@@ -41,9 +41,6 @@ export const zhConfig = defineConfig({
   description: '美观而强大的语法高亮器',
 
   themeConfig: {
-    outline: {
-      label: '目录',
-    },
     search: {
       provider: 'local',
       options: {
@@ -119,6 +116,22 @@ export const zhConfig = defineConfig({
       pattern: 'https://github.com/antfu/shikiji/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页',
     },
+
+    docFooter: {
+      prev: '上一页',
+      next: '下一页',
+    },
+
+    outline: {
+      label: '目录',
+    },
+
+    langMenuLabel: '多语言',
+    returnToTopLabel: '回到顶部',
+    sidebarMenuLabel: '菜单',
+    darkModeSwitchLabel: '主题',
+    lightModeSwitchTitle: '切换到浅色模式',
+    darkModeSwitchTitle: '切换到深色模式',
 
     footer: {
       message: '以 MIT 许可证发布',
