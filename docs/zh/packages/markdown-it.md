@@ -28,7 +28,7 @@ md.use(await Shikiji({
 
 ## 细粒度捆绑
 
-在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了一个 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `markdown-it-shikiji/core` 中导入并传入你自己的高亮显示器：
+在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `markdown-it-shikiji/core` 中导入并传入你自己的高亮显示器：
 
 ```ts twoslash
 // @noErrors: true
@@ -49,7 +49,7 @@ const highlighter = await getHighlighterCore({
 
 const md = MarkdownIt()
 
-md.use(fromHighlighter(highlighter, { /* options */ }))
+md.use(fromHighlighter(highlighter, { /* 选项 */ }))
 ```
 
 ## 功能

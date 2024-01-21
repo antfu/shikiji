@@ -6,7 +6,7 @@ outline: deep
 
 <Badges name="shikiji-transformers" />
 
-受 [shiki-processor](https://github.com/innocenzi/shiki-processor) 启发，为 Shikiji 设计的常用转换器（Transformers）的集合。
+受 [shiki-processor](https://github.com/innocenzi/shiki-processor) 启发，为 Shikiji 设计的常用转换器（Transformers）集合。
 
 ## 安装
 
@@ -38,7 +38,7 @@ const html = await codeToHtml(code, {
 
 ### `transformerNotationDiff`
 
-使用 `[!code ++]` 和 `[!code --]` 来标记增加和移除的行。
+使用 `[!code ++]` 和 `[!code --]` 来标记增删的行。
 
 例如，如下代码：
 
@@ -283,4 +283,4 @@ console.log(msg) // 打印 Hello World
 
 ### `transformerRemoveLineBreak`
 
-删除 `<span class="line">` 之间的换行符。当你在 CSS 中 `display: block` 设置为 `.line` 时有用。
+删除 `<span class="line">` 之间的换行符。当你在 CSS 中将 `display: block` 设置为 `.line` 时这有可能用。

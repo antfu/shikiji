@@ -4,13 +4,13 @@ outline: deep
 
 # VitePress 集成
 
-[VitePress](https://vitepress.dev/) 在底层使用了 Shikiji，所以你不需要显式的定义集成。
+[VitePress](https://vitepress.dev/) 在底层使用了 Shikiji，所以你不需要显式地集成。
 
 VitePress 提供了 [一些 Shikiji 的自定义选项](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts#L66-L112)，在 [VitePress 文档](https://vitepress.dev/zh/reference/site-config#markdown) 上查看更多。
 
 ## Twoslash
 
-要在 Vitepress 中启用 [TypeScript Twoslash](/packages/twoslash)（类型悬停显示），使用我们提供的插件来快速开始。借助 [Floating Vue](https://floating-vue.starpad.dev/) 在容器外显示具有样式的类型信息。
+要在 Vitepress 中启用 [TypeScript Twoslash](/packages/twoslash)（类型悬停显示），使用我们提供的插件来快速开始，它借助 [Floating Vue](https://floating-vue.starpad.dev/) 在容器外显示具有样式的类型信息。
 
 <Badges name="vitepress-plugin-twoslash" />
 
@@ -89,7 +89,7 @@ console.log('hello')
 
 ### Vue 单文件组件
 
-此外，这个插件也集成了 [`twoslash-vue`](https://github.com/antfu/twoslash-vue)，所以你也可以使用 `vue twoslash` 高亮 Vue SFC 块：
+此外，这个插件集成了 [`twoslash-vue`](https://github.com/antfu/twoslash-vue)，所以你可以使用 `vue twoslash` 高亮 Vue SFC 块：
 
 ```vue twoslash
 <script setup>

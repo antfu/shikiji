@@ -28,7 +28,7 @@ const file = await unified()
   .use(remarkParse)
   .use(remarkRehype)
   .use(rehypeShikiji, {
-    // 或只有单个主题的 `theme` 字段
+    // 也可以是只有单个主题的 `theme` 字段
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
@@ -40,7 +40,7 @@ const file = await unified()
 
 ## 细粒度捆绑
 
-在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了一个 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `rehype-shikiji/core` 中导入 `rehypeShikijiFromHighlighter` 并传入你自己的高亮显示器：
+在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `rehype-shikiji/core` 中导入 `rehypeShikijiFromHighlighter` 并传入你自己的高亮显示器：
 
 ```ts twoslash
 // @noErrors: true
@@ -69,7 +69,7 @@ const file = await unified()
   .use(remarkParse)
   .use(remarkRehype)
   .use(rehypeShikijiFromHighlighter, highlighter, {
-    // 或只有单个主题的 `theme` 字段
+    // 也可以是只有单个主题的 `theme` 字段
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',

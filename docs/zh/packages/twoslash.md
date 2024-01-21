@@ -8,7 +8,7 @@ outline: deep
 
 适用于 [Twoslash](https://github.com/twoslashes/twoslash) 的 Shikiji 转换器，在代码块内提供行内的类型悬停显示。
 
-[TwoSlash 注释参考](https://twoslash.netlify.app/refs/notations).
+[TwoSlash 注释参考](https://twoslash.netlify.app/refs/notations)
 
 ## 安装
 
@@ -38,7 +38,7 @@ const html = await codeToHtml(`console.log()`, {
 
 默认的输出是没有样式的，你需要添加额外的 CSS 来使它们看起来更好。
 
-如果你想在浏览器或者工作线程（workers）上运行 Twoslash，参考 [使用 CDN](#使用-cdn) 部分。
+如果你想在浏览器或者 Workers 上运行 Twoslash，参考 [使用 CDN](#使用-cdn) 部分。
 
 ## 渲染器
 
@@ -53,10 +53,11 @@ const html = await codeToHtml(`console.log()`, {
 [源代码](https://github.com/antfu/shikiji/blob/main/packages/shikiji-twoslash/src/renderer-rich.ts)
 
 ::: tip 提示
-这是自 v0.10.0 版本以来的默认渲染器。
+自 v0.10.0 开始，本渲染器是默认渲染器。
 :::
 
-此渲染器提供了一个更明确的类名，前缀为 `twoslash-`，以便更好地进行作用域的限定。此外，它还在悬停信息上进行语法的高亮显示。
+此渲染器提供了一个更明确的类名，前缀为 `twoslash-`，以便更好地进行作用域的限定。
+此外，它还在悬停信息上进行语法的高亮显示。
 
 ```ts twoslash
 import { rendererRich, transformerTwoslash } from 'shikiji-twoslash'
@@ -125,13 +126,13 @@ transformerTwoslash({
 
 [源代码](https://github.com/antfu/shikiji/blob/main/packages/vitepress-plugin-twoslash/src/renderer-floating-vue.ts)
 
-这个渲染器使用 [Floating Vue](https://floating-vue.starpad.dev/) 作为浮动组件（在容器外渲染），并生成 Vue 模版语法。这个渲染器不可以直接使用， 而是作为 [VitePress 集成](/zh/packages/vitepress#twoslash) 的内部渲染器。在这里列出它，对你可能创建的自己的渲染器提供一些参考。
+这个渲染器使用 [Floating Vue](https://floating-vue.starpad.dev/) 作为浮动组件（在容器外渲染），并生成 Vue 模版语法。这个渲染器不可以直接使用，而是作为 [VitePress 集成](/zh/packages/vitepress#twoslash) 的内部渲染器。在这里列出它，对你可能创建的自己的渲染器提供一些参考。
 
 ## 选项
 
 ### 显式触发
 
-当与 `markdown-it-shikiji` 或 `rehype-shikiji` 集成时，我们可能不希望 Twoslash 在每个代码块上运行。在这种情况下，我们可以将 `explicitTrigger` 设置为 `true`，仅在指定呈现 twoslash 的代码块上运行。
+当与 `markdown-it-shikiji` 或 `rehype-shikiji` 集成时，我们可能不希望 Twoslash 在每个代码块上运行。在这种情况下，我们可以将 `explicitTrigger` 设置为 `true`，仅在指定呈现 Twoslash 的代码块上运行。
 
 ```ts twoslash
 import { transformerTwoslash } from 'shikiji-twoslash'
@@ -161,7 +162,7 @@ transformerTwoslash({
 
 幸运的是，Twoslash 实现了一个虚拟文件系统，允许你提供自己的文件以供 TypeScript 在内存中解析。然而，在浏览器中加载这些文件仍然是一个挑战。好在，于 [TypeScript WebSite](https://github.com/microsoft/TypeScript-Website) 中，TypeScript 团队提供了一些用来从 CDN 上按需获取类型的工具，他们称之为 [自动类型获取（ATA，Automatic Type Acquisition）](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ata)。
 
-我们简易的封装了构建块，并在 [`twoslash-cdn`](https://github.com/antfu/twoslash-cdn) 中提供了易于使用的 API。 例如：
+我们简易地封装了构建块，并在 [`twoslash-cdn`](https://github.com/antfu/twoslash-cdn) 中提供了易于使用的 API。 例如：
 
 ```js
 // TODO: 在生产环境中使用显式的版本替换
