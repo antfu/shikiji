@@ -1,5 +1,5 @@
-# Astro Integration
+# Astro 集成
 
-You don't need explicit integration in [Astro](https://astro.build/) as Astro already uses Shikiji under the hood.
+在 [Astro](https://astro.build/) 中，你不需要显式的集成，因为 Astro 已经在底层使用了 Shikiji。
 
-Learn more about the configurations in the [Astro documentation](https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting).
+在 [Astro 文档](https://docs.astro.build/zh-cn/guides/markdown-content/#%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE) 中了解更多配置。

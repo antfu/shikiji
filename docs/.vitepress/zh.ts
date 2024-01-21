@@ -26,7 +26,7 @@ const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
   { text: 'Monaco Editor', link: '/zh/packages/monaco' },
   { text: 'VitePress', link: '/zh/packages/vitepress' },
   { text: 'Astro', link: '/zh/packages/astro' },
-  { text: 'Common Transformers', link: '/zh/packages/transformers' },
+  { text: '常用转换器', link: '/zh/packages/transformers' },
   { text: 'CLI', link: '/zh/packages/cli' },
 ]
 

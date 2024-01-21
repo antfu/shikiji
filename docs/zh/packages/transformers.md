@@ -6,9 +6,9 @@ outline: deep
 
 <Badges name="shikiji-transformers" />
 
-Collective of common transformers for Shikiji, inspired by [shiki-processor](https://github.com/innocenzi/shiki-processor).
+受 [shiki-processor](https://github.com/innocenzi/shiki-processor) 启发，为 Shikiji 设计的常用转换器（Transformers）的集合。
 
-## Install
+## 安装
 
 ```bash
 npm i -D shikiji-transformers
@@ -34,13 +34,13 @@ const html = await codeToHtml(code, {
 })
 ```
 
-## Transformers
+## 转换器
 
 ### `transformerNotationDiff`
 
-Use `[!code ++]` and `[!code --]` to mark added and removed lines.
+使用 `[!code ++]` 和 `[!code --]` 来标记增加和移除的行。
 
-For example, the following code
+例如，如下代码：
 
 ````md
 ```ts
@@ -51,7 +51,7 @@ export function foo() {
 ```
 ````
 
-will be transformed to
+会被转换为：
 
 ```ts
 export function foo() {
@@ -60,7 +60,7 @@ export function foo() {
 }
 ```
 
-::: details HTML Output
+::: details HTML 输出
 
 ```html
 <!-- Output (stripped of `style` attributes for clarity) -->
@@ -86,7 +86,7 @@ export function foo() {
 
 ### `transformerNotationHighlight`
 
-Use `[!code highlight]` to highlight a line (adding `highlighted` class).
+使用 `[!code highlight]` 来高亮显示行（添加 `highlighted` 类名）。
 
 ````md
 ```ts
@@ -96,7 +96,7 @@ export function foo() {
 ```
 ````
 
-Results in
+效果是：
 
 ```ts
 export function foo() {
@@ -104,40 +104,40 @@ export function foo() {
 }
 ```
 
-Alternatively, you can use the [`transformerMetaHighlight`](#transformermetahighlight) to highlight lines based on the meta string.
+或者，你可以使用 [`transformerMetaHighlight`](#transformermetahighlight) 根据元字符串来高亮显示行。
 
 ---
 
 ### `transformerNotationWordHighlight`
 
-Use `[!code word:xxx]` to highlight a word (adding `highlighted-word` class).
+使用 `[!code word:xxx]` 来高亮显示词（添加 `highlighted-word` 类名）。
 
 ````md
 ```ts
 export function foo() { // [\!code word:Hello]
   const msg = 'Hello World'
-  console.log(msg) // prints Hello World
+  console.log(msg) // 打印 Hello World
 }
 ```
 ````
 
-Results in
+效果是：
 
 ```ts
 export function foo() { // [!code word:Hello]
   const msg = 'Hello World'
-  console.log(msg) // prints Hello World
+  console.log(msg) // 打印 Hello World
 }
 ```
 
-You can also specify the number of occurrences to highlight, e.g. `[!code word:options:2]` will highlight the next 2 occurrences of `options`.
+你还可以指定高亮显示的次数，例如 `[!code word:options:2]` 会高亮显示近两个 `options`。
 
 ````md
 ```ts
 // [\!code word:options:2]
 const options = { foo: 'bar' }
 options.foo = 'baz'
-console.log(options.foo) // this one will not be highlighted
+console.log(options.foo) // 这个不会被高亮显示
 ```
 ````
 
@@ -145,14 +145,14 @@ console.log(options.foo) // this one will not be highlighted
 // [!code word:options:2]
 const options = { foo: 'bar' }
 options.foo = 'baz'
-console.log(options.foo) // this one will not be highlighted
+console.log(options.foo) // 这个不会被高亮显示
 ```
 
 ---
 
 ### `transformerNotationFocus`
 
-Use `[!code focus]` to focus a line (adding `focused` class).
+使用 `[!code focus]` 来聚焦显示行（添加 `focused` 类名）。
 
 ````md
 ```ts
@@ -162,7 +162,7 @@ export function foo() {
 ```
 ````
 
-Results in
+效果是：
 
 ```ts
 export function foo() {
@@ -174,7 +174,7 @@ export function foo() {
 
 ### `transformerNotationErrorLevel`
 
-Use `[!code error]`, `[!code warning]`, to mark a line with an error level (adding `highlighted error`, `highlighted warning` class).
+使用 `[!code error]` 和 `[!code warning]` 来指定行的日志等级（添加 `highlighted error` 和 `highlighted warning` 类名）。
 
 ````md
 ```ts
@@ -185,7 +185,7 @@ export function foo() {
 ```
 ````
 
-Results in
+效果是：
 
 ```ts
 export function foo() {
@@ -198,16 +198,16 @@ export function foo() {
 
 ### `transformerRenderWhitespace`
 
-Render whitespaces (tabs and spaces) as individual spans, with classes `tab` and `space`.
+将空白字符（Tab 和空格）渲染为单独的标签（具有 `tab` 或 `space` 类名）。
 
-With some CSS, you can make it look like this:
+使用一些 CSS，可以使其看起来像这样：
 
 <div class="language-js vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">js</span><pre v-pre class="shiki shiki-themes vitesse-light vitesse-dark vp-code" style="--shiki-light:#393a34;--shiki-dark:#dbd7caee;--shiki-light-bg:#ffffff;--shiki-dark-bg:#121212;" tabindex="0"><code><span class="line"><span style="--shiki-light:#AB5959;--shiki-dark:#CB7676;">function</span><span class="space"> </span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">block</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">{</span></span>
 <span class="line"><span class="space"> </span><span class="space"> </span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">space</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span></span>
 <span class="line"><span class="tab">&#9;</span><span class="tab">&#9;</span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">table</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span><span style="--shiki-light:#393A34;--shiki-dark:#DBD7CAEE;"> </span></span>
 <span class="line"><span style="--shiki-light:#999999;--shiki-dark:#666666;">}</span></span></code></pre></div>
 
-::: details Example CSS
+::: details 示例 CSS
 
 ```css
 .vp-code .tab,
@@ -234,7 +234,7 @@ With some CSS, you can make it look like this:
 
 ### `transformerMetaHighlight`
 
-Highlight lines based on the meta string provided on the code snippet. Requires integrations supports.
+根据代码片段上提供的元字符串，高亮显示行。需要集成支持。
 
 ````md
 ```js {1,3-4}
@@ -245,7 +245,7 @@ console.log('4')
 ```
 ````
 
-Results in
+效果是：
 
 ```js {1,3-4}
 console.log('1')
@@ -256,31 +256,31 @@ console.log('4')
 
 ### `transformerMetaWordHighlight`
 
-Highlight words based on the meta string provided on the code snippet. Requires integrations supports.
+根据代码片段中提供的元字符串，高亮显示词。需要集成支持。
 
 ````md
 ```js /Hello/
 const msg = 'Hello World'
 console.log(msg)
-console.log(msg) // prints Hello World
+console.log(msg) // 打印 Hello World
 ```
 ````
 
-Results in
+效果是：
 
 ```js /Hello/
 const msg = 'Hello World'
-console.log(msg) // prints Hello World
+console.log(msg) // 打印 Hello World
 ```
 
 ---
 
 ### `transformerCompactLineOptions`
 
-Support for `shiki`'s `lineOptions` that is removed in `shikiji`.
+在 `shikiji` 中删除的对 `shiki` 的 `lineOptions` 的支持。
 
 ---
 
 ### `transformerRemoveLineBreak`
 
-Remove line breaks between `<span class="line">`. Useful when you set `display: block` to `.line` in CSS.
+删除 `<span class="line">` 之间的换行符。当你在 CSS 中 `display: block` 设置为 `.line` 时有用。
