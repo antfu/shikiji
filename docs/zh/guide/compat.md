@@ -4,7 +4,7 @@ outline: deep
 
 # 兼容构建
 
-我们趁着重写的机会做了一些重大的改变，我们认为这些改变对未来发展是有益的。可能的话，我们建议你尝试迁移这些变更，因为其中大部分应该都很简单。如果你有非常深层的集成，请尝试使用与 `shiki` 当前 API 更好兼容性的兼容构建。
+我们趁着重写的机会做了一些重大的改变，我们认为这些改变对未来发展是有益的。可能的话，建议你尝试迁移这些变更，因为其中大部分应该都很简单。如果你有非常深层的集成，请尝试使用与 `shiki` 当前 API 兼容更好的兼容构建。
 
 ## 安装 `shikiji-compat`
 
@@ -36,7 +36,7 @@ outline: deep
 
 `shikiji` 包含的破坏性更改，而 `shikiji-compat` 中不具有（屏蔽）：
 
-- 顶级命名导出项 `setCDN`、`loadLanguage`、`loadTheme` 和 i877`setWasm` 被移除，因为其不再被需要。
+- 顶级命名导出项 `setCDN`、`loadLanguage`、`loadTheme` 和 `setWasm` 被移除，因为其不再被需要。
 - `BUNDLED_LANGUAGES`、`BUNDLED_THEMES` 被移动至 `shikiji/langs` 和 `shikiji/themes` 中并分别更名为 `bundledLanguages` 和 `bundledThemes`。
 - `getHighlighter` 的 `theme` 选项被移除，请改用数组形式的 `themes`。
 - 高亮显示器不再具有内部的默认主题上下文。 对于 `codeToHtml` 和 `codeToThemedTokens`，`theme` 选项是必须的。

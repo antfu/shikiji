@@ -1,8 +1,8 @@
 # 主题颜色控制
 
-## 多种颜色值
+## 多种颜色值支持
 
-通常，TextMate 主题需要每个标记的颜色值是有效的十六进制颜色值。这个限制来自于 [`vscode-textmate`](https://github.com/microsoft/vscode-textmate)。然而，在 Shikiji v0.9.15 中，我们引入了一个自动解决的方法，通过用占位符替换非十六进制颜色值，并在标记化时将其替换回来。这样可以让你使用具有多种颜色值的主题进行渲染，而不必担心技术细节：
+通常，TextMate 主题要求每个标签的颜色值是有效的十六进制颜色值。这个限制来自于 [`vscode-textmate`](https://github.com/microsoft/vscode-textmate)。然而，在 Shikiji v0.9.15 中，我们引入了一个自动解决的方法，通过用占位符替换非十六进制颜色值，并在标签化时将其替换回来。这样可以让你使用具有多种颜色值的主题进行渲染，而不必担心技术细节：
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
@@ -42,7 +42,7 @@ const html = highlighter.codeToHtml('const foo = "bar"', { lang: 'javascript', t
 ::: info 注意
 谨慎使用，这将与 TextMate 主题不兼容。
 
-这也可能会使主题与非 Web 用例不兼容，例如 [`shikiji-cli`](/packages/cli) 和 [`shikiji-monaco`](/packages/monaco)。
+这也可能会使主题与非 Web 用例不兼容，例如 [`shikiji-cli`](/zh/packages/cli) 和 [`shikiji-monaco`](/zh/packages/monaco)。
 :::
 
 了解如何 [载入主题](./load-theme)。
@@ -57,7 +57,7 @@ const html = highlighter.codeToHtml('const foo = "bar"', { lang: 'javascript', t
 此功能是实验性的，可能会在不遵循如下语义化版本控制规范（semver）的情况下进行更改。
 :::
 
-Shikiji 提供了一个工厂函数助手（Factory Function Helper）`createCssVariablesTheme`，用于更方便地创建使用 CSS 变量的主题。请注意，这个主题形式比大多数其他主题的细粒度要低，并且需要在你的应用程序中定义 CSS 变量。这是为了更容易地从 Shiki 的 [`css-variables` 主题](https://github.com/shikijs/shiki/blob/main/docs/themes.md#theming-with-css-variables) 迁移而提供的。但为了更好的显示效果，我们建议使用 [多种颜色值](#多种颜色值) 或 [颜色替换](#颜色替换) 来覆盖现有的主题。
+Shikiji 提供了一个工厂函数助手（Factory Function Helper）`createCssVariablesTheme`，用于更方便地创建使用 CSS 变量的主题。请注意，这个主题形式比大多数其他主题的细粒度要低，并且需要在你的应用程序中定义 CSS 变量。这是为了更容易地从 Shiki 的 [`css-variables` 主题](https://github.com/shikijs/shiki/blob/main/docs/themes.md#theming-with-css-variables) 迁移而提供的。但为了更好的显示效果，我们建议使用 [多种颜色值支持](#多种颜色值支持) 或 [颜色替换](#颜色替换) 来覆盖现有的主题。
 
 此主题形式**不包含在默认设置**中，必须显式注册：
 

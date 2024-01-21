@@ -6,7 +6,7 @@ outline: deep
 
 <Badges name="shikiji" />
 
-使用 npm 安装，或 [使用 CDN](#cdn-usage)：
+使用 npm 或 [使用 CDN](#cdn-usage) 安装：
 ::: code-group
 
 ```sh [npm]
@@ -44,7 +44,7 @@ bun add -D shikiji
 
 使用 `shikiji` 的最快方式是使用我们提供的简写函数。它会根据需求加载必要的主题和语言，并自动将其缓存到内存中。
 
-将你的代码片段传给 `codeToHtml` 函数并指定 `lang` 和 `theme`，它将返回一个带有高亮显示的 HTML 字符串，你可以嵌入到页面中。生成的 HTML 中的标记都有相应的内联样式，因此你不需要额外的 CSS 来进行样式设置。
+将你的代码片段传给 `codeToHtml` 函数并指定 `lang` 和 `theme`，它将返回一个带有高亮显示的 HTML 字符串，你可以将其嵌入到页面中。生成的 HTML 中，每个标记都有相应的内联样式，因此你不需要额外的 CSS 来进行样式设置。
 
 ```ts twoslash
 import { codeToHtml } from 'shikiji'
@@ -80,7 +80,7 @@ const hast = codeToHast('.text-red { color: red; }', {
 
 ### 高亮显示器用法
 
-我们提供的 [简写](#简写) 是异步执行的，因为我们使用了 WASM，并在内部按需加载主题和语言。在某些情况下，你可能需要同步地高亮代码，因此我们提供了 `getHighlighter` 函数来创建一个可以在后续同步使用的高亮显示器实例。
+因为我们使用了 WASM，所以提供的 [简写](#简写) 是异步执行的，并在内部按需加载主题和语言。在某些情况下，你可能需要同步地高亮代码，因此我们提供了 `getHighlighter` 函数来创建一个可以在后续同步使用的高亮显示器实例。
 
 用法与 `shiki` 基本相同，其中，每个主题和语言文件都是动态导入的 ES 模块。最好**显式地**列出语言和主题以获得最佳性能。
 
@@ -102,7 +102,7 @@ const code = highlighter.codeToHtml('const a = 1', {
 })
 ```
 
-此外，如果要在创建高亮显示器后加载主题和语言，可以使用 `loadTheme` 和 `loadLanguage` 方法。
+此外，如果要在创建高亮显示器后加载主题和语言，使用 `loadTheme` 和 `loadLanguage` 方法。
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
@@ -147,7 +147,7 @@ highlighter.codeToHtml('const a = 1', {
 
 ### 细粒度捆绑
 
-当导入 `shikiji` 时，所有的主题和语言都被捆绑为异步块。通常情况下，如果你不使用它们，你就不必关注，因为它们不会被加载。某些情况下，如果你要控制这些捆绑包的内容，你可以使用核心（`shikiji/core`）来组合自己的捆绑包。
+当导入 `shikiji` 时，所有的主题和语言都被捆绑为异步块（async chunks）。通常情况下，如果你不使用它们，你就不必在意，因为它们不会被加载。某些情况下，如果你要控制这些捆绑包的内容，你可以使用核心（`shikiji/core`）来组合自己的捆绑包。
 
 ```ts twoslash theme:material-theme-ocean
 // @noErrors
@@ -245,7 +245,7 @@ async function main() {
   <div id="foo"></div>
 
   <script type="module">
-    // 保证指定了确切的版本号
+    // 指定确切的版本号
     import { codeToHtml } from 'https://esm.sh/shikiji@0.8.0'
     // 或
     // import { codeToHtml } from 'https://esm.run/shikiji@0.8.0'
@@ -265,7 +265,7 @@ async function main() {
 
 ### Cloudflare Workers
 
-Cloudflare Workers [不支持从二进制数据初始化 WebAssembly](https://community.cloudflare.com/t/fixed-cloudflare-workers-slow-with-moderate-sized-webassembly-bindings/184668/3)，因此默认的 WASM 构建将无法工作。你需要将 WASM 作为资源上传并直接导入。
+Cloudflare Workers [不支持从二进制数据初始化 WebAssembly](https://community.cloudflare.com/t/fixed-cloudflare-workers-slow-with-moderate-sized-webassembly-bindings/184668/3)，因此默认的 WASM 构建将无法工作。你需要将 WASM 作为资产上传并直接导入。
 
 同时，建议使用 [细粒度捆绑](#细粒度捆绑) 来减小捆绑的体积。
 

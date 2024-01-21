@@ -135,7 +135,7 @@ export const zhConfig = defineConfig({
 
     footer: {
       message: '以 MIT 许可证发布',
-      copyright: '版权所有 © 2021 Pine Wu, 2023-PRESENT Anthony Fu.',
+      copyright: '版权所有 © 2021 Pine Wu，2023-PRESENT Anthony Fu.',
     },
   },
 })

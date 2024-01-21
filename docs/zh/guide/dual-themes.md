@@ -4,7 +4,7 @@ outline: deep
 
 # 浅色与深色双主题
 
-Shikiji 支持输出浅色和深色双主题。与 [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki#dark-mode) 将代码渲染两次的实现不同，Shikiji 的多主题实现使用 CSS 变量来存储每个标记上的颜色。这样做在性能上更高效，并且包更小。
+Shikiji 支持输出浅色和深色双主题。与 [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki#dark-mode) 将代码渲染两次的实现不同，Shikiji 的多主题实现使用 CSS 变量来存储每个标签上的颜色。这样做在性能上更高效，并且包更小。
 
 将 `codeToHtml` 上的 `theme` 选项改为含 `light` 和 `dark` 两键的 `options` 来生成两个主题。
 
@@ -66,7 +66,7 @@ const code = highlighter.codeToHtml('console.log("hello")', {
 }
 ```
 
-## 基于 class 的深色模式
+## 基于类名的深色模式
 
 ```css
 html.dark .shiki,
@@ -119,7 +119,7 @@ const code = highlighter.codeToHtml('console.log("hello")', {
 
 ### 不使用默认颜色
 
-如果你想完全控制颜色或避免使用 `!important` 进行覆盖，可以选择通过将 `defaultColor` 设置为 `false` 来禁用默认颜色。
+如果你想完全控制颜色或避免使用 `!important` 进行覆盖，可以通过将 `defaultColor` 设置为 `false` 来禁用默认颜色。
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'
@@ -147,11 +147,11 @@ const code = highlighter.codeToHtml('console.log("hello")', {
 
 在这种情况下，生成的 HTML 将没有默认样式，你需要添加自己的 CSS 来控制颜色。
 
-还可以通过 CSS 变量来控制主题。对此，你可以参考 [@mayank99](https://github.com/mayank99) 在 [这个议题 #6](https://github.com/antfu/shikiji/issues/6) 中的优秀研究和示例。
+还可以通过 CSS 变量来控制主题。对此，你可以参考 [@mayank99](https://github.com/mayank99) 在 [这个议题 #6](https://github.com/antfu/shikiji/issues/6) 中优秀的研究和示例。
 
 ## 自定义语言别名
 
-你可以使用 `langAlias` 选项注册自定义语言别名。例如：
+你可以使用 `langAlias` 选项注册自定义的语言别名。例如：
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'

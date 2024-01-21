@@ -8,9 +8,9 @@ outline: deep
 
 <span text-xl text-green>
 <b><span text-brand-yellow>Shiki</span><span text-brand-red>ji</span></b> <ruby text-brand-yellow>式<rt>shiki</rt></ruby><ruby text-brand-red>辞<rt>ji</rt></ruby>
-</span> 是一款美观而强大的语法高亮显示器，它基于 TextMate 语法及主题，与 VS Code 的语法高亮引擎相同。它能为几乎所有主流的编程语言提供非常准确和快速的语法高亮显示。
+</span> 是一款美观而强大的语法高亮显示器，它基于 TextMate 语法及主题，与 VS Code 的语法高亮引擎相同。它能为几乎所有主流编程语言提供非常准确且快速的语法高亮显示。
 
-没有需要维护的自定义正则表达式，没有需要维护的自定义 CSS，也没有需要维护的自定义 HTML；并随着你在 VS Code 中喜欢使用的语言和主题的发展，你的语法高亮也会相应的发展。
+没有需要维护的自定义正则表达式，没有需要维护的自定义 CSS，也没有需要维护的自定义 HTML；并随着你在 VS Code 中喜欢使用的语言和主题的变化，语法高亮效果也会相应的发展。
 
 Shikiji 是对 [Shiki](https://github.com/shikijs/shiki) 的 ESM 重写，并做了一些改进。我们的目标是 [将本项目作为里程碑更新合并回 Shiki](https://github.com/shikijs/shiki/issues/510)。如果你要进行迁移，请查看 [Shikiji 兼容构建相对于 Shiki 的破坏性改动](/guide/compat)。
 
@@ -23,8 +23,8 @@ Shikiji 是对 [Shiki](https://github.com/shikijs/shiki) 的 ESM 重写，并做
 - 所有语法 / 主题 / WASM 都以纯 ESM 的形式提供，不再需要 [CDN](https://github.com/shikijs/shiki#specify-a-custom-root-directory)，也没有其他 [资产](https://github.com/shikijs/shiki#specify-how-to-load-webassembly)
 - 通用便携，不依赖于 Node.js API 和文件系统，可以在任何现代 JavaScript 运行时上运行
 - 默认仅支持 ESM，不过你依然可以 [使用 CDN](/zh/guide/install#cdn-usage) 或 [使用 CJS](/zh/guide/install#cjs-usage)
-- [语言与主题捆绑](/zh/guide/install#fine-grained-bundle)
-- [深色与浅色主题支持](/zh/guide/dual-themes)
+- [语言与主题的细粒度捆绑](/zh/guide/install#fine-grained-bundle)
+- [浅色与深色主题支持](/zh/guide/dual-themes)
 - [基于 AST 的转换器插件](/zh/guide/transformers)
 - [`hast` 支持](/zh/guide/transformers#codetohast)
 - [TypeScript Twoslash](/zh/packages/twoslash)

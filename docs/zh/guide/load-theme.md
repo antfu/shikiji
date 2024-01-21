@@ -1,6 +1,6 @@
 # 加载自定义主题
 
-请先查看 [所有内建主题](/themes)。
+请先查看 [所有内建主题](/zh/themes)。
 
 你可以通过向 `themes` 数组传递一个 `Theme` 对象来载入自定义主题。
 
@@ -51,4 +51,4 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-主题是一个以 JavaScript 对象形式的 TextMate 主题。 例如，[它应该看起来像这样](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-themes/themes/dark-plus.json)。
+主题是一个 JavaScript 对象形式的 TextMate 主题，[它应该看起来像这样](https://github.com/antfu/textmate-grammars-themes/blob/main/packages/tm-themes/themes/dark-plus.json)。
