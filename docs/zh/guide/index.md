@@ -8,7 +8,7 @@ outline: deep
 
 <span text-xl text-green>
 <b><span text-brand-yellow>Shiki</span><span text-brand-red>ji</span></b> <ruby text-brand-yellow>式<rt>shiki</rt></ruby><ruby text-brand-red>辞<rt>ji</rt></ruby>
-</span> 是一款美观而强大的语法高亮器，它基于 TextMate 语法及主题，与 VS Code 的语法高亮引擎相同。它能为几乎所有主流的编程语言提供非常准确和快速的语法高亮显示。
+</span> 是一款美观而强大的语法高亮显示器，它基于 TextMate 语法及主题，与 VS Code 的语法高亮引擎相同。它能为几乎所有主流的编程语言提供非常准确和快速的语法高亮显示。
 
 没有需要维护的自定义正则表达式，没有需要维护的自定义 CSS，也没有需要维护的自定义 HTML；并随着你在 VS Code 中喜欢使用的语言和主题的发展，你的语法高亮也会相应的发展。
 

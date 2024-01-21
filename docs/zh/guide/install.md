@@ -78,9 +78,9 @@ const hast = codeToHast('.text-red { color: red; }', {
 })
 ```
 
-### 高亮器用法
+### 高亮显示器用法
 
-我们提供的 [简写](#简写) 是异步执行的，因为我们使用了 WASM，并在内部按需加载主题和语言。在某些情况下，你可能需要同步地高亮代码，因此我们提供了 `getHighlighter` 函数来创建一个可以在后续同步使用的高亮器实例。
+我们提供的 [简写](#简写) 是异步执行的，因为我们使用了 WASM，并在内部按需加载主题和语言。在某些情况下，你可能需要同步地高亮代码，因此我们提供了 `getHighlighter` 函数来创建一个可以在后续同步使用的高亮显示器实例。
 
 用法与 `shiki` 基本相同，其中，每个主题和语言文件都是动态导入的 ES 模块。最好**显式地**列出语言和主题以获得最佳性能。
 
@@ -102,7 +102,7 @@ const code = highlighter.codeToHtml('const a = 1', {
 })
 ```
 
-此外，如果要在创建高亮器后加载主题和语言，可以使用 `loadTheme` 和 `loadLanguage` 方法。
+此外，如果要在创建高亮显示器后加载主题和语言，可以使用 `loadTheme` 和 `loadLanguage` 方法。
 
 ```ts twoslash
 import { getHighlighter } from 'shikiji'

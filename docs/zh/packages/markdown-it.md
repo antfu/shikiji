@@ -28,7 +28,7 @@ md.use(await Shikiji({
 
 ## 细粒度捆绑
 
-在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了一个 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `markdown-it-shikiji/core` 中导入并传入你自己的高亮器：
+在默认情况下，会导入完整的 `shikiji` 捆绑包。如果你使用了一个 [细粒度捆绑](/zh/guide/install#细粒度捆绑)，你可以从 `markdown-it-shikiji/core` 中导入并传入你自己的高亮显示器：
 
 ```ts twoslash
 // @noErrors: true
@@ -72,5 +72,5 @@ console.log('4') // 高亮
 ````
 
 ::: info 注意
-如果高亮器不工作，这可能是因为 [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) 插件的兼容性问题。`markdown-it-attrs` 使用了和本插件相同的大括号（`{}`）语法，使得高亮器无法正常工作。如果你想要同时使用 `markdown-it-attrs` 和本插件，考虑更改 `markdown-it-attrs` 的 [分隔符 / 语法](https://github.com/arve0/markdown-it-attrs#custom-delimiters) 来使用另外的字符，例如 `%`。
+如果高亮显示器不工作，这可能是因为 [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) 插件的兼容性问题。`markdown-it-attrs` 使用了和本插件相同的大括号（`{}`）语法，使得高亮显示器无法正常工作。如果你想要同时使用 `markdown-it-attrs` 和本插件，考虑更改 `markdown-it-attrs` 的 [分隔符 / 语法](https://github.com/arve0/markdown-it-attrs#custom-delimiters) 来使用另外的字符，例如 `%`。
 :::

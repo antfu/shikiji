@@ -19,7 +19,7 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-同样的，你也可以在高亮器创建后载入自定义语言。
+同样的，你也可以在高亮显示器创建后载入自定义语言。
 
 ```ts twoslash
 // @noErrors

@@ -38,7 +38,7 @@ const VERSIONS: DefaultTheme.NavItemWithLink[] = [
 
 export const zhConfig = defineConfig({
   lang: 'zh-CN',
-  description: '美观而强大的语法高亮器',
+  description: '美观而强大的语法高亮显示器',
 
   themeConfig: {
     search: {
