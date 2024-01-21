@@ -4,7 +4,8 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "docs:i18n-checkpoint": "esno ./i18n-checkpoint-generator.ts"
   },
   "dependencies": {
     "fuse.js": "^7.0.0"
@@ -18,6 +19,7 @@
     "shikiji": "workspace:*",
     "shikiji-transformers": "workspace:*",
     "shikiji-twoslash": "workspace:*",
+    "simple-git": "^3.22.0",
     "unocss": "^0.58.3",
     "unplugin-vue-components": "^0.26.0",
     "vitepress": "^1.0.0-rc.39",

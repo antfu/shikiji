@@ -1,0 +1,12 @@
+{
+  "default": {
+    "title": "About this site's translation",
+    "hash": "The synchronized commit HASH is ",
+    "date": "The synchronized time is "
+  },
+  "zh": {
+    "title": "关于本站点简体中文翻译",
+    "hash": "同步的提交为 ",
+    "date": "同步的时间为 "
+  }
+}
