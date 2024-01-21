@@ -2,25 +2,25 @@
 outline: deep
 ---
 
-# VitePress Integration
+# VitePress 集成
 
-[VitePress](https://vitepress.dev/) uses Shikiji under the hood, so you don't need explicit integration.
+[VitePress](https://vitepress.dev/) 在底层使用了 Shikiji，所以你不需要显式的定义集成。
 
-VitePress provides [a few options for customizing Shikiji](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts#L66-L112). Learn more about them in the [VitePress documentation](https://vitepress.dev/reference/site-config#markdown).
+VitePress 提供了 [一些 Shikiji 的自定义选项](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts#L66-L112)，在 [VitePress 文档](https://vitepress.dev/zh/reference/site-config#markdown) 上查看更多。
 
 ## Twoslash
 
-To enable [TypeScript Twoslash](/packages/twoslash) (type hover on code snippets) in VitePress, we provide a VitePress plugin for easy setup. Pre-styled, with [Floating Vue](https://floating-vue.starpad.dev/) to display the type information out side of the code container.
+要在 Vitepress 中启用 [TypeScript Twoslash](/packages/twoslash)（类型悬停显示），使用我们提供的插件来快速开始。借助 [Floating Vue](https://floating-vue.starpad.dev/) 在容器外显示具有样式的类型信息。
 
 <Badges name="vitepress-plugin-twoslash" />
 
-### Setup
+### 安装
 
 ```bash
 npm i -D vitepress-plugin-twoslash
 ```
 
-In your [`.vitepress/config.ts`](https://vitepress.dev/reference/site-config):
+在 [`.vitepress/config.ts`](https://vitepress.dev/reference/site-config) 配置文件中：
 
 ```ts twoslash
 // .vitepress/config.ts
@@ -36,7 +36,7 @@ export default defineConfig({
 })
 ```
 
-And then in your [`.vitepress/theme/index.ts`](https://vitepress.dev/guide/custom-theme), install the Vue plugin and import the css with `vitepress-plugin-twoslash/styles.css`.
+然后在你的 [`.vitepress/theme/index.ts`](https://vitepress.dev/guide/custom-theme) 中，安装 Vue 插件并通过 `vitepress-plugin-twoslash/styles.css` 导入 CSS。
 
 ```ts twoslash
 // @noErrors: true
@@ -54,14 +54,14 @@ export default {
 }
 ```
 
-::: details About style.css
+::: details 关于 style.css
 
-For easier setup, `vitepress-plugin-twoslash/styles.css` bundles the styles from `floating-vue` and `shikiji-twoslash/style-rich.css` so you only need a single entry. If you are using a custom `floating-vue` style or want to have more control of the styles, you can expand them as:
+方便起见，`vitepress-plugin-twoslash/styles.css` 包含了 `floating-vue` 和 `shikiji-twoslash/style-rich.css` 中的样式，所以你只需要引入这一项。如果你使用的是自定义 `floating-vue` 样式，或者需要对样式进行更多控制，你可以将它展开成如下几项：
 
 ```ts
 import 'vitepress-plugin-twoslash/style.css'
 
-// Equivalent to:
+// 等同于：
 import 'shikiji-twoslash/style-rich.css'
 import 'floating-vue/dist/style.css'
 import 'vitepress-plugin-twoslash/style-core.css'
@@ -69,7 +69,7 @@ import 'vitepress-plugin-twoslash/style-core.css'
 
 :::
 
-That's it, you can now use `ts twoslash` in your markdown files to enable the beautiful type hover.
+现在，你可以在你的 Markdown 文件中使用 `ts twoslash` 来启用美观的类型悬停显示。
 
 ````md
 ```ts twoslash
@@ -78,7 +78,7 @@ console.log('hello')
 ```
 ````
 
-It will be rendered as:
+它会被渲染为：
 
 ```ts twoslash
 console.log('hello')
@@ -87,24 +87,24 @@ console.log('hello')
 
 <br> <!-- leaving some space for the query above -->
 
-### Vue Single File Component
+### Vue 单文件组件
 
-In addition, this plugin also integrated [`twoslash-vue`](https://github.com/antfu/twoslash-vue) for you, so that you can also highlight Vue SFC blocks with `vue twoslash`:
+此外，这个插件也集成了 [`twoslash-vue`](https://github.com/antfu/twoslash-vue)，所以你也可以使用 `vue twoslash` 高亮 Vue SFC 块：
 
 ```vue twoslash
 <script setup>
 import { onMounted, ref } from 'vue'
 
-// reactive state
+// 响应式状态
 const count = ref(0)
 //             ^?
 
-// functions that mutate state and trigger updates
+// 修改状态并出发更新的函数
 function increment() {
   count.value++
 }
 
-// lifecycle hooks
+// 生命周期钩子
 onMounted(() => {
   console.log(`The initial count is ${count.value}.`)
 })
