@@ -1,5 +1,5 @@
 import type { Element } from 'hast'
-import type { MaybeArray, SpecialTheme, ThemeInput, ThemeRegistration, ThemedToken } from './types'
+import type { MaybeArray, SpecialTheme, ThemeInput, ThemedToken } from './types'
 
 export function toArray<T>(x: MaybeArray<T>): T[] {
   return Array.isArray(x) ? x : [x]
