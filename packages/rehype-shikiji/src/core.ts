@@ -117,8 +117,8 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         return
       }
 
-      const attrs = head.data?.meta ?? head.properties.metastring
-      const meta = (attrs && parseMetaString?.(attrs, node, tree)) || {}
+      const metaString = head.data?.meta ?? head.properties.metastring ?? ''
+      const meta = parseMetaString?.(metaString, node, tree) || {}
 
       const codeOptions: CodeToHastOptions = {
         ...rest,
@@ -126,7 +126,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         meta: {
           ...rest.meta,
           ...meta,
-          __raw: attrs,
+          __raw: metaString,
         },
       }
 
@@ -141,7 +141,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         })
       }
 
-      if (highlightLines && typeof attrs === 'string') {
+      if (highlightLines && typeof metaString === 'string') {
         codeOptions.transformers ||= []
         codeOptions.transformers.push(
           transformerMetaHighlight({
