@@ -33,7 +33,7 @@ export interface RehypeShikijiExtraOptions {
    * Return an object to merge with `meta`
    */
   parseMetaString?: (
-    metaString: string,
+    metaString: string | undefined,
     node: Element,
     tree: Root
   ) => Record<string, any> | undefined | null
@@ -57,6 +57,15 @@ export type RehypeShikijiCoreOptions =
   & TransformerOptions
   & CodeOptionsMeta
   & RehypeShikijiExtraOptions
+
+declare module 'hast' {
+  interface Data {
+    meta?: string
+  }
+  interface Properties {
+    metastring?: string
+  }
+}
 
 const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, RehypeShikijiCoreOptions], Root> = function (
   highlighter,
@@ -108,7 +117,7 @@ const rehypeShikijiFromHighlighter: Plugin<[HighlighterGeneric<any, any>, Rehype
         return
       }
 
-      const attrs = (head.data as any)?.meta
+      const attrs = head.data?.meta ?? head.properties.metastring
       const meta = parseMetaString?.(attrs, node, tree) || {}
 
       const codeOptions: CodeToHastOptions = {
