@@ -31,7 +31,7 @@ function highlightRange(elements: ElementContent[], ignoredElement: Element | nu
       continue
 
     // check if it is overlapped with highlight range
-    if (hasOverlap([currentIdx - 1, textNode.value.length], [index, len])) {
+    if (hasOverlap([currentIdx, currentIdx + textNode.value.length - 1], [index, index + len])) {
       const start = Math.max(0, index - currentIdx)
       const length = len - Math.max(0, currentIdx - index)
 
@@ -51,8 +51,8 @@ function highlightRange(elements: ElementContent[], ignoredElement: Element | nu
   }
 }
 
-function hasOverlap(range1: [idx: number, len: number], range2: [idx: number, len: number]): boolean {
-  return (range1[0] <= range2[0] + range2[1]) && (range1[0] + range1[1]) >= range2[0]
+function hasOverlap(range1: [number, number], range2: [ number, number]): boolean {
+  return (range1[0] <= range2[1]) && (range1[1]) >= range2[0]
 }
 
 function separateToken(span: Element, textNode: Text, index: number, len: number): [
