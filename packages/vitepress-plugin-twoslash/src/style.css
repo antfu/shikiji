@@ -1,7 +1,15 @@
-.twoslash {
+:root {
   --twoslash-popup-bg: var(--vp-c-bg, inherit);
+  --twoslash-popup-color: var(--vp-c-text-1);
+  --twoslash-docs-color: var(--vp-c-text-1);
+  --twoslash-docs-font: var(--vp-font-family-base);
+  --twoslash-code-font: var(--vp-font-family-mono);
+  --twoslash-code-size: var(--vp-code-font-size);
   --twoslash-underline-color: #8888;
-  --twoslash-border-color: #8884;
+  --twoslash-border-color: var(--vp-c-border);
+  --twoslash-cursor-color: var(--vp-c-brand);
+  --twoslash-matched-color: var(--vp-c-brand);
+  --twoslash-unmatched-color: var(--vp-c-text-2);
 }
 
 .v-popper--theme-twoslash {
@@ -9,24 +17,24 @@
 }
 
 .v-popper--theme-twoslash .v-popper__inner {
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border);
+  background: var(--twoslash-popup-bg);
+  color: var(--twoslash-popup-color);
+  border-color: var(--twoslash-border-color);
 }
 
 .v-popper--theme-twoslash .v-popper__arrow-outer {
-  border-color: var(--vp-c-border);
+  border-color: var(--twoslash-border-color);
 }
 
 .v-popper--theme-twoslash .v-popper__arrow-inner {
-  border-color: var(--vp-c-bg, inherit);
+  border-color: var(--twoslash-popup-bg);
 }
 
-.twoslash-popup-info {
+.twoslash-popup-container {
   transform: translateY(1.5em);
 }
 
-.twoslash-query-presisted .twoslash-popup-info {
+.twoslash-query-presisted .twoslash-popup-container {
   transform: translateY(1.8em);
 }
 
@@ -38,24 +46,23 @@
   color: var(--twoslash-unmatched-color) !important;
 }
 
-.floating-vue-twoslash .twoslash-popup-type {
+.twoslash-floating .twoslash-popup-code {
   max-width: 600px;
   display: block;
-  padding: 6px 12px;
   width: fit-content;
   min-width: 100%;
+  padding: 6px 12px;
   line-height: var(--vp-code-line-height);
-  font-size: var(--vp-code-font-size);
-  color: var(--vp-code-block-color);
+  font-size: var(--twoslash-code-size);
   transition: color 0.5s;
   white-space: pre-wrap;
 }
 
-.floating-vue-twoslash .twoslash-popup-jsdoc {
-  border-top: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
+.twoslash-floating .twoslash-popup-docs {
+  border-top: 1px solid var(--twoslash-border-color);
+  color: var(--twoslash-docs-color);
   padding: 0px 12px 0px 12px !important;
-  font-family: var(--vp-font-family-base);
+  font-family: var(--twoslash-docs-font);
   font-size: 0.9em;
   max-height: 500px;
   max-width: 700px;
@@ -64,13 +71,13 @@
   text-wrap: balance;
 }
 
-.floating-vue-twoslash .twoslash-popup-jsdoc p {
+.twoslash-floating .twoslash-popup-docs p {
   margin: 0;
   padding: 6px 0;
   text-wrap: balance;
 }
 
-.floating-vue-twoslash .twoslash-popup-jsdoc pre {
+.twoslash-floating .twoslash-popup-docs pre {
   background-color: var(--vp-code-block-bg);
   border-radius: 8px;
   padding: 12px;
@@ -78,44 +85,37 @@
   overflow-x: auto;
 }
 
-.floating-vue-twoslash .twoslash-popup-jsdoc-tags {
+.twoslash-floating .twoslash-popup-docs-tags {
   display: flex;
   flex-direction: column;
   padding: 8px 12px !important;
 }
 
-.floating-vue-twoslash
-  .twoslash-popup-jsdoc-tags
-  .twoslash-popup-jsdoc-tag-name {
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-brand-1);
+.twoslash-floating .twoslash-popup-docs-tags .twoslash-popup-docs-tag-name {
+  font-family: var(--twoslash-code-font);
+  color: var(--twoslash-unmatched-color);
   margin-right: 0.5em;
-  font-size: 0.9em;
 }
 
 .twoslash-completion-cursor {
   height: 1.2em;
   width: 2px;
   margin-bottom: -0.2em;
-  background: var(--vp-c-brand);
+  background: var(--twoslash-cursor-color);
   display: inline-block;
   user-select: none;
 }
 
-.floating-vue-twoslash-compeltion {
-  --twoslash-matched-color: var(--vp-c-brand);
-}
-
-.floating-vue-twoslash-compeltion .v-popper__arrow-container {
+.twoslash-floating.twoslash-completion .v-popper__arrow-container {
   display: none;
 }
 
-.floating-vue-twoslash-compeltion .twoslash-completion-list {
+.twoslash-floating.twoslash-completion .twoslash-completion-list {
   padding: 6px;
-  font-family: var(--vp-font-family-mono);
-  font-size: var(--vp-code-font-size) !important;
+  font-family: var(--twoslash-code-font);
+  font-size: var(--twoslash-code-size) !important;
 }
 
-.floating-vue-twoslash-compeltion .twoslash-completion-list li {
+.twoslash-floating.twoslash-completion .twoslash-completion-list li {
   padding: 3px 0;
 }

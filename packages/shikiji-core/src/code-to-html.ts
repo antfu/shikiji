@@ -1,6 +1,8 @@
 import { toHtml as hastToHtml } from 'hast-util-to-html'
 import type { CodeToHastOptions, ShikiInternal, ShikijiTransformerContextCommon } from './types'
-import { codeToHast } from './renderer-hast'
+import { codeToHast } from './code-to-hast'
+
+export { hastToHtml }
 
 /**
  * Get highlighted code in HTML.

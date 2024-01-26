@@ -4,7 +4,7 @@ import type {
   ThemedToken,
   ThemedTokenWithVariants,
 } from './types'
-import { codeToThemedTokens } from './tokenizer'
+import { codeToThemedTokens } from './code-to-tokens'
 
 /**
  * Get tokens with multiple themes
@@ -97,6 +97,7 @@ export function syncThemesTokenization(...themes: ThemedToken[][][]) {
           current[n] = {
             ...token,
             content: token.content.slice(minLength),
+            offset: token.offset + minLength,
           }
         }
       }

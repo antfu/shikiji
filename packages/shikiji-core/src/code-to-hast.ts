@@ -9,9 +9,9 @@ import type {
   ThemedTokenWithVariants,
   TokenStyles,
 } from './types'
-import { codeToThemedTokens } from './tokenizer'
 import { FontStyle } from './types'
-import { codeToTokensWithThemes } from './renderer-html-themes'
+import { codeToThemedTokens } from './code-to-tokens'
+import { codeToTokensWithThemes } from './code-to-tokens-themes'
 
 export function codeToHast(
   internal: ShikiInternal,
@@ -62,8 +62,8 @@ export function codeToHast(
     tokens = themeTokens
       .map(line => line.map(token => mergeToken(token, themesOrder, cssVariablePrefix, defaultColor)))
 
-    fg = themes.map((t, idx) => (idx === 0 && defaultColor ? '' : `${cssVariablePrefix + t.color}:`) + themeRegs[idx].fg).join(';')
-    bg = themes.map((t, idx) => (idx === 0 && defaultColor ? '' : `${cssVariablePrefix + t.color}-bg:`) + themeRegs[idx].bg).join(';')
+    fg = themes.map((t, idx) => (idx === 0 && defaultColor ? '' : `${cssVariablePrefix + t.color}:`) + (themeRegs[idx].fg || 'inherit')).join(';')
+    bg = themes.map((t, idx) => (idx === 0 && defaultColor ? '' : `${cssVariablePrefix + t.color}-bg:`) + (themeRegs[idx].bg || 'inherit')).join(';')
     themeName = `shiki-themes ${themeRegs.map(t => t.name).join(' ')}`
     rootStyle = defaultColor ? undefined : [fg, bg].join(';')
   }

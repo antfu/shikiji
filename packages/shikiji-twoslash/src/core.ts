@@ -6,7 +6,7 @@ import type { TwoslashExecuteOptions, TwoslashReturn } from 'twoslash'
 import type { ShikijiTransformer } from 'shikiji-core'
 import type { Element, ElementContent, Text } from 'hast'
 
-import { addClassToHast } from 'shikiji-core'
+import { addClassToHast, splitToken } from 'shikiji-core'
 import type { TransformerTwoslashOptions, TwoslashRenderer } from './types'
 
 export * from './types'
@@ -65,7 +65,7 @@ export function createTransformerFactory(
 
         // Break tokens at the boundaries of twoslash nodes
         const breakpoints = Array.from(new Set(this.meta.twoslash.nodes.flatMap(i =>
-          ['hover', 'error', 'query', 'highlight'].includes(i.type)
+          ['hover', 'error', 'query', 'highlight', 'completion'].includes(i.type)
             ? [i.start, i.start + i.length]
             : [],
         ))).sort()
@@ -75,22 +75,12 @@ export function createTransformerFactory(
             const breakpointsInToken = breakpoints
               .filter(i => token.offset < i && i < token.offset + token.content.length)
               .map(i => i - token.offset)
+              .sort((a, b) => a - b)
 
             if (!breakpointsInToken.length)
               return token
 
-            breakpointsInToken.push(token.content.length)
-            breakpointsInToken.sort((a, b) => a - b)
-            let lastDelta = 0
-            return breakpointsInToken.map((i) => {
-              const n = {
-                ...token,
-                content: token.content.slice(lastDelta, i),
-                offset: token.offset + lastDelta,
-              }
-              lastDelta = i
-              return n
-            })
+            return splitToken(token, breakpointsInToken)
           })
         })
       },
@@ -161,7 +151,8 @@ export function createTransformerFactory(
         }
 
         const tokensSkipHover = new Set<Element | Text>()
-        const postActions: (() => void)[] = []
+        const actionsHovers: (() => void)[] = []
+        const actionsHighlights: (() => void)[] = []
 
         for (const node of twoslash.nodes) {
           if (node.type === 'tag') {
@@ -209,21 +200,36 @@ export function createTransformerFactory(
               break
             }
             case 'highlight': {
-              if (renderer.nodeHightlight) {
-                tokens.forEach((token) => {
-                  tokensSkipHover.add(token)
-                  const clone = { ...token }
-                  Object.assign(token, renderer.nodeHightlight!.call(this, node, clone))
+              if (renderer.nodesHighlight) {
+                actionsHighlights.push(() => {
+                  const line = this.lines[node.line]
+                  let charIndex = 0
+                  let itemStart = line.children.length
+                  let itemEnd = 0
+
+                  line.children.forEach((token, index) => {
+                    if (charIndex >= node.character && index < itemStart)
+                      itemStart = index
+                    if ((charIndex <= node.character + node.length) && index > itemEnd)
+                      itemEnd = index
+                    charIndex += getTokenString(token).length
+                  })
+
+                  if ((charIndex <= node.character + node.length))
+                    itemEnd = line.children.length
+
+                  const targets = line.children.slice(itemStart, itemEnd)
+                  const length = targets.length
+                  const highlighted = renderer.nodesHighlight?.call(this, node, targets) || targets
+                  line.children.splice(itemStart, length, ...highlighted)
                 })
               }
-              if (renderer.lineHighlight)
-                insertAfterLine(node.line, renderer.lineHighlight.call(this, node))
               break
             }
             case 'hover': {
               // Hover will be handled after all other nodes are processed
               if (renderer.nodeStaticInfo) {
-                postActions.push(() => {
+                actionsHovers.push(() => {
                   tokens.forEach((token) => {
                     if (tokensSkipHover.has(token))
                       return
@@ -243,8 +249,16 @@ export function createTransformerFactory(
             }
           }
         }
-        postActions.forEach(i => i())
+
+        actionsHovers.forEach(i => i())
+        actionsHighlights.forEach(i => i())
       },
     }
   }
+}
+
+function getTokenString(token: ElementContent): string {
+  if ('value' in token)
+    return token.value
+  return token.children?.map(getTokenString).join('') || ''
 }
