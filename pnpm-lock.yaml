@@ -356,6 +356,9 @@ importers:
 
   packages/shikiji-transformers:
     dependencies:
+      hast-util-to-string:
+        specifier: ^3.0.0
+        version: 3.0.0
       shikiji:
         specifier: workspace:*
         version: link:../shikiji
