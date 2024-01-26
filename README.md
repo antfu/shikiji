@@ -1,5 +1,8 @@
 <img src="https://raw.githubusercontent.com/antfu/shikiji/main/docs/public/logo.svg" width="150" alt="Shikiji Logo" />
 
+> [!IMPORTANT]
+> Shikiji is migration back to Shiki! The developement of this repository is slowing down and will soon be archived. Please follow [this PR](https://github.com/shikijs/shiki/pull/557) to track the progress.
+
 # Shikiji 式辞
 
 [![NPM version](https://img.shields.io/npm/v/shikiji?color=32A9C3&labelColor=1B3C4A&label=npm)](https://www.npmjs.com/package/shikiji)
