@@ -1,7 +1,9 @@
-<img src="https://raw.githubusercontent.com/antfu/shikiji/main/docs/public/logo.svg" width="150" alt="Shikiji Logo" />
-
 > [!IMPORTANT]
-> Shikiji is migration back to Shiki! The developement of this repository is slowing down and will soon be archived. Please follow [this PR](https://github.com/shikijs/shiki/pull/557) to track the progress.
+> Shikiji is [merged back](https://github.com/shikijs/shiki/pull/557) to Shiki! This repository will soon be archived. Please continue at [shikijs/shiki](https://github.com/shikijs/shiki).
+
+---
+
+<img src="https://raw.githubusercontent.com/antfu/shikiji/main/docs/public/logo.svg" width="150" alt="Shikiji Logo" />
 
 # Shikiji 式辞
 
