@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Shikiji is [merged back](https://github.com/shikijs/shiki/pull/557) to Shiki! This repository will soon be archived. Please continue at [shikijs/shiki](https://github.com/shikijs/shiki).
+> Shikiji is [merged back](https://github.com/shikijs/shiki/pull/557) to Shiki! This repository is now archived. Please continue at [shikijs/shiki](https://github.com/shikijs/shiki).
 
 ---
 
